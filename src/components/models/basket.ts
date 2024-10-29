@@ -1,10 +1,5 @@
+import { IBasketModel } from '../../types';
 import { EventEmitter } from '../base/events';
-
-interface IBasketModel {
-	items: Map<string, number>;
-	add(id: string): void;
-	remove(id: string): void;
-}
 
 export class BasketModel implements IBasketModel {
 	items: Map<string, number> = new Map();

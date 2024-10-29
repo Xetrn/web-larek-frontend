@@ -1,4 +1,4 @@
-export interface Item {
+export interface IProduct {
 	id: string;
 	name: string;
 	description: string;
@@ -7,12 +7,20 @@ export interface Item {
 	pictureUrl: string;
 }
 
-export interface Cart {
-	items: Item[];
-	totalPrice: number;
+export interface IBasketModel {
+	items: Map<string, number>;
+	add(id: string): void;
+	remove(id: string): void;
 }
 
-export interface PersonalData {
+export interface ICatalogModel {
+	items: IProduct[];
+	setItems(items: IProduct[]): void;
+	getProduct(id: string): IProduct;
+}
+
+// ????
+export interface IPersonalData {
 	paymentMethod: 'cash' | 'card';
 	address: string;
 	email: string;
