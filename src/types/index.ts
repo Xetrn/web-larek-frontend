@@ -18,11 +18,3 @@ export interface ICatalogModel {
 	setItems(items: IProduct[]): void;
 	getProduct(id: string): IProduct;
 }
-
-// ????
-export interface IPersonalData {
-	paymentMethod: 'cash' | 'card';
-	address: string;
-	email: string;
-	phoneNumber: string;
-}

@@ -13,7 +13,7 @@ export class BasketModel implements IBasketModel {
 		if (!this.items.has(id)) this.items.set(id, 0);
 
 		this.items.set(id, this.items.get(id) + 1);
-		this._events.emit('basket-model:add');
+		this._events.emit('basket:add');
 	}
 
 	remove(id: string) {
@@ -22,6 +22,6 @@ export class BasketModel implements IBasketModel {
 			this.items.set(id, this.items.get(id) - 1);
 			if (this.items.get(id) === 0) this.items.delete(id);
 		}
-		this._events.emit('basket-model:remove');
+		this._events.emit('basket:remove');
 	}
 }

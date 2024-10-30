@@ -11,7 +11,7 @@ export class CatalogModel implements ICatalogModel {
 
 	setItems(items: IProduct[]): void {
 		this.items = items;
-		this._events?.emit('catalog-model:set-items');
+		this._events.emit('catalog-model:set-items');
 	}
 
 	getProduct(id: string): IProduct | undefined {
