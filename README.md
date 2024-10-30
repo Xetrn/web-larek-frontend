@@ -94,14 +94,14 @@ type BusketProduct = Pick<IProduct, "id" | "title" | "price">;
 Каталог.
 ```
 interface ICatalog {
-    products: IProduct[];
+    products: CatalogProduct[];
 }
 ```
 
 Корзина. 
 ```
 interface IBusket {
-    products: IProduct[];
+    products: BusketProduct[];
     totalPrice: number;
 }
 ```
@@ -165,7 +165,7 @@ interface IContactsForm extends IFormState {
 ```
 
 
-## Слой данных.
+## Слой данных
 Содержит два API, которые наследуются от базового класса Api.
 ProductsAPI. Представляет собой Api для получения всех товаров или отдельного товара.
 Реализуется интерфейсом IProductsAPI.
@@ -235,7 +235,7 @@ BusketModel. Класс, управляющий логикой корзины. �
 interface IBusketModel {
     busket: IBusket;
 
-    getBusket: () => IProduct[];
+    getBusket: () => BusketProduct[];
     removeFromBusket: (id: string) => void;
     isInBusket: (id: string) => boolean;
 
@@ -269,10 +269,132 @@ interface IFormModel {
 }
 ```
 
-## Слой отображения.
-//TODO
+## Слой отображения
+Любое отображение будет минимум реализовывать интерфейс IView,
+который содержит метод для обновления отображения и контейнер элемента.
+```
+interface IView<T> {
+    container: HTMLElement;
+    render: (data?: T) => HTMLElement;
+}
+```
 
-## Слой представления.
+Предполагаемые отображения и их начальная инициализация:
+ModalView. Класс для отображения модального окна. Содержит само содержимое, кнопку закрытия, методы открытия и закрытия.
+```
+class ModalView implements IView<HTMLElement> {
+    closeButton : HTMLButtonElement;
+    container: HTMLElement;
+    open: () => void;
+    close: () => void;
+    render: (data?: HTMLElement) => HTMLElement;
+}
+```
+
+CatalogView. Класс для отображения каталога. Содержит содержимое каталога.
+```
+class CatalogView implements IView<ICatalog> {
+    container: HTMLElement;
+    render: (data?: ICatalog) => HTMLElement;
+}
+```
+
+CatalogProductView. Класс для отображения товара в каталоге. Содержит информацию о карточке.
+```
+class CatalogProductView implements IView<CatalogProduct> {
+    container: HTMLElement;
+    category: HTMLElement;
+    title: HTMLElement;
+    image: HTMLImageElement;
+    price: HTMLElement;
+    render: (data?: CatalogProduct) => HTMLElement;
+}
+```
+
+ProductView. Класс для отображения карточки товара в модальном окне. Содержит полную информацию о карточке
+и кнопку для добавления в корзину или удаления товара из нее.
+```
+class ProductView implements IView<IProduct> {
+    container: HTMLElement;
+    title: HTMLElement;
+    category: HTMLElement;
+    description: HTMLElement;
+    image: HTMLImageElement;
+    price: HTMLElement;
+    busketButton: HTMLButtonElement;
+    render: (data?: IProduct) => HTMLElement;
+}
+```
+
+BusketProductView. Класс для отображения товара в корзине. Содержит краткую информацию о товаре, то есть цена, название, 
+индекс в корзине + кнопка для удаления из корзины
+```
+class BusketProductView implements IView<BusketProduct> {
+    container: HTMLElement;
+    index: HTMLElement;
+    title: HTMLElement;
+    price: HTMLElement;
+    removeButton: HTMLButtonElement;
+    render: (data?: BusketProduct) => HTMLElement;
+}
+```
+
+BusketPreview. Класс для отображения иконки корзины на главной странице. Меняется только счетчик количества товаров.
+```
+class BusketPreview implements IView<number> {
+    counter: HTMLElement;
+    container: HTMLElement;
+    render: (data?: number) => HTMLElement;
+}
+```
+
+BusketView. Класс для отображения корзины. Содержит список товаров, кнопку оформления заказа, суммарную цену товаров.
+```
+class BusketView implements IView<IBusket> {
+    container: HTMLElement;
+    productsList: HTMLUListElement;
+    startOrdering: HTMLButtonElement;
+    price: HTMLElement;
+    render: (data?: IBusket) => HTMLElement;
+}
+```
+
+OrderFormView. Класс для отображения первой формы при оформлении заказа. Содержит тип оплаты, поле ввода адреса,
+кнопку для перехода к следующей форме.
+```
+class OrderFormView implements IView<IPaymentForm> {
+    container: HTMLElement;
+    paymentTypes: HTMLUListElement;
+    address: HTMLInputElement;
+    nextButton: HTMLButtonElement;
+    render: (data?: IPaymentForm) => HTMLElement;
+}
+```
+
+ContactsFormView. Класс для отображения второй формы при оформлении заказа. Содержит поля ввода почты и телефона,
+кнопку для оформления заказа.
+```
+class ContactsFormView implements IView<IContactsForm> {
+    container: HTMLElement;
+    email: HTMLInputElement;
+    phone: HTMLInputElement;
+    submitButton: HTMLButtonElement;
+    render: (data?: IContactsForm) => HTMLElement;
+}
+```
+
+OrderResultView. Класс для отображения результата оформления заказа. Содержит списанную сумму и кнопку для
+перехода на главную страницу и очищения форм и корзины. 
+```
+class OrderResultView implements IView<IOrderResult> {
+    container: HTMLElement;
+    price: HTMLElement;
+    toMainPage: HTMLButtonElement;
+    render: (data?: IOrderResult) => HTMLElement;
+}
+```
+
+## Слой представления
 Контроллером выступит главный файл index.ts. Взаимодействие между моделями и отображениями
 будет происходить с помощью брокера сообщений, таким образом, реализуется событийно-ориентированная архитектура.
 Типы возможных событий, указанные в отдельном файле eventsTypes.ts:
