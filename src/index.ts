@@ -6,16 +6,16 @@ import {Product} from "./types";
 import {ProductView} from "./components/view/ProductView";
 import {Api} from "./components/base/api";
 import {API_URL} from "./utils/constants";
-import {ProductsDTO} from "./types/ProductsDTO";
+import {ProductList} from "./types/ProductList";
 import {ModalView} from "./components/view/ModalView";
 import {ProductModalView} from "./components/view/ProductModalView";
-import {BucketModel} from "./models/BucketModel";
+import {BasketModel} from "./models/BasketModel";
 
 const api = new Api(API_URL)
 const events = new EventEmitter()
 
 const catalogModel = new CatalogModel(events)
-const bucketModel = new BucketModel(events)
+const bucketModel = new BasketModel(events)
 const catalogView = new CatalogView(events)
 events.on("catalog-model: change items", (products: Product[]) => {
     catalogView.render({items: products.map(product => new ProductView(events).render(product))})
@@ -36,6 +36,6 @@ events.on("product-modal-view: add", ({id}: {id: string}) => {
 })
 
 api.get('/product/')
-    .then((data: ProductsDTO) => {
+    .then((data: ProductList) => {
         catalogModel.setItems(data.items)
     })
