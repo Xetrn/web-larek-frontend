@@ -2,7 +2,7 @@
 interface IBusketModel {
     busket: IBusket;
 
-    getBusket: () => IProduct[];
+    getBusket: () => BusketProduct[];
     removeFromBusket: (id: string) => void;
     isInBusket: (id: string) => boolean;
 

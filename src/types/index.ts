@@ -16,12 +16,12 @@ interface IProduct {
 }
 
 interface IBusket {
-    products: IProduct[];
+    products: BusketProduct[];
     totalPrice: number;
 }
 
 interface ICatalog {
-    products: IProduct[];
+    products: CatalogProduct[];
 }
 
 interface IOrder{
