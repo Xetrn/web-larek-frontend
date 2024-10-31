@@ -2,40 +2,45 @@ import { EventEmitter } from '../base/events';
 import { IView } from './view';
 
 export class BasketView implements IView {
-	protected container: HTMLElement;
-	protected _events: EventEmitter;
+	private modalContainer: HTMLElement;
+	private events: EventEmitter;
 
 	constructor(events: EventEmitter) {
-		this._events = events;
+		this.events = events;
 
-		this.container = document.querySelector('#modal-container');
-		this.init();
+		this.modalContainer = document.getElementById('modal-container');
+		this.setup();
 	}
 
-	private init() {
-		const closeButton = this.container.querySelector(
+	private setup() {
+		const closeBtn = this.modalContainer.querySelector(
 			'.modal__close'
 		) as HTMLButtonElement;
-		closeButton.onclick = () => this._events.emit('basket-modal:close');
 
-		const basket = this.container.querySelector(
+		closeBtn.addEventListener('click', () => {
+			this.events.emit('modal:close');
+		});
+
+		const modalContent = this.modalContainer.querySelector(
 			'.modal__container'
 		) as HTMLElement;
-		this.container.onclick = (event) => {
-			if (!basket.contains(event.target as Node)) {
-				this._events.emit('basket-modal:close');
+
+		this.modalContainer.addEventListener('click', (event) => {
+			if (!modalContent.contains(event.target as Node)) {
+				this.events.emit('modal:close');
 			}
-		};
+		});
 	}
 
 	render({ content, isOpen }: { content?: HTMLElement; isOpen: boolean }) {
-		const contentContainer = this.container.querySelector(
+		const contentWrapper = this.modalContainer.querySelector(
 			'.modal__content'
 		) as HTMLElement;
-		contentContainer.replaceChildren(content);
+		contentWrapper.innerHTML = '';
+		if (content) contentWrapper.appendChild(content);
 
-		this.container.className = `basket ${isOpen ? 'open' : ''}`;
+		this.modalContainer.classList.toggle('open', isOpen);
 
-		return this.container;
+		return this.modalContainer;
 	}
 }
