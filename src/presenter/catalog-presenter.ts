@@ -3,18 +3,18 @@ import { ProductView } from '../components/view/product-view';
 import { CatalogModel } from '../model';
 
 export class CatalogPresenter {
-	protected catalogModel: CatalogModel;
-	private catalogView = new CatalogView();
+  protected catalogModel: CatalogModel;
+  private catalogView = new CatalogView();
 
-	constructor({ catalogModel }: { catalogModel: CatalogModel }) {
-		this.catalogModel = catalogModel;
-	}
+  constructor({ catalogModel }: { catalogModel: CatalogModel }) {
+    this.catalogModel = catalogModel;
+  }
 
-	init() {
-		const products = this.catalogModel.products;
+  init() {
+    const products = this.catalogModel.products;
 
-		this.catalogView.render({
-			items: products.map((product) => new ProductView().render(product)),
-		});
-	}
+    this.catalogView.render({
+      items: products.map((product) => new ProductView().render(product)),
+    });
+  }
 }

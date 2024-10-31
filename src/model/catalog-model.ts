@@ -2,26 +2,26 @@ import { EventEmitter } from '../components/base/events';
 import { CatalogProduct, IProduct, IProductAPI } from '../types';
 
 interface ICatalogModel {
-	products: IProduct[];
+  products: IProduct[];
   load(): Promise<void>;
-	getAll(): CatalogProduct[];
-	getById(id: string): IProduct;
+  getAll(): CatalogProduct[];
+  getById(id: string): IProduct;
 }
 
 export class CatalogModel implements ICatalogModel {
-	products: IProduct[];
+  products: IProduct[];
 
-	constructor(private api: IProductAPI, private events: EventEmitter) {}
+  constructor(private api: IProductAPI, private events: EventEmitter) {}
 
-	async load() {
-		this.products = (await this.api.getProducts()).items;
-	}
+  async load() {
+    this.products = (await this.api.getProducts()).items;
+  }
 
-	getAll(): CatalogProduct[] {
-		return this.products;
-	}
+  getAll(): CatalogProduct[] {
+    return this.products;
+  }
 
-	getById(id: string): IProduct {
-		return this.products.find((p) => p.id === id);
-	}
+  getById(id: string): IProduct {
+    return this.products.find((p) => p.id === id);
+  }
 }
