@@ -2,7 +2,7 @@ import { IView } from "./view";
 import { IProduct } from "../types/product";
 import { EventEmitter } from "../components/base/events";
 
-export class CatalogItemView implements IView{
+export class ItemView implements IView{
 
     constructor(protected events: EventEmitter){   
     }
@@ -28,7 +28,7 @@ export class CatalogItemView implements IView{
         priceElement.textContent = `${data.price} синапсов`;
 
         buttonElement.addEventListener('click', ()=>{
-            this.events.emit('ui:open-product', {id: data.id});
+            this.events.emit('ui:open-product', data);
         });
 
     

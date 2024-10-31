@@ -17,6 +17,8 @@ export class CatalogView implements IView{
             this.container.appendChild(productElement);
         });
 
+        this.events.emit('ui:render-catalog', products);
+
         return this.container;
     }
 }
