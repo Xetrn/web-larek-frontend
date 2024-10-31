@@ -1,0 +1,286 @@
+@startuml web-larek
+' Интерфейсы
+
+interface IEvents {
+	+on(event: EventName, callback: Function): void
+	+off(eventName: EventName, callback: Function): void
+	+emit(event: string, data?: object): void
+	+trigger(event: string, context?: object): Function
+}
+
+interface IView {
+	+render(data?: object): HTMLElement
+}
+
+interface IPresenter {
+	+view: IView
+	+model: object
+	+init(): void
+}
+
+interface IShopAPI {
+	+getProducts(): Promise<IProducts>
+	+getProductById(id: string): Promise<IProduct>
+	+createOrder(products: IProduct[]): Promise<IOrder>
+	+getImageUrl(url: string): string
+}
+
+interface IModalModel {
+	+show(): void
+	+hide(): void
+}
+
+interface IGalleryModel {
+	+setProducts(items: IProducts): void
+	+getProduct(id: string): IProduct
+}
+
+interface IBasketModel extends IModalModel {
+	+addItem(id: string): void
+	+removeItem(id: string): void
+	+getItems(): IProduct[]
+	+getCount(): number
+	+hasItem(id: string): boolean
+}
+
+interface ICardPreviewModel extends IModalModel {
+	+getProduct(): IProduct
+	+setProduct(product: IProduct): void
+}
+
+interface IOrderModel extends IModalModel {
+	+order: IOrder
+	+setOrder(order: IOrder): void
+	+clear(): void
+}
+
+interface IContactsModel extends IModalModel {
+	+order: IOrder
+	+setOrder(order: IOrder): void
+	+clear(): void
+}
+
+interface ISuccessModel extends IModalModel {
+	+orderResponse: IOrderResponse
+	+setOrderResponse(orderResponse: IOrderResponse): void
+	+clear(): void
+}
+
+interface IForm {
+	+form: HTMLFormElement
+	+isValid: boolean
+	+errors: HTMLSpanElement
+	+validate(): boolean
+}
+
+
+' Базовые классы
+class EventEmitter implements IEvents {
+	-_events: Map<EventName, Set<Function>>
+	+on(event: EventName, callback: Function): void
+	+off(eventName: EventName, callback: Function): void
+	+emit(event: string, data?: object): void
+	+onAll(callback: Function): void
+	+offAll(): void
+	+trigger(event: string, context?: object): Function
+}
+
+class API {
+	+baseUrl: string
+	#options: RequestInit
+	#handleResponse(response: Response): Promise<object>
+	+get(uri: string): Promise<object>
+	+post(uri: string, data: object): Promise<object>
+}
+
+' Классы
+class ShopAPI extends API implements IShopAPI {
+	+getProducts(): Promise<IProducts>
+	+getProductById(id: string): Promise<IProduct>
+	+createOrder(products: IProduct[]): Promise<IOrder>
+	+getImageUrl(url: string): string
+}
+
+' Модели
+class BasketModel implements IBasketModel {
+	-products: IProduct[]
+	+addItem(id: string): void
+	+removeItem(id: string): void
+	+clearItems(): void
+	+getItems(): IProduct[]
+	+getCount(): number
+	+hasItem(id: string): boolean
+	#initEvents(): void
+}
+
+class GalleryModel implements IGalleryModel {
+	-products: IProducts
+	+setProducts(items: IProducts): void
+	+getProduct(id: string): IProduct
+	#initEvents(): void
+}
+
+class ProductPreviewModel implements ICardPreviewModel {
+	-product: IProduct
+	+getProduct(): IProduct
+	+setProduct(product: IProduct): void
+}
+
+class OrderModel implements IOrderModel {
+	+order: IOrder
+	+setOrder(order: IOrder): void
+	+clear(): void
+}
+
+class ContactsModel implements IContactsModel {
+	+order: IOrder
+	+setOrder(order: IOrder): void
+	+clear(): void
+}
+
+class SuccessModel implements ISuccessModel {
+	+orderResponse: IOrderResponse
+	+setOrderResponse(orderResponse: IOrderResponse): void
+	+clear(): void	
+}
+
+' Представления
+abstract class ModalView implements IView {
+	#contentContainer: HTMLDivElement
+	-wrapperContainer: HTMLDivElement
+	-closeButton: HTMLButtonElement
+	#getHTMLElements(container: HTMLElement): void
+	#initEvents(): void
+	+show(): void
+	+hide(): void
+	+render(data: object): HTMLElement
+}
+
+class GalleryView implements IView {
+	+render(data: object): HTMLElement
+	#renderGalleryItems(products: IProducts): void
+	#initEvents(): void
+}
+
+class BasketButtonView implements IView {
+	-counter: HTMLSpanElement
+	+render(): HTMLElement
+	+updateCounter(): void
+	#initEvents(): void
+}
+
+' Модальные окна
+class CardPreviewView extends ModalView {
+	-title: HTMLElement
+	-description: HTMLElement
+	-image: HTMLImageElement
+	-price: HTMLElement
+	-category: HTMLElement
+	-cartButton: HTMLButtonElement
+	-content: IProduct
+	-inBasket: boolean
+	#getHTMLElements(): void
+	#initEvents(): void
+	-toggleButtonState(): void
+	+render(data?: object): HTMLElement
+}
+
+class OrderView extends ModalView implements IForm {
+	+form: HTMLFormElement
+	+errors: HTMLSpanElement
+	+isValid: boolean
+	-onlineButton: HTMLButtonElement
+	-cashButton: HTMLButtonElement
+	-addressInput: HTMLInputElement
+	-nextButton: HTMLButtonElement
+	#getHTMLElements(): void
+	#initEvents(): void
+	+render(data?: object): HTMLElement
+	+validate(): boolean
+}
+
+class ContactsView extends ModalView implements IForm {
+	+form: HTMLFormElement
+	+errors: HTMLSpanElement
+	+isValid: boolean
+	-emailInput: HTMLInputElement
+	-phoneInput: HTMLInputElement
+	-submitButton: HTMLButtonElement
+	#getHTMLElements(): void
+	#initEvents(): void
+	+validate(): boolean
+	+render(data?: object): HTMLElement
+}
+
+class SuccessView extends ModalView {
+	-description: HTMLElement
+	-closeButton: HTMLButtonElement
+	+render(data?: object): HTMLElement
+}
+
+' Презентеры
+class GalleryPresenter implements IPresenter {
+	+view: GalleryView
+	+model: GalleryModel
+	+init(): void
+}
+
+class BasketPresenter implements IPresenter {
+	+view: BasketButtonView
+	+model: BasketModel
+	+init(): void
+}
+
+class CardPreviewPresenter implements IPresenter {
+	+view: CardPreviewView
+	+model: ProductPreviewModel
+	+init(): void
+}
+
+class OrderPresenter implements IPresenter {
+	+view: OrderView
+	+model: OrderModel
+	+init(): void
+}
+
+class ContactsPresenter implements IPresenter {
+	+view: ContactsView
+	+model: ContactsModel
+	+init(): void
+}
+
+class SuccessPresenter implements IPresenter {
+	+view: SuccessView
+	+model: SuccessModel
+	+init(): void
+}
+
+' ' Связи Model-Presenter
+GalleryPresenter o-- GalleryModel
+BasketPresenter o-- BasketModel  
+CardPreviewPresenter o-- ProductPreviewModel
+OrderPresenter o-- OrderModel
+ContactsPresenter o-- ContactsModel
+SuccessPresenter o-- SuccessModel
+
+' Связи View-Presenter
+GalleryPresenter o-- GalleryView
+BasketPresenter o-- BasketButtonView
+CardPreviewPresenter o-- CardPreviewView
+OrderPresenter o-- OrderView
+ContactsPresenter o-- ContactsView
+SuccessPresenter o-- SuccessView
+
+' Наследование от базовых классов и интерфейсов
+GalleryModel --|> EventEmitter
+BasketModel --|> EventEmitter
+ProductPreviewModel --|> EventEmitter
+OrderModel --|> EventEmitter
+ContactsModel --|> EventEmitter
+SuccessModel --|> EventEmitter
+
+' Связь с API
+ShopAPI --o GalleryModel
+ShopAPI --o ContactsModel
+
+@enduml
