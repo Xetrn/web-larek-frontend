@@ -83,6 +83,7 @@ interface IOrderAPI. Нужен для создания заказа.
 
 Свойства:
 - `products: Product[]` - Массив продуктов
+
 Методы:
 - `setProducts(products: Product[]): void` - Установить продукты
 - `getProducts(): Promise` - Возвращает все продукты
@@ -92,6 +93,7 @@ interface IOrderAPI. Нужен для создания заказа.
 
 Свойства:
 - `products: CartProduct[]` - Массив продуктов
+
 Методы:
 - `getProducts(): Promise` - Возвращает все продукты
 - `addProduct(product: Product): void` - Добавить продукт в корзину
