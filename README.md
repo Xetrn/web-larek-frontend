@@ -104,16 +104,6 @@ interface IOrderAPI. Нужен для создания заказа.
 Методы:
 - `createOrder(order: Order): Promise` - Создать заказ
 
-ICardProductModel. Интерфейс для управления карточкой товара.
-
-Свойства:
-- `products: iProduct` - Массив товаров
-
-Методы:
-- `getCard(url: string): Promise<object>` - Получить актуальную карточку товара по url
-- `buyProduct(): void` - Добавить в корзину товар
-- `deleteProduct(): void` - Убрать товар из корзины
-
 ## Слой отображения (View)
 
 ### Базовый View
