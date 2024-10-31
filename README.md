@@ -44,7 +44,7 @@ yarn build
 ```
 
 ## UML диаграмма
-Первая недоделанная версия, подробно рассписаны модели, интерфейсы и API. Брокер событий не реализован, но учтен в использовании моделями и презентером.  
+Первая недоделанная версия, подробно рассписаны модели, интерфейсы и API. Брокер событий не реализован, но учтен в использовании моделями и презентером.
 В будущем диаграмма будет доделываться и переделываться, так как сейчас я не смог потянуть ее сложность 😥.
 
 ![uml](web-larek-diagram-v1.svg)
@@ -56,7 +56,7 @@ yarn build
 В проекте будет использоваться класс брокера событий **EventEmitter** со следующим фунционалом:
 
 - **`on`**: Добавляет обработчик (callback) для указанного события. Создаёт новое множество обработчиков для события, если оно ещё не существует.
-  
+
 - **`off`**: Удаляет конкретный обработчик (callback) для события; если обработчиков больше не остаётся, удаляет само событие из коллекции.
 
 - **`emit`**: Запускает событие с данными для всех соответствующих подписчиков. Поддерживает как точное совпадение события, так и шаблоны через регулярные выражения.
@@ -87,19 +87,19 @@ yarn build
 #### IProduct - интерфейс продукта, приходящего с сервера
 ```ts
 type CategoryType =
-	| 'софт-скил'
-	| 'хард-скил'
-	| 'кнопка'
-	| 'другое'
-	| 'дополнительное';
+  | 'софт-скил'
+  | 'хард-скил'
+  | 'кнопка'
+  | 'другое'
+  | 'дополнительное';
 
 interface IProduct {
-	id: string;
-	description: string;
-	image: string;
-	title: string;
-	category: CategoryType;
-	price: number | null;
+  id: string;
+  description: string;
+  image: string;
+  title: string;
+  category: CategoryType;
+  price: number | null;
 }
 ```
 
@@ -111,10 +111,10 @@ type CatalogProduct = Omit<IProduct, 'description'>;
 #### ICatalogModel - интерфейс модели каталога
 ```ts
 interface ICatalogModel {
-	products: IProduct[];
+  products: IProduct[];
   load(): Promise<void>;
-	getAll(): CatalogProduct[];
-	getById(id: string): IProduct;
+  getAll(): CatalogProduct[];
+  getById(id: string): IProduct;
 }
 
 ```
@@ -127,17 +127,17 @@ type BasketProduct = Pick<IProduct, 'id' | 'title' | 'price'>;
 #### IBasket - интерфейс данных корзины
 ```ts
 interface IBasket {
-	products: Set<BasketProduct>;
-	totalPrice: number;
+  products: Set<BasketProduct>;
+  totalPrice: number;
 }
 ```
 
 #### IBasketModel - интерфейс модели корзины
 ```ts
 interface IBasketModel extends IBasket {
-	getAll(): BasketProduct[];
-	add(product: IProduct): void;
-	remove(id: string): void;
+  getAll(): BasketProduct[];
+  add(product: IProduct): void;
+  remove(id: string): void;
 }
 ```
 
@@ -149,24 +149,24 @@ interface IBasketModel extends IBasket {
 type PaymentMethod = 'online' | 'cash';
 
 interface IOrder {
-	payment: PaymentMethod;
-	email: string;
-	phone: string;
-	address: string;
-	total: number;
-	items: string[];
+  payment: PaymentMethod;
+  email: string;
+  phone: string;
+  address: string;
+  total: number;
+  items: string[];
 }
 ```
 
 #### Типы ответа сервера при создании заказа
 ```ts
 type OrderResponseSuccess = {
-	id: string;
-	total: number;
+  id: string;
+  total: number;
 };
 
 type OrderResponseError = {
-	error: string;
+  error: string;
 };
 ```
 
@@ -176,10 +176,10 @@ type OrderFormStatus = 'address' | 'contacts';
 
 interface IOrderModel {
   status: OrderFormStatus;
-	order: IOrder;
-	isValid: boolean;
-	error: string;
-	createOrder(order: IOrder): Promise<OrderResponseSuccess>;
+  order: IOrder;
+  isValid: boolean;
+  error: string;
+  createOrder(order: IOrder): Promise<OrderResponseSuccess>;
 }
 ```
 
@@ -189,8 +189,8 @@ interface IOrderModel {
 #### Тип ответа сервера при получении продуктов
 ```ts
 export type ApiListResponse<T> = {
-	total: number;
-	items: T[];
+  total: number;
+  items: T[];
 };
 ```
 
@@ -199,12 +199,12 @@ export type ApiListResponse<T> = {
 
 ```ts
 export interface IProductAPI {
-	getProducts(): Promise<ApiListResponse<IProduct>>;
-	getProductById(id: string): Promise<IProduct>;
+  getProducts(): Promise<ApiListResponse<IProduct>>;
+  getProductById(id: string): Promise<IProduct>;
 }
 
 export interface IOrderAPI {
-	createOrder(order: IOrder): Promise<OrderResponseSuccess>;
+  createOrder(order: IOrder): Promise<OrderResponseSuccess>;
 }
 
 export interface IShopAPI extends IProductAPI, IOrderAPI {}
@@ -233,11 +233,11 @@ export interface IShopAPI extends IProductAPI, IOrderAPI {}
 - [X] `CatalogView` - отображение каталога с товарами.
 - [X] `ProductView` - продукт без описания (компонент каталога).
 - [ ] `ProductDetailModal` - модальное окно товара.
-  
+
 ### Корзина
 - [ ] `BasketModal` - модальное окно с корзиной.
 - [ ] `ProductBasketView` - продукт в корзине (только название и цена).
-  
+
 ### Заказ
 - [ ] `AddressEntryModal` - модальное окно для заполнения адреса и типа товара.
 - [ ] `ContactDetailsModal` - модальное окно для заполнения контактных данных.
