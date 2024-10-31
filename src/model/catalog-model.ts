@@ -3,6 +3,7 @@ import { CatalogProduct, IProduct, IProductAPI } from '../types';
 
 interface ICatalogModel {
 	products: IProduct[];
+  load(): Promise<void>;
 	getAll(): CatalogProduct[];
 	getById(id: string): IProduct;
 }

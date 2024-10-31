@@ -1,9 +1,9 @@
 import { cloneTemplate } from '../../utils/utils';
 import { CDN_URL } from '../../utils/constants';
-import { View } from './view';
+import { BaseView } from './view';
 import { CatalogProduct } from '../../types';
 
-export class ProductView extends View {
+export class ProductView extends BaseView {
   constructor() {
 		super();
 		this.element = cloneTemplate('#card-catalog') as HTMLButtonElement;

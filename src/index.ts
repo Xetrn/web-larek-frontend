@@ -16,5 +16,5 @@ const catalogModel = new CatalogModel(shopApi, events);
 const catalogPresenter = new CatalogPresenter({ catalogModel });
 
 catalogModel.load().then(() => {
-	catalogPresenter.render();
+	catalogPresenter.init();
 });

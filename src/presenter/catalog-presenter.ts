@@ -10,7 +10,7 @@ export class CatalogPresenter {
 		this.catalogModel = catalogModel;
 	}
 
-	render() {
+	init() {
 		const products = this.catalogModel.products;
 
 		this.catalogView.render({

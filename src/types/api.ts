@@ -1,4 +1,4 @@
-import { IOrder, OrderResponse } from './order';
+import { IOrder, OrderResponseSuccess } from './order';
 import { IProduct } from './product';
 
 export type ApiListResponse<T> = {
@@ -12,7 +12,7 @@ export interface IProductAPI {
 }
 
 export interface IOrderAPI {
-	createOrder(order: IOrder): Promise<OrderResponse>;
+	createOrder(order: IOrder): Promise<OrderResponseSuccess>;
 }
 
 export interface IShopAPI extends IProductAPI, IOrderAPI {}

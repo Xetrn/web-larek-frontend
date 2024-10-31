@@ -1,9 +1,13 @@
 export type PaymentMethod = 'online' | 'cash';
 export type OrderFormStatus = 'address' | 'contacts';
 
-export type OrderResponse = {
+export type OrderResponseSuccess = {
 	id: string;
 	total: number;
+};
+
+export type OrderResponseError = {
+	error: string;
 };
 
 export interface IOrder {
@@ -13,11 +17,4 @@ export interface IOrder {
 	address: string;
 	total: number;
 	items: string[];
-}
-
-export interface IOrderForm {
-	status: OrderFormStatus;
-	order: IOrder;
-	isValid: boolean;
-	error: string;
 }

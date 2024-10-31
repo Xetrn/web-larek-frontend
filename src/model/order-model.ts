@@ -2,13 +2,16 @@ import { EventEmitter } from '../components/base/events';
 import {
 	IOrder,
 	IOrderAPI,
-	IOrderForm,
 	OrderFormStatus,
-	OrderResponse,
+	OrderResponseSuccess,
 } from '../types';
 
-interface IOrderModel extends IOrderForm {
-	createOrder(order: IOrder): Promise<OrderResponse>;
+interface IOrderModel {
+  status: OrderFormStatus;
+	order: IOrder;
+	isValid: boolean;
+	error: string;
+	createOrder(order: IOrder): Promise<OrderResponseSuccess>;
 }
 
 export class OrderModel implements IOrderModel {
@@ -29,7 +32,7 @@ export class OrderModel implements IOrderModel {
 		};
 	}
 
-	createOrder(order: IOrder): Promise<OrderResponse> {
+	createOrder(order: IOrder): Promise<OrderResponseSuccess> {
 		return this.api.createOrder(order);
 	}
 }

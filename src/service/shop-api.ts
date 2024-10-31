@@ -3,7 +3,7 @@ import {
 	IOrder,
 	IProduct,
 	IShopAPI,
-	OrderResponse,
+	OrderResponseSuccess,
 } from '../types';
 import { Api } from '../components/base/api';
 
@@ -16,7 +16,7 @@ export class ShopAPI extends Api implements IShopAPI {
 		return (await this.get(`/product.${id}`)) as Promise<IProduct>;
 	}
 
-	async createOrder(order: IOrder): Promise<OrderResponse> {
-		return (await this.post('/order', order)) as Promise<OrderResponse>;
+	async createOrder(order: IOrder): Promise<OrderResponseSuccess> {
+		return (await this.post('/order', order)) as Promise<OrderResponseSuccess>;
 	}
 }
