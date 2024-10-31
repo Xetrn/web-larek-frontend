@@ -7,3 +7,5 @@ export interface IProduct {
 	price: number;
 	inBasket: boolean;
 }
+
+export interface IProductModel extends IProduct {}

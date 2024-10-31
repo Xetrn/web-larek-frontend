@@ -6,3 +6,7 @@ export interface IOrder {
 	total: number;
 	items: string[];
 }
+
+export interface IOrderModel extends IOrder {
+
+}
