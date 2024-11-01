@@ -92,28 +92,28 @@ export type Product = {
 
 ```
 export type Order = {
-	payment: PaymentMethod;
-	email: string;
-	address: string;
-	phone: string;
-	total: number;
-	items: string[];
+  payment: PaymentMethod;
+  email: string;
+  address: string;
+  phone: string;
+  total: number;
+  items: string[];
 };
 ```
 
 ```
 export type OrderResponse = {
-	id?: string;
-	total: number;
-	error?: string;
+  id?: string;
+  total: number;
+  error?: string;
 };
 ```
 
 ```
 export type OrderResponse = {
-	id?: string;
-	total: number;
-	error?: string;
+  id?: string;
+  total: number;
+  error?: string;
 };
 ```
 
