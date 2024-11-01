@@ -24,7 +24,9 @@ export class CatalogView implements IView{
 
     cardUpdate(product: IProduct): void {
         const productElement = this.itemView.render(product);
-        this.container.replaceChild(productElement, this.container.querySelector(`.card[data-id="${product.id}"]`) as HTMLElement);
+        const oldProductElement = this.container.querySelector(`.card[card__title="${product.title}"]`) as HTMLElement;
+        const oldCard = oldProductElement.closest('.card') as HTMLElement;
+        this.container.replaceChild(productElement, oldCard);
         this.events.emit('ui:render-card', product);
     }
 }

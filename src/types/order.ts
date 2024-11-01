@@ -1,13 +1,13 @@
-type Payment = "online" | "on-site";
+export type Payment = "online" | "on-site";
 
-interface IUserData {
+export interface IUserData {
     payment: Payment;
     address: string;
     email: string;
     phone: string;
 }
 
-interface IOrderData {
+export interface IOrderData {
     userData: IUserData;
     total: number;
     items: string[];
