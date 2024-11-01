@@ -82,20 +82,20 @@ Api. Обеспечивает взаимодействие по API с уда�
 Описывает товар
 ```
 export type Product = {
-	id: string;
-	title: string;
-	price: number | null;
-	description: string;
-	category: CategoryType;
-	image: string;
+  id: string;
+  title: string;
+  price: number | null;
+  description: string;
+  category: CategoryType;
+  image: string;
 };
-```
+``` 
 
 Описывает товары приходящие из Api
 ```
 export type Products = {
-	items: Product[];
-	total: number;
+  items: Product[];
+  total: number;
 };
 ```
 
