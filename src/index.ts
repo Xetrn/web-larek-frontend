@@ -30,7 +30,8 @@ catalogEvents.on('ui:add-to-basket', (data:IProduct) => {
     console.log('product was added to basket', data);
 
     basket.add(data.id);
-    products.addProductToBasket(data.id); // вызовет событие catalog:change
+    products.addProductToBasket(data.id);
+    catalogView.cardUpdate(data); 
 });
 
 basketEvents.on('basket:change', (data) => {

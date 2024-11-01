@@ -21,4 +21,10 @@ export class CatalogView implements IView{
 
         return this.container;
     }
+
+    cardUpdate(product: IProduct): void {
+        const productElement = this.itemView.render(product);
+        this.container.replaceChild(productElement, this.container.querySelector(`.card[data-id="${product.id}"]`) as HTMLElement);
+        this.events.emit('ui:render-card', product);
+    }
 }
