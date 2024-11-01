@@ -9,13 +9,10 @@ export type Order = {
 	items: string[];
 };
 
-export type OrderSuccessResponse = {
-	id: string;
+export type OrderResponse = {
+	id?: string;
 	total: number;
-};
-
-export type ErrorResponse = {
-	error: string;
+	error?: string;
 };
 
 export type PaymentMethod = 'online' | 'cash';

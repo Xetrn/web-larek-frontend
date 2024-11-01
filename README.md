@@ -58,13 +58,9 @@ yarn build
 - View. Отображает данные (не содержит бизнес-логики)
 - Presenter. Обеспечивает взаимодействие между моделью и представлением (Посредством событий)
 
-## Базовый код
+## Базовые классы
 
-### EventEmitter
-
-Описание: Обеспечивает связь между компонентами с помощью событий
-
-#### Методы
+EventEmitter. Обеспечивает связь между компонентами с помощью событий
 
 - `on(eventName: EventName, callback: (event: T) => void): void` - Добавляет обработчик для указанного события
 - `off(eventName: EventName, callback: Subscriber): void` - Удаляет конкретный обработчик для события
@@ -74,25 +70,18 @@ yarn build
 - `trigger(eventName: string, context?: Partial<T>): (data: T) => void` - Создаётся функция-обработчик, генерирующая событие
   при вызове с объединёнными данными из context и параметров вызова
 
-### API
-
-Описание: Обеспечивает взаимодействие по API с удалённым сервером
-
-#### Методы
+Api. Обеспечивает взаимодействие по API с удалённым сервером
 
 - `get(uri: string): Promise` - Выполняет GET-запрос по uri и возвращает результат
 - `post(uri: string, data: object): Promise` - Выполняет POST-запрос по uri с переданными данными и возвращает результат
 
-## Компоненты API
+##  Подключение к API
 
-interface IProductsAPI. Нужен для получения данных о товарах
+IShopApi. Нужен для получения данных для магазина
 
-- `getProducts(): Promise` - Выполняет GET-запрос по uri и возвращает все товары
-- `getProductById(id: string): Promise` - Выполняет GET-запрос по uri и возвращает товар
-
-interface IOrderAPI. Нужен для создания заказа.
-
-- `createOrder(order: Order): Promise` - Выполняет POST-запрос по uri с переданными данными и возвращает результат
+- `getProducts(): Promise<Products>` - Возвращает все товары
+- `getProductById(id: string): Promise<Product>` - Возвращает товар по идентификатору
+- `createOrder(order: Order): Promise<OrderResponse>` - Создает заказ и возвращает результат операции
 
 ## Слой логики (Model)
 

@@ -15,7 +15,7 @@ export type Product = {
 	image: string;
 };
 
-export type ProductsList = {
+export type Products = {
 	items: Product[];
 	total: number;
 };
