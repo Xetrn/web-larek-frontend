@@ -1,5 +1,6 @@
 import { Product } from "../../types";
 import { EventEmitter } from "../base/events";
+import { Actions } from "../../utils/constants";
 
 interface IProductsModel {
     items: Product[];
@@ -9,15 +10,15 @@ interface IProductsModel {
 
 export class ProductsModel implements IProductsModel {
     items: Product[] | null = null;
-    _events: EventEmitter | null = null;
+    private events: EventEmitter | null = null;
 
     constructor(events: EventEmitter) {
-        this._events = events
+        this.events = events
     }
 
     set(items: Product[]) {
         this.items = items;
-        this._events.emit("catalog:change", items)
+        this.events.emit(Actions.CATALOG_CHANGE, items)
     }
 
     getProduct(id: string): Product {
