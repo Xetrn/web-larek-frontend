@@ -51,7 +51,7 @@ yarn build
 
 ## Архитектура
 
-В проекте используется паттерн MVP (Model View Presenter)
+В проекте используется паттерн MVP (Model View Presenter). Событийно-ориентированная архитектура
 
 - Model. Данная часть отвечает за управление данными корзины (заказа), каталога (Модель загружает, сохраняет, а также обрабатывает
   данные)
@@ -131,6 +131,26 @@ IModal (IView). Базовое модальное окно
 - `open(): void` - Открывает модальное окно, вызывает modal:open
 - `close(): void` - Закрывает модальное окно, вызывает modal:close
 
+## Model компоненты
+
+### Базовые типы данных
+
+```
+type CartProduct = {
+  id: string;
+  title: string;
+  price: number;
+};
+```
+
+CartModel. Корзина
+
+- `private products: CartProduct[]` - Идентификаторы продуктов 
+
+- `getProducts(): string[]` - Возвращает все продукты
+- `addProduct(product: CartProduct): void` - Добавляет продукт в корзину
+- `deleteProductById(id: string): void` - Удаляет продукт из корзины
+
 ## Слой логики (Model)
 
 ### CatalogModel
@@ -144,18 +164,6 @@ IModal (IView). Базовое модальное окно
 - `setProducts(products: Product[]): void` - Установить продукты
 - `getProducts(): Promise` - Возвращает все продукты
 - `getProductById(id: string): Promise` - Возвращает продукт по идентификатору
-
-### CartModel
-
-Свойства:
-
-- `products: CartProduct[]` - Массив продуктов
-
-Методы:
-
-- `getProducts(): Promise` - Возвращает все продукты
-- `addProduct(product: Product): void` - Добавить продукт в корзину
-- `deleteProduct(id: string): void` - Удалить продукт из корзины
 
 ### OrderModel
 
