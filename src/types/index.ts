@@ -28,3 +28,16 @@ export interface IBasket {
     title: string;              // название продукта
     price: number | null;       // цена продукта
 }
+
+export interface IResult {
+    id: string;                 // уникальный идентификатор результата
+    total: number;              // общая сумма результата
+}
+
+export interface IActions {
+    // обработчик события клика
+    onClick: (event: MouseEvent) => void;
+}
+
+// объект с сообщениями об ошибках для свойств заказа
+export type Errors = Partial<Record<keyof IOrder, string>>;
