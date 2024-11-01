@@ -145,8 +145,10 @@ type CartProduct = {
 
 CartModel. Корзина
 
-- `private products: CartProduct[]` - Идентификаторы продуктов 
+Свойства:
+- `private products: CartProduct[]` - Идентификаторы продуктов
 
+Методы:
 - `getProducts(): string[]` - Возвращает все продукты
 - `addProduct(product: CartProduct): void` - Добавляет продукт в корзину
 - `deleteProductById(id: string): void` - Удаляет продукт из корзины
