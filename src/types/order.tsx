@@ -7,6 +7,8 @@ export interface IOrder {
 	items: string[];
 }
 
-export interface IOrderModel extends IOrder {
-
+export interface IOrderModel {
+	updateField(name: string, value: any): void;
+	clearField(name: string): void;
+	clear(): void;
 }

@@ -8,4 +8,8 @@ export interface IProduct {
 	inBasket: boolean;
 }
 
-export interface IProductModel extends IProduct {}
+export interface ICatalogModel {
+	products: IProduct[];
+	getAll(): IProduct[];
+	getProduct(id: string): IProduct;
+}

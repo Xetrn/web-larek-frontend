@@ -1,9 +1,9 @@
-import { IBasket } from './basket';
-import { IOrder } from './order';
-import { IProduct } from './product';
+import { IBasketModel} from './basket';
+import { IOrderModel} from './order';
+import { ICatalogModel } from './product';
 
 export interface IAppState {
-	basket: IBasket;
-	order: IOrder;
-	products: IProduct[];
+	basket: IBasketModel;
+	order: IOrderModel;
+	catalog: ICatalogModel[];
 }
