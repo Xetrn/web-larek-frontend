@@ -23,3 +23,20 @@ export interface ICatalogModel {
 export interface IEventEmitter {
     emit: (event: string, data?: unknown) => void;
 }
+
+export interface IUser {
+    id: string;
+    email: string;
+    phone: string;
+    address: string;
+}
+
+export interface IOrder {
+    id: string;
+    payment: string;
+    mail: string;
+    phone: string;
+    address: string;
+    total: number | null;
+    products: IProductModel;
+}
