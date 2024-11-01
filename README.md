@@ -80,7 +80,7 @@ Api. Обеспечивает взаимодействие по API с уда�
 ### Базовые типы данных
 
 ```
-export type Product = {
+type Product = {
   id: string;
   title: string;
   price: number | null;
@@ -91,7 +91,7 @@ export type Product = {
 ``` 
 
 ```
-export type Order = {
+type Order = {
   payment: PaymentMethod;
   email: string;
   address: string;
@@ -102,7 +102,7 @@ export type Order = {
 ```
 
 ```
-export type OrderResponse = {
+type OrderResponse = {
   id?: string;
   total: number;
   error?: string;
@@ -110,7 +110,7 @@ export type OrderResponse = {
 ```
 
 ```
-export type OrderResponse = {
+type OrderResponse = {
   id?: string;
   total: number;
   error?: string;
