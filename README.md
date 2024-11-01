@@ -88,9 +88,7 @@ type Product = {
   category: CategoryType;
   image: string;
 };
-``` 
 
-```
 type Order = {
   payment: PaymentMethod;
   email: string;
@@ -99,17 +97,13 @@ type Order = {
   total: number;
   items: string[];
 };
-```
 
-```
 type OrderResponse = {
   id?: string;
   total: number;
   error?: string;
 };
-```
 
-```
 type OrderResponse = {
   id?: string;
   total: number;
