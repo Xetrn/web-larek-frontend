@@ -7,9 +7,16 @@ export interface IProduct {
   price: number;
 }
 
-export interface IProduct {
+export interface IProductList {
   total: number;
   items: IProduct[];
+}
+
+export type BasketProductItem = Pick<IProduct, 'id' | 'title' | 'price'>;
+
+export interface IBasket {
+  items: Map<BasketProductItem, number>;
+  totalPrice: number;
 }
 
 export interface IOrder {
