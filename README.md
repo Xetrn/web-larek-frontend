@@ -89,6 +89,11 @@ type Product = {
   image: string;
 };
 
+type Products = {
+  items: Product[];
+  total: number;
+};
+
 type Order = {
   payment: PaymentMethod;
   email: string;
@@ -96,12 +101,6 @@ type Order = {
   phone: string;
   total: number;
   items: string[];
-};
-
-type OrderResponse = {
-  id?: string;
-  total: number;
-  error?: string;
 };
 
 type OrderResponse = {
