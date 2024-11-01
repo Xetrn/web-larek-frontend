@@ -1,5 +1,4 @@
 // Типы для данных из API
-
 export type Order = {
 	payment: PaymentMethod;
 	email: string;
@@ -9,11 +8,18 @@ export type Order = {
 	items: string[];
 };
 
-export type OrderResponse = {
-	id?: string;
+// Ответы сервера при создании заказа
+export type OrderSuccessResponse = {
+	id: string;
 	total: number;
-	error?: string;
 };
+
+export type OrderErrorResponse = {
+	total: number;
+	error: string;
+};
+
+export type OrderResponse = OrderSuccessResponse | OrderErrorResponse;
 
 export type PaymentMethod = 'online' | 'cash';
 

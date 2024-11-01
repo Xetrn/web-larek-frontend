@@ -103,11 +103,17 @@ type Order = {
   items: string[];
 };
 
-type OrderResponse = {
-  id?: string;
+type OrderSuccessResponse = {
+  id: string;
   total: number;
-  error?: string;
 };
+
+type OrderErrorResponse = {
+  total: number;
+  error: string;
+};
+
+type OrderResponse = OrderSuccessResponse | OrderErrorResponse
 ```
 
 ### Интерфейсы
@@ -125,7 +131,7 @@ IView. Базовый компонент для view слоя
 - `constructor(): void` - Конструктор
 - `render(Partial<T>): HTMLElement` - Выполняет рендер компонента
 
-IModal (IView). Базовое модальное окно
+Modal (IView). Базовое модальное окно
 
 - `set content(element: HTMLElement)` - Устанавливает содержимое модального окна;
 - `open(): void` - Открывает модальное окно, вызывает modal:open
@@ -133,7 +139,7 @@ IModal (IView). Базовое модальное окно
 
 ## Model компоненты
 
-### Базовые типы данных
+### Cart. Модель управления корзиной
 
 ```
 type CartProduct = {
@@ -143,29 +149,25 @@ type CartProduct = {
 };
 ```
 
-CartModel. Корзина
-
 Свойства:
 - `private products: CartProduct[]` - Идентификаторы продуктов
 
 Методы:
-- `getProducts(): string[]` - Возвращает все продукты
+- `getProducts(): CartProduct[]` - Возвращает все продукты
 - `addProduct(product: CartProduct): void` - Добавляет продукт в корзину
 - `deleteProductById(id: string): void` - Удаляет продукт из корзины
 
-## Слой логики (Model)
-
-### CatalogModel
+### Catalog. Модель управления каталогом
 
 Свойства:
-
-- `products: Product[]` - Массив продуктов
+- `private products: Product[]` - Массив продуктов
 
 Методы:
-
 - `setProducts(products: Product[]): void` - Установить продукты
-- `getProducts(): Promise` - Возвращает все продукты
-- `getProductById(id: string): Promise` - Возвращает продукт по идентификатору
+- `getProducts(): Product[]` - Возвращает все продукты
+- `getProductById(id: string): Product` - Возвращает продукт по идентификатору
+
+## Слой логики (Model)
 
 ### OrderModel
 
@@ -174,16 +176,6 @@ CartModel. Корзина
 - `createOrder(order: Order): Promise` - Создать заказ
 
 ## Слой отображения (View)
-
-### Базовый View
-
-- `render(): HTMLElement` - Выполняет рендер компонента
-
-### Базовое ModalView (модальное окно)
-
-- `open(): void` - Открыть модальное окно
-- `close(): void` - Закрыть модальное окно
-- `render(): HTMLElement` - Выполняет рендер компонента
 
 ### Каталог
 
@@ -243,14 +235,17 @@ items: string[] - Список уникальный идентификаторо
 ### Ответы сервера при создании заказа
 
 ```
-export type OrderSuccessResponse = {
+type OrderSuccessResponse = {
   id: string;
   total: number;
 };
 
-export type ErrorResponse = {
+type OrderErrorResponse = {
+  total: number;
   error: string;
 };
+
+type OrderResponse = OrderSuccessResponse | OrderErrorResponse
 ```
 
 ### Вспомогательные типы
