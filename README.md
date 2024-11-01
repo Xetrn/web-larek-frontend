@@ -79,7 +79,6 @@ Api. Обеспечивает взаимодействие по API с уда�
 
 ### Базовые типы данных
 
-Описывает товар
 ```
 export type Product = {
   id: string;
@@ -91,13 +90,34 @@ export type Product = {
 };
 ``` 
 
-Описывает товары приходящие из Api
 ```
-export type Products = {
-  items: Product[];
-  total: number;
+export type Order = {
+	payment: PaymentMethod;
+	email: string;
+	address: string;
+	phone: string;
+	total: number;
+	items: string[];
 };
 ```
+
+```
+export type OrderResponse = {
+	id?: string;
+	total: number;
+	error?: string;
+};
+```
+
+```
+export type OrderResponse = {
+	id?: string;
+	total: number;
+	error?: string;
+};
+```
+
+### Интерфейсы
 
 IShopApi (Api). Нужен для получения данных для магазина
 
