@@ -150,32 +150,45 @@ type CartProduct = {
 ```
 
 Свойства:
-- `private products: CartProduct[]` - Идентификаторы продуктов
+- `protected products: CartProduct[]` - Идентификаторы продуктов
 
 Методы:
-- `getProducts(): CartProduct[]` - Возвращает все продукты
-- `addProduct(product: CartProduct): void` - Добавляет продукт в корзину
-- `deleteProductById(id: string): void` - Удаляет продукт из корзины
+- `get products(): CartProduct[]` - Возвращает все товары
+- `addProduct(product: CartProduct): void` - Добавляет товар в корзину
+- `deleteProductById(id: string): void` - Удаляет товар из корзины
+- `getTotalPrice(): number` - Возвращает общую стоимость
+- `getProductCount(): number`- Возвращает количество товаров
+- `clear(): void`- Удаляет все товары из корзины
 
 ### Catalog. Модель управления каталогом
 
 Свойства:
-- `private products: Product[]` - Массив продуктов
+- `products: Product[]` - Массив продуктов
 
 Методы:
-- `setProducts(products: Product[]): void` - Установить продукты
-- `getProducts(): Product[]` - Возвращает все продукты
 - `getProductById(id: string): Product` - Возвращает продукт по идентификатору
 
-## Слой логики (Model)
+### Order. Модель управления заказом
 
-### OrderModel
+```
+type PaymentMethod = 'online' | 'cash';
 
-Методы:
+type PaymentForm = {
+  payment: PaymentMethod;
+  address: string;
+};
 
-- `createOrder(order: Order): Promise` - Создать заказ
+type ContactsForm = {
+  phone: string;
+  email: string;
+};
+```
 
-## Слой отображения (View)
+Свойства:
+- `payment: PaymentForm` - Данные о адресе и способе оплаты
+- `contacts: ContactsForm`- Данные о номере телефона и email
+
+## View компоненты
 
 ### Каталог
 
