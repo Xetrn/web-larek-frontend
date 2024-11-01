@@ -163,9 +163,12 @@ type CartProduct = {
 ### Catalog. Модель управления каталогом
 
 Свойства:
-- `products: Product[]` - Массив продуктов
+- `protected products: Product[]` - Массив продуктов
 
 Методы:
+- `constructor(api: IShopApi): void` - Конструктор
+- `load(): Promise<void>` - Загружает данные из api
+- `getProducts(): Product[]` - Возвращает все продукты
 - `getProductById(id: string): Product` - Возвращает продукт по идентификатору
 
 ### Order. Модель управления заказом
@@ -187,6 +190,10 @@ type ContactsForm = {
 Свойства:
 - `payment: PaymentForm` - Данные о адресе и способе оплаты
 - `contacts: ContactsForm`- Данные о номере телефона и email
+
+Методы:
+- `constructor(api: IShopApi): void` - Конструктор
+- `createOrder(): Promise<void>` - Создает заказ обратившись к api
 
 ## View компоненты
 
