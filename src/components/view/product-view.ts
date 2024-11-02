@@ -1,6 +1,6 @@
 import { View } from './View';
 import { EventEmitter } from '../base/events';
-import { Product } from '../../types/product';
+import { IProduct } from '../../types/';
 import { cloneTemplate } from '../../utils/utils';
 import { CDN_URL } from '../../utils/constants';
 
@@ -16,7 +16,7 @@ export class ProductView extends View {
 		this._container = cloneTemplate("#card-catalog") as HTMLElement;
 	}
 
-	render(product: Product): HTMLElement {
+	render(product: IProduct): HTMLElement {
 		this._container.onclick = () => this._events.emit('view-open-product', product);
 
 		this._container.querySelector(".card__category").textContent = product.type;

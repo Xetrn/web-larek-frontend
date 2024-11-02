@@ -1,6 +1,6 @@
 import { View } from './View';
 import { EventEmitter } from '../base/events';
-import { Product } from '../../types/product';
+import { IProduct } from '../../types';
 import { ProductView } from './product-view';
 
 export class CatalogView extends View {
@@ -14,7 +14,7 @@ export class CatalogView extends View {
 		this._container = document.querySelector('.gallery');
 	}
 
-	render(products: Product[]): HTMLElement {
+	render(products: IProduct[]): HTMLElement {
 		this._container.innerHTML = ''; // Очистить контейнер перед рендерингом
 
 		const productView = new ProductView(this._events);

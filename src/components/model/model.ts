@@ -1,21 +1,24 @@
 import { EventEmitter } from '../base/events';
-import { Product } from '../../types/product';
+import { IProduct } from '../../types';
 
 export class Model {
 	private _events: EventEmitter;
-	private _basketProducts: Map<string,Product> = new Map();
-	private _catalog: Product[];
+	private _basketProducts: Map<string, IProduct> = new Map();
+	private _catalog: IProduct[];
 
-	constructor(catalog: Product[], events: EventEmitter) {
+	constructor(events: EventEmitter) {
 		this._events = events;
+	}
+
+	setCatalog(catalog: IProduct[]) {
 		this._catalog = catalog;
 	}
 
-	addProduct(product: Product) {
+	addProduct(product: IProduct) {
 		this._basketProducts.set(product.id, product);
 	}
 
-	removeProduct(product: Product) {
+	removeProduct(product: IProduct) {
 		this._basketProducts.delete(product.id);
 	}
 

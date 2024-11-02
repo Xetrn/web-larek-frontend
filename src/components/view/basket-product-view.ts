@@ -1,6 +1,6 @@
 import { View } from './View';
 import { EventEmitter } from '../base/events';
-import { Product } from '../../types/product';
+import { IProduct } from '../../types';
 import { cloneTemplate } from '../../utils/utils';
 
 export class BasketProductView extends View {
@@ -15,7 +15,7 @@ export class BasketProductView extends View {
 		this._container = cloneTemplate("#card-basket") as HTMLElement;
 	}
 
-	render({ product, index }: { product: Product; index: number }): HTMLElement {
+	render({ product, index }: { product: IProduct; index: number }): HTMLElement {
 		const removeButton = this._container.querySelector(".basket__item-delete") as HTMLButtonElement;
 		removeButton.onclick = () => this._events.emit('view-remove-product', product);
 

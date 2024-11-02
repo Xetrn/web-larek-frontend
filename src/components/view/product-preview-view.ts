@@ -1,6 +1,6 @@
 import { View } from './View';
 import { EventEmitter } from '../base/events';
-import { Product } from '../../types/product';
+import { IProduct } from '../../types/';
 import { cloneTemplate } from '../../utils/utils';
 import { CDN_URL } from '../../utils/constants';
 
@@ -16,7 +16,7 @@ export class ProductPreviewView extends View {
 		this._container = cloneTemplate("#card-preview") as HTMLElement;
 	}
 
-	render(product: Product): HTMLElement {
+	render(product: IProduct): HTMLElement {
 		// добавить кнопку закрытия
 
 		const addToBasketButton = this._container.querySelector(".card__button") as HTMLButtonElement;
