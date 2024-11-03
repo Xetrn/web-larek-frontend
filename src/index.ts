@@ -9,6 +9,7 @@ import { ProductView } from './types/view/product';
 import { CartStorage } from './utils/storage';
 import { Modal } from './components/view/modal';
 import { CardCatalogModal } from './components/view/card_catalog_modal';
+import { CartModal } from './components/view/cart_modal';
 
 const api = new ShopApi(API_URL);
 const events = new EventEmitter();
@@ -31,33 +32,36 @@ const modal = new Modal(events);
 
 document.body.append(catalogView.render(), modal.render());
 
+// Загрузка данных из API
 events.on(Events.CATALOG_LOAD, (products: ProductView[]) => {
-	catalogView.catalog = products;
+	catalogView.render(
+		products.filter((product) => {
+			return product.price !== null;
+		})
+	);
 });
 
-events.on(Events.CATALOG_RELOAD, () => {
-	catalogView.render();
-});
-
+// Открытие карточки из каталога
 events.on(Events.CATALOG_CARD_OPEN, (product: ProductView) => {
-	modal.setContent(new CardCatalogModal(events))
+	modal.setContent(new CardCatalogModal(events));
 	modal.open(product);
 });
 
-events.on(Events.CATALOG_MODAL_CHANGE_STATUS, () => {
-	catalogView.togglePageLock();
+// Открытие модального окна
+events.on(Events.CATALOG_OPEN_MODAL, () => {
+	catalogView.onPageLock();
 });
 
-events.on(Events.CART_PRODUCT_CHANGE_STATUS, (product: ProductView) => {
-	product.isInCart = !product.isInCart;
+// Закрытие модального окна
+events.on(Events.CATALOG_CLOSE_MODAL, () => {
+	catalogView.offPageLock();
+});
 
-	if (product.isInCart) {
-		CartStorage.appendItem(product.id)
-	} else {
-		CartStorage.removeItem(product.id)
-	}
+// Добавление продукта в корзину
+events.on(Events.CART_ADD_PRODUCT, (product: ProductView) => {
+	product.isInCart = true;
 
-	console.log(1212)
+	CartStorage.appendItem(product.id);
 
 	catalogView.catalog[
 		catalogView.catalog.findIndex((value) => {
@@ -69,6 +73,20 @@ events.on(Events.CART_PRODUCT_CHANGE_STATUS, (product: ProductView) => {
 	modal.render(product);
 });
 
-events.on(Events.MODAL_CLOSE, () => {
-	modal.close();
+// Открытие корзины
+events.on(Events.CART_OPEN, () => {
+	modal.setContent(new CartModal(events));
+	modal.open(
+		CartStorage.getItems().map((productId, index) => {
+			const product = catalogView.catalog.find((p) => {
+				return p.id === productId;
+			});
+			return {
+				number: index + 1,
+				id: product.id,
+				title: product.title,
+				price: product.price,
+			};
+		})
+	);
 });

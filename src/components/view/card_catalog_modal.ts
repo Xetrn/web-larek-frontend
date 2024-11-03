@@ -6,7 +6,6 @@ import { IEvents } from '../base/events';
 
 export class CardCatalogModal implements IView<ProductView> {
 	private element: HTMLElement;
-	private button: HTMLButtonElement;
 
 	constructor(protected events: IEvents) {}
 
@@ -42,7 +41,7 @@ export class CardCatalogModal implements IView<ProductView> {
 						button,
 						createElement<HTMLSpanElement>('span', {
 							className: 'card__price',
-							textContent: String(product.price),
+							textContent: `${product.price} синапсов`,
 						}),
 					]),
 				]),
@@ -58,11 +57,14 @@ export class CardCatalogModal implements IView<ProductView> {
 	}
 
 	render(product: ProductView): HTMLElement {
-		this.button = this.createButton(product);
-		this.element = this.createElement(product, this.button);
+		const button = this.createButton(product);
+		this.element = this.createElement(product, button);
 
-		this.button.addEventListener('click', () => {
-			this.events.emit(Events.CART_PRODUCT_CHANGE_STATUS, product);
+		button.addEventListener('click', () => {
+			if (product.isInCart)
+				this.events.emit(Events.CART_OPEN, product)
+			else
+				this.events.emit(Events.CART_ADD_PRODUCT, product);
 		});
 
 		return this.element;

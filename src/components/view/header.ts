@@ -8,7 +8,7 @@ export class HeaderView implements IView<void> {
 	private readonly element: HTMLHeadElement;
 	private readonly span: HTMLSpanElement;
 
-	constructor(events: IEvents) {
+	constructor(protected events: IEvents) {
 		this.span = this.createCartCounter();
 		const button = this.createButton(this.span);
 

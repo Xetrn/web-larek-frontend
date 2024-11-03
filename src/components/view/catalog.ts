@@ -5,7 +5,7 @@ import { HeaderView } from './header';
 import { ProductView } from '../../types/view/product';
 import { IView } from '../../types/view';
 
-export class CatalogView implements IView<void> {
+export class CatalogView implements IView<ProductView[]> {
 	private readonly element: HTMLDivElement;
 	private header: HeaderView;
 	private readonly gallery: HTMLElement;
@@ -34,24 +34,28 @@ export class CatalogView implements IView<void> {
 		);
 	}
 
-	togglePageLock() {
-		this.element.classList.toggle('page__wrapper_locked');
-	}
-
 	get catalog(): ProductView[] {
 		return this.products;
 	}
 
-	set catalog(products: ProductView[]) {
-		this.products = products;
-		this.gallery.replaceChildren(
-			...this.products.map((product) => {
-				return new CardCatalogView(product, this.events).render();
-			})
-		);
+	onPageLock() {
+		this.element.classList.add('page__wrapper_locked');
 	}
 
-	render(): HTMLElement {
+	offPageLock() {
+		this.element.classList.remove('page__wrapper_locked');
+	}
+
+	render(products?: ProductView[]): HTMLElement {
+		if (products) {
+			this.products = products;
+			this.gallery.replaceChildren(
+				...this.products.map((product) => {
+					return new CardCatalogView(this.events).render(product);
+				})
+			);
+		}
+
 		this.header.render();
 		return this.element;
 	}

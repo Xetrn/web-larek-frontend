@@ -28,8 +28,8 @@ export class Modal<T> implements IView<T> {
 	}
 
 	private createButton(): HTMLButtonElement {
-		return createElement<HTMLButtonElement>('div', {
-			className: 'modal__close',
+		return createElement<HTMLButtonElement>('button', {
+			className: 'modal__close', ariaLabel: 'закрыть'
 		});
 	}
 
@@ -58,31 +58,26 @@ export class Modal<T> implements IView<T> {
 		);
 	}
 
-	private clickModal(data?: HTMLElement) {
-		console.log(this.element.className);
-		this.element.classList.toggle('modal_active');
-		this.contentContainer.replaceChildren(data);
-
-		this.events.emit(Events.CATALOG_MODAL_CHANGE_STATUS);
-	}
-
-	setContent(content: IView<T>){
-		this.content = content
+	setContent(content: IView<T>) {
+		this.content = content;
 	}
 
 	open(data: T) {
-		this.clickModal(this.content.render(data));
+		this.element.classList.add('modal_active');
+		this.contentContainer.replaceChildren(this.content.render(data));
+
+		this.events.emit(Events.CATALOG_OPEN_MODAL);
 	}
 
 	close() {
-		this.clickModal();
+		this.element.classList.remove('modal_active');
+		this.contentContainer.replaceChildren();
+
+		this.events.emit(Events.CATALOG_CLOSE_MODAL);
 	}
 
 	render(data?: T): HTMLElement {
-		if (data)
-			this.contentContainer.replaceChildren(
-				this.content.render(data)
-			);
+		if (data) this.contentContainer.replaceChildren(this.content.render(data));
 
 		return this.element;
 	}
