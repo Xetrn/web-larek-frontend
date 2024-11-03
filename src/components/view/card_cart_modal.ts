@@ -37,7 +37,7 @@ export class CardCartModal implements IView<CartProduct> {
 	private createButton(): HTMLButtonElement {
 		return createElement<HTMLButtonElement>('button', {
 			className: 'basket__item-delete card__button',
-			ariaLabel: 'удалить',
+			ariaLabel: 'удалить'
 		});
 	}
 
@@ -46,7 +46,7 @@ export class CardCartModal implements IView<CartProduct> {
 		this.element = this.createElement(product, button);
 
 		button.addEventListener('click', () => {
-			this.events.emit(Events.CART_REMOVE_PRODUCT, product);
+			this.events.emit(Events.CART_REMOVE_PRODUCT, { id: product.id });
 		});
 
 		return this.element;

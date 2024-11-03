@@ -41,7 +41,9 @@ export class CardCatalogModal implements IView<ProductView> {
 						button,
 						createElement<HTMLSpanElement>('span', {
 							className: 'card__price',
-							textContent: `${product.price} синапсов`,
+							textContent: product.price
+								? `${product.price} синапсов`
+								: 'Бесценно',
 						}),
 					]),
 				]),
@@ -52,7 +54,8 @@ export class CardCatalogModal implements IView<ProductView> {
 	private createButton(product: ProductView): HTMLButtonElement {
 		return createElement<HTMLButtonElement>('button', {
 			className: 'button',
-			textContent: product.isInCart ? 'В корзину' : 'Купить',
+			textContent: product.isInCart ? 'Удалить из корзины' : 'Купить',
+			disabled: !product.price,
 		});
 	}
 
@@ -61,10 +64,9 @@ export class CardCatalogModal implements IView<ProductView> {
 		this.element = this.createElement(product, button);
 
 		button.addEventListener('click', () => {
-			if (product.isInCart)
-				this.events.emit(Events.CART_OPEN, product)
-			else
-				this.events.emit(Events.CART_ADD_PRODUCT, product);
+			this.events.emit(Events.CATALOG_CARD_CHANGE_STATUS_PRODUCT, {
+				id: product.id, isInCart: product.isInCart
+			});
 		});
 
 		return this.element;

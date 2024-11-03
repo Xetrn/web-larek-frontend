@@ -49,6 +49,9 @@ export class CatalogView implements IView<ProductView[]> {
 	render(products?: ProductView[]): HTMLElement {
 		if (products) {
 			this.products = products;
+		}
+
+		if (this.products) {
 			this.gallery.replaceChildren(
 				...this.products.map((product) => {
 					return new CardCatalogView(this.events).render(product);

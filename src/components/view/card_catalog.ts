@@ -29,7 +29,9 @@ export class CardCatalogView implements IView<ProductView> {
 				}),
 				createElement<HTMLSpanElement>('span', {
 					className: 'card__price',
-					textContent: `${product.price} синапсов`,
+					textContent: product.price
+						? `${product.price} синапсов`
+						: 'Бесценно',
 				}),
 			]
 		);

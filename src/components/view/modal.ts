@@ -66,14 +66,14 @@ export class Modal<T> implements IView<T> {
 		this.element.classList.add('modal_active');
 		this.contentContainer.replaceChildren(this.content.render(data));
 
-		this.events.emit(Events.CATALOG_OPEN_MODAL);
+		this.events.emit(Events.MODAL_OPEN);
 	}
 
 	close() {
 		this.element.classList.remove('modal_active');
 		this.contentContainer.replaceChildren();
 
-		this.events.emit(Events.CATALOG_CLOSE_MODAL);
+		this.events.emit(Events.MODAL_CLOSE);
 	}
 
 	render(data?: T): HTMLElement {

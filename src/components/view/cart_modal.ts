@@ -14,17 +14,21 @@ export class CartModal implements IView<CartProduct[]> {
 		products: CartProduct[],
 		button: HTMLButtonElement
 	): HTMLHeadElement {
+		const elements = products.map((product) => {
+			return new CardCartModal(this.events).render(product);
+		});
 		return createElement<HTMLHeadElement>('div', { className: 'basket' }, [
 			createElement<HTMLHeadingElement>('h2', {
 				className: 'modal__title',
 				textContent: 'Корзина',
 			}),
-			createElement<HTMLHeadElement>(
+			createElement<HTMLUListElement>(
 				'ul',
 				{ className: 'basket__list' },
-				products.map((product) => {
-					return new CardCartModal(this.events).render(product);
-				})
+				elements.length ? elements : createElement<HTMLLIElement>('li', {
+					className: 'basket__item card card_compact',
+					textContent: 'Корзина пуста',
+				}),
 			),
 			createElement<HTMLDivElement>('div', { className: 'modal__actions' }, [
 				button,
@@ -39,15 +43,16 @@ export class CartModal implements IView<CartProduct[]> {
 		]);
 	}
 
-	private createButton(): HTMLButtonElement {
+	private createButton(cartLength: number): HTMLButtonElement {
 		return createElement<HTMLButtonElement>('button', {
 			className: 'button basket__button',
+			disabled: !cartLength,
 			textContent: 'Оформить',
 		});
 	}
 
 	render(products: CartProduct[]): HTMLElement {
-		const button = this.createButton();
+		const button = this.createButton(products.length);
 		this.element = this.createElement(products, button);
 
 		button.addEventListener('click', () => {

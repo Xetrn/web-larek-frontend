@@ -6,11 +6,13 @@ export const settings = {};
 export const Events = {
 	CATALOG_LOAD: 'catalog:load',
 	CATALOG_CARD_OPEN: 'catalog:card_open',
-	CATALOG_OPEN_MODAL: 'catalog:open_modal',
-	CATALOG_CLOSE_MODAL: 'catalog:close_modal',
+
+	MODAL_OPEN: 'modal:open',
+	MODAL_CLOSE: 'modal:close',
+
+	CATALOG_CARD_CHANGE_STATUS_PRODUCT: 'cart:change_status_product',
 
 	CART_OPEN: 'cart:open',
-	CART_ADD_PRODUCT: 'cart:add_product',
 	CART_REMOVE_PRODUCT: 'cart:remove_product',
 
 	CART_PLACE_ORDER: 'cart:place_order',
