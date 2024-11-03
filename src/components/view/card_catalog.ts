@@ -3,14 +3,13 @@ import { Product } from '../../types/product';
 import { CDN_URL, Events } from '../../utils/constants';
 import { IEvents } from '../base/events';
 
-export class CardCatalog implements IView<void> {
+export class CardCatalogView implements IView<void> {
 	private readonly element: HTMLElement;
 
 	constructor(product: Product, events: IEvents) {
-		const button = this.createButton(product);
-		this.element = button;
+		this.element = this.createButton(product);
 
-		button.addEventListener('click', () => {
+		this.element.addEventListener('click', () => {
 			events.emit(Events.CATALOG_CARD_OPEN, product);
 		});
 	}
