@@ -4,9 +4,13 @@ export const CDN_URL = `${process.env.API_ORIGIN}/content/weblarek`;
 export const settings = {};
 
 export const Events = {
-	CATALOG_DATA_LOAD: 'catalog:data_load',
+	CATALOG_LOAD: 'catalog:load',
+	CATALOG_RELOAD: 'catalog:reload',
+	CATALOG_CARD_OPEN: 'catalog:card_open',
+	CATALOG_MODAL_CHANGE_STATUS: 'catalog:modal_change_status',
 
-	CATALOG_CARD_OPEN: 'catalog_card:open',
+	MODAL_CLOSE: 'modal:close',
 
 	CART_OPEN: 'cart:open',
+	CART_PRODUCT_CHANGE_STATUS: 'cart:product_change_status',
 };

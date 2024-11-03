@@ -1,8 +1,10 @@
 import { createElement } from '../../utils/utils';
 import { IEvents } from '../base/events';
 import { Events } from '../../utils/constants';
+import { CartStorage } from '../../utils/storage';
+import { IView } from '../../types/view';
 
-export class HeaderView implements IView<number> {
+export class HeaderView implements IView<void> {
 	private readonly element: HTMLHeadElement;
 	private readonly span: HTMLSpanElement;
 
@@ -50,9 +52,8 @@ export class HeaderView implements IView<number> {
 		);
 	}
 
-	render(productCount?: number): HTMLElement {
-		if (productCount) this.span.textContent = String(productCount);
-
+	render(): HTMLElement {
+		this.span.textContent = String(CartStorage.getItems().length);
 		return this.element;
 	}
 }

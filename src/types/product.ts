@@ -1,5 +1,5 @@
 // Типы для данных из API
-type CategoryType =
+export type CategoryType =
 	| 'софт-скил'
 	| 'хард-скил'
 	| 'кнопка'

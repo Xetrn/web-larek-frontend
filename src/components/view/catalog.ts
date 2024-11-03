@@ -1,13 +1,16 @@
 import { createElement } from '../../utils/utils';
 import { IEvents } from '../base/events';
-import { Product } from '../../types/product';
 import { CardCatalogView } from './card_catalog';
 import { HeaderView } from './header';
+import { ProductView } from '../../types/view/product';
+import { IView } from '../../types/view';
 
-export class CatalogView implements IView<number> {
+export class CatalogView implements IView<void> {
 	private readonly element: HTMLDivElement;
 	private header: HeaderView;
 	private readonly gallery: HTMLElement;
+
+	private products: ProductView[];
 
 	constructor(protected events: IEvents) {
 		this.header = new HeaderView(events);
@@ -31,17 +34,25 @@ export class CatalogView implements IView<number> {
 		);
 	}
 
-	set catalog(products: Product[]) {
+	togglePageLock() {
+		this.element.classList.toggle('page__wrapper_locked');
+	}
+
+	get catalog(): ProductView[] {
+		return this.products;
+	}
+
+	set catalog(products: ProductView[]) {
+		this.products = products;
 		this.gallery.replaceChildren(
-			...products.map((product) => {
+			...this.products.map((product) => {
 				return new CardCatalogView(product, this.events).render();
 			})
 		);
 	}
 
-	render(productCount?: number): HTMLElement {
-		if (productCount) this.header.render(productCount);
-
+	render(): HTMLElement {
+		this.header.render();
 		return this.element;
 	}
 }

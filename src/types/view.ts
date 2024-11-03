@@ -1,3 +1,3 @@
-interface IView<T> {
+export interface IView<T> {
 	render(data?: T): HTMLElement;
 }

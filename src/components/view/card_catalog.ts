@@ -1,12 +1,13 @@
 import { createElement } from '../../utils/utils';
-import { Product } from '../../types/product';
-import { CDN_URL, Events } from '../../utils/constants';
+import { Events } from '../../utils/constants';
 import { IEvents } from '../base/events';
+import { Category, ProductView } from '../../types/view/product';
+import { IView } from '../../types/view';
 
 export class CardCatalogView implements IView<void> {
 	private readonly element: HTMLElement;
 
-	constructor(product: Product, events: IEvents) {
+	constructor(product: ProductView, events: IEvents) {
 		this.element = this.createButton(product);
 
 		this.element.addEventListener('click', () => {
@@ -14,13 +15,15 @@ export class CardCatalogView implements IView<void> {
 		});
 	}
 
-	private createButton(product: Product): HTMLButtonElement {
+	private createButton(product: ProductView): HTMLButtonElement {
 		return createElement<HTMLButtonElement>(
 			'button',
 			{ className: 'gallery__item card' },
 			[
 				createElement<HTMLSpanElement>('span', {
-					className: 'card__category card__category_soft',
+					className: `card__category card__category_${
+						Category[product.category]
+					}`,
 					textContent: product.category,
 				}),
 				createElement<HTMLHeadingElement>('h2', {
@@ -29,7 +32,7 @@ export class CardCatalogView implements IView<void> {
 				}),
 				createElement<HTMLImageElement>('img', {
 					className: 'card__image',
-					src: `${CDN_URL}${product.image.replace('.svg', '.png')}`,
+					src: product.image,
 					alt: '',
 				}),
 				createElement<HTMLSpanElement>('span', {
