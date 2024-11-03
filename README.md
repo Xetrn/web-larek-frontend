@@ -118,7 +118,7 @@ type OrderResponse = OrderSuccessResponse | OrderErrorResponse
 
 ### Интерфейсы
 
-IShopApi (Api). Нужен для получения данных для магазина
+IShopApi. Нужен для получения данных для магазина
 
 - `getProducts(): Promise<Products>` - Возвращает все товары
 - `getProductById(id: string): Promise<Product>` - Возвращает товар по идентификатору
