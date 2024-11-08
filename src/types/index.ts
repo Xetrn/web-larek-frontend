@@ -49,5 +49,5 @@ export interface View<T> {
 
 // Интерфейсы для контроллеров
 export interface Controller {
-	handleCheckout(): void;
+	// handleCheckout(): void;
 }
