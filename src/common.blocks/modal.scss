@@ -3,7 +3,6 @@
 
 .modal {
   @include mixins.sublayer;
-  // height: max-content;
   position: absolute;
   display: none;
   justify-content: center;
@@ -12,6 +11,8 @@
   padding-top: 5vh;
   padding-bottom: 5vh;
   box-sizing: border-box;
+  height: max-content;
+  min-height: 100%;
 
   &_active {
     display: flex;

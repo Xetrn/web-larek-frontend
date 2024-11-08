@@ -1,3 +1,17 @@
+export class Storage {
+	static getValue(key: string): void {
+		return localStorage[key];
+	}
+
+	static setValue(key: string, value: string): void {
+		localStorage[key] = value;
+	}
+
+	static clear(key: string): void {
+		localStorage.removeItem(key);
+	}
+}
+
 export class CartStorage {
 	private static SEPARATOR = ',';
 	private static KEY = 'cart';

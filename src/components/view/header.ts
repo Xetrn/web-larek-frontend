@@ -1,23 +1,10 @@
 import { createElement } from '../../utils/utils';
 import { IEvents } from '../base/events';
 import { Events } from '../../utils/constants';
-import { CartStorage } from '../../utils/storage';
 import { IView } from '../../types/view';
 
-export class HeaderView implements IView<void> {
-	private readonly element: HTMLHeadElement;
-	private readonly span: HTMLSpanElement;
-
-	constructor(protected events: IEvents) {
-		this.span = this.createCartCounter();
-		const button = this.createButton(this.span);
-
-		this.element = this.createElement(button);
-
-		button.addEventListener('click', () => {
-			events.emit(Events.CART_OPEN);
-		});
-	}
+export class HeaderView implements IView<number> {
+	constructor(protected events: IEvents) {}
 
 	private createElement(button: HTMLButtonElement): HTMLHeadElement {
 		return createElement<HTMLHeadElement>(
@@ -37,23 +24,24 @@ export class HeaderView implements IView<void> {
 		);
 	}
 
-	private createCartCounter(): HTMLSpanElement {
-		return createElement<HTMLSpanElement>('span', {
-			className: 'header__basket-counter',
-			textContent: '0',
-		});
-	}
-
-	private createButton(cartCounter: HTMLSpanElement): HTMLButtonElement {
+	private createButton(cartCount: number): HTMLButtonElement {
 		return createElement<HTMLButtonElement>(
 			'button',
 			{ className: 'header__basket' },
-			cartCounter
+			createElement<HTMLSpanElement>('span', {
+				className: 'header__basket-counter',
+				textContent: `${cartCount}`,
+			})
 		);
 	}
 
-	render(): HTMLElement {
-		this.span.textContent = String(CartStorage.getItems().length);
-		return this.element;
+	render(data: number): HTMLElement {
+		const button = this.createButton(data);
+
+		button.addEventListener('click', () => {
+			this.events.emit(Events.CART_OPEN);
+		});
+
+		return this.createElement(button);
 	}
 }

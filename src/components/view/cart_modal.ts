@@ -1,15 +1,10 @@
-import { IView } from '../../types/view';
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';
-import { IEvents } from '../base/events';
 import { CardCartModal } from './card_cart_modal';
 import { CartProduct } from '../../types/cart';
+import { Modal } from './modal';
 
-export class CartModal implements IView<CartProduct[]> {
-	private element: HTMLElement;
-
-	constructor(protected events: IEvents) {}
-
+export class CartModal extends Modal<CartProduct[]> {
 	private createElement(
 		products: CartProduct[],
 		button: HTMLButtonElement
@@ -25,10 +20,12 @@ export class CartModal implements IView<CartProduct[]> {
 			createElement<HTMLUListElement>(
 				'ul',
 				{ className: 'basket__list' },
-				elements.length ? elements : createElement<HTMLLIElement>('li', {
-					className: 'basket__item card card_compact',
-					textContent: 'Корзина пуста',
-				}),
+				elements.length
+					? elements
+					: createElement<HTMLLIElement>('li', {
+							className: 'basket__item card card_compact',
+							textContent: 'Корзина пуста',
+					  })
 			),
 			createElement<HTMLDivElement>('div', { className: 'modal__actions' }, [
 				button,
@@ -51,14 +48,13 @@ export class CartModal implements IView<CartProduct[]> {
 		});
 	}
 
-	render(products: CartProduct[]): HTMLElement {
+	setContent(products: CartProduct[]): HTMLElement {
 		const button = this.createButton(products.length);
-		this.element = this.createElement(products, button);
 
 		button.addEventListener('click', () => {
 			this.events.emit(Events.CART_PLACE_ORDER);
 		});
 
-		return this.element;
+		return this.createElement(products, button);
 	}
 }

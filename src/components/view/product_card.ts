@@ -1,20 +1,21 @@
 import { createElement } from '../../utils/utils';
-import { Events } from '../../utils/constants';
+import { Events, settings } from '../../utils/constants';
 import { IEvents } from '../base/events';
-import { Category, ProductView } from '../../types/view/product';
-import { IView } from '../../types/view';
 
-export class CardCatalogView implements IView<ProductView> {
+import { IView } from '../../types/view';
+import { Product } from '../../types/product';
+
+export class ProductCardView implements IView<Product> {
 	constructor(protected events: IEvents) {}
 
-	private createElement(product: ProductView): HTMLButtonElement {
+	private createElement(product: Product): HTMLButtonElement {
 		return createElement<HTMLButtonElement>(
 			'button',
 			{ className: 'gallery__item card' },
 			[
 				createElement<HTMLSpanElement>('span', {
 					className: `card__category card__category_${
-						Category[product.category]
+						settings.categoryLabel[product.category]
 					}`,
 					textContent: product.category,
 				}),
@@ -29,19 +30,19 @@ export class CardCatalogView implements IView<ProductView> {
 				}),
 				createElement<HTMLSpanElement>('span', {
 					className: 'card__price',
-					textContent: product.price
-						? `${product.price} синапсов`
-						: 'Бесценно',
+					textContent: product.price ? `${product.price} синапсов` : 'Бесценно',
 				}),
 			]
 		);
 	}
 
-	render(data: ProductView): HTMLElement {
+	render(data: Product): HTMLElement {
 		const element: HTMLButtonElement = this.createElement(data);
 
 		element.addEventListener('click', () => {
-			this.events.emit(Events.CATALOG_CARD_OPEN, data);
+			this.events.emit(Events.CATALOG_PRODUCT_CARD_OPEN, {
+				productID: data.id,
+			});
 		});
 
 		return element;

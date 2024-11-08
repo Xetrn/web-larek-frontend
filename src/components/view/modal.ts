@@ -3,54 +3,37 @@ import { IEvents } from '../base/events';
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';
 
-export class Modal<T> implements IView<T> {
-	private readonly element: HTMLDivElement;
-	private readonly contentContainer: HTMLDivElement;
+export abstract class Modal<T> implements IView<T> {
+	private element: HTMLElement;
 
-	private content: IView<T>;
+	constructor(protected events: IEvents) {}
 
-	constructor(protected events: IEvents) {
-		const button = this.createButton();
-		this.contentContainer = this.createContentContainer();
-
-		const modalContainer = this.createModalContainer(
-			button,
-			this.contentContainer
-		);
-		this.element = this.createElement(modalContainer);
-
-		this.element.addEventListener('click', () => this.close());
-		modalContainer.addEventListener('click', (event) =>
-			event.stopPropagation()
-		);
-
-		button.addEventListener('click', () => this.close());
-	}
-
-	private createButton(): HTMLButtonElement {
+	private createCloseButton(): HTMLButtonElement {
 		return createElement<HTMLButtonElement>('button', {
-			className: 'modal__close', ariaLabel: 'закрыть'
-		});
-	}
-
-	private createContentContainer(): HTMLDivElement {
-		return createElement<HTMLDivElement>('div', {
-			className: 'modal__content',
+			className: 'modal__close',
+			ariaLabel: 'закрыть',
 		});
 	}
 
 	private createModalContainer(
 		button: HTMLButtonElement,
-		contentContainer: HTMLDivElement
+		content: HTMLElement
 	): HTMLDivElement {
 		return createElement<HTMLDivElement>(
 			'div',
 			{ className: 'modal__container' },
-			[button, contentContainer]
+			[
+				button,
+				createElement<HTMLDivElement>(
+					'div',
+					{ className: 'modal__content' },
+					content
+				),
+			]
 		);
 	}
 
-	private createElement(modalContainer: HTMLDivElement): HTMLDivElement {
+	private createModalElement(modalContainer: HTMLDivElement): HTMLDivElement {
 		return createElement<HTMLDivElement>(
 			'div',
 			{ className: 'modal' },
@@ -58,26 +41,33 @@ export class Modal<T> implements IView<T> {
 		);
 	}
 
-	setContent(content: IView<T>) {
-		this.content = content;
-	}
+	abstract setContent(data: T): HTMLElement;
 
-	open(data: T) {
+	protected open() {
 		this.element.classList.add('modal_active');
-		this.contentContainer.replaceChildren(this.content.render(data));
-
 		this.events.emit(Events.MODAL_OPEN);
 	}
 
-	close() {
+	protected close() {
 		this.element.classList.remove('modal_active');
-		this.contentContainer.replaceChildren();
-
 		this.events.emit(Events.MODAL_CLOSE);
 	}
 
-	render(data?: T): HTMLElement {
-		if (data) this.contentContainer.replaceChildren(this.content.render(data));
+	render(data: T): HTMLElement | null {
+		const button = this.createCloseButton();
+		button.addEventListener('click', () => this.close());
+
+		const content = this.setContent(data);
+
+		const modalContainer = this.createModalContainer(button, content);
+		modalContainer.addEventListener('click', (event) =>
+			event.stopPropagation()
+		);
+
+		this.element = this.createModalElement(modalContainer);
+		this.element.addEventListener('click', () => this.close());
+
+		this.open();
 
 		return this.element;
 	}

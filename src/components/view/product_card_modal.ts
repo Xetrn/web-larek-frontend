@@ -1,16 +1,13 @@
-import { IView } from '../../types/view';
 import { createElement } from '../../utils/utils';
-import { Category, ProductView } from '../../types/view/product';
-import { Events } from '../../utils/constants';
-import { IEvents } from '../base/events';
 
-export class CardCatalogModal implements IView<ProductView> {
-	private element: HTMLElement;
+import { Events, settings } from '../../utils/constants';
+import { Product } from '../../types/product';
+import { ProductModalData } from '../../types/view/catalog';
+import { Modal } from './modal';
 
-	constructor(protected events: IEvents) {}
-
+export class CardCatalogModal extends Modal<ProductModalData> {
 	private createElement(
-		product: ProductView,
+		product: Product,
 		button: HTMLButtonElement
 	): HTMLHeadElement {
 		return createElement<HTMLHeadElement>(
@@ -25,7 +22,7 @@ export class CardCatalogModal implements IView<ProductView> {
 				createElement<HTMLHeadElement>('div', { className: 'card__column' }, [
 					createElement<HTMLSpanElement>('span', {
 						className: `card__category card__category_${
-							Category[product.category]
+							settings.categoryLabel[product.category]
 						}`,
 						textContent: product.category,
 					}),
@@ -51,7 +48,7 @@ export class CardCatalogModal implements IView<ProductView> {
 		);
 	}
 
-	private createButton(product: ProductView): HTMLButtonElement {
+	private createButton(product: ProductModalData): HTMLButtonElement {
 		return createElement<HTMLButtonElement>('button', {
 			className: 'button',
 			textContent: product.isInCart ? 'Удалить из корзины' : 'Купить',
@@ -59,16 +56,14 @@ export class CardCatalogModal implements IView<ProductView> {
 		});
 	}
 
-	render(product: ProductView): HTMLElement {
-		const button = this.createButton(product);
-		this.element = this.createElement(product, button);
-
+	setContent(data: ProductModalData): HTMLElement {
+		const button = this.createButton(data);
 		button.addEventListener('click', () => {
 			this.events.emit(Events.CATALOG_CARD_CHANGE_STATUS_PRODUCT, {
-				id: product.id, isInCart: product.isInCart
+				productID: data.id,
 			});
 		});
 
-		return this.element;
+		return this.createElement(data, button);
 	}
 }
