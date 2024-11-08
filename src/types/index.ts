@@ -11,9 +11,16 @@ export interface ICard {
 }
 
 /**
+ * Интерфейс для описания модели данных карточек
+ */
+export interface ICardsData {
+	cards: ICard[];
+}
+
+/**
  * Интерфейс для описания заказа
  */
-export interface IOrder {
+export interface IOrderData {
 	payment: TPaymentMethod;
 	address: string;
 	phone: string;
@@ -23,17 +30,10 @@ export interface IOrder {
 }
 
 /**
- * Интерфейс для описания модели данных карточек
+ * Интерфейс для модели данных успешного оформления заказа
  */
-export interface ICardsData {
-	_cards: ICard[];
-}
-
-/**
- * Интерфейс для модели данных заказа
- */
-export interface IOrderData extends IOrder {
-	orderFullInfo: IOrder;
+export interface IOrderSuccess {
+	orderSuccess: TOrderSuccess;
 }
 
 /**
@@ -57,7 +57,7 @@ export interface IBasketData {
 export interface IAppApi {
 	getCards(): Promise<ICard[]>;
 	getCardById(id: string): Promise<ICard>;
-	postOrder(order: IOrder): Promise<TOrderSuccess>;
+	postOrder(order: IOrderData): Promise<TOrderSuccess>;
 }
 
 /**
@@ -78,12 +78,12 @@ export type TBasket = Pick<ICard, 'title' | 'price'>;
 /**
  * Данные заказа в общем виде
  */
-export type TOrder = Partial<IOrder>;
+export type TOrder = Partial<IOrderData>;
 
 /**
  * Данные заказа для вывода в модальном окне успешно завершенного заказа
  */
-export type TOrderSuccess = Pick<IOrder, 'items' | 'total'>;
+export type TOrderSuccess = Pick<IOrderData, 'total'>; //* items
 
 /**
  * Данные для метода оплаты
