@@ -75,23 +75,20 @@ export class ContactsModal extends Modal<ContactsForm> {
 		});
 	}
 
-	private createErrorSpan(text: string | null): HTMLSpanElement {
+	private createErrorSpan(data: ContactsForm): HTMLSpanElement {
 		return createElement<HTMLSpanElement>('span', {
 			className: 'form__errors',
-			textContent: text,
+			textContent: !data.email
+				? 'Необходимо указать email'
+				: !data.phone
+				? 'Необходимо указать телефон'
+				: null,
 		});
 	}
 
 	setContent(data: ContactsForm): HTMLElement {
 		const button = this.createButton(!(data.email && data.phone));
-
-		const errorSpan = this.createErrorSpan(
-			!data.email
-				? 'Необходимо указать email'
-				: !data.phone
-				? 'Необходимо указать телефон'
-				: null
-		);
+		const errorSpan = this.createErrorSpan(data);
 
 		const emailInput = this.creatEmailInput(data.email);
 		const phoneInput = this.createPhoneInput(data.phone);
@@ -107,14 +104,23 @@ export class ContactsModal extends Modal<ContactsForm> {
 				errorSpan.textContent = null;
 				button.disabled = false;
 			}
+		};
+
+		emailInput.addEventListener('input', () => {
+			inputHandler();
 
 			this.events.emit(Events.CONTACT_FORM_DATA_CHANGE, {
 				email: emailInput.value,
 			});
-		};
+		});
 
-		emailInput.addEventListener('input', inputHandler);
-		phoneInput.addEventListener('input', inputHandler);
+		phoneInput.addEventListener('input', () => {
+			inputHandler();
+
+			this.events.emit(Events.CONTACT_FORM_DATA_CHANGE, {
+				phone: phoneInput.value,
+			});
+		});
 
 		const element = this.createElement(
 			emailInput,

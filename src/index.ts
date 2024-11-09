@@ -175,7 +175,7 @@ events.on(Events.ORDER_SUCCESS_OPEN, () => {
 		api,
 		Cart.getProductIds(),
 		Cart.getProductIds()
-			.map((productId, index) => {
+			.map((productId) => {
 				return Catalog.getProductById(productId).price;
 			})
 			.reduce((partialSum, price) => partialSum + price, 0)
