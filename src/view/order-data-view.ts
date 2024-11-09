@@ -1,7 +1,7 @@
-import { Order } from "../types";
+import { IOrder } from "../types";
 
 export class orderDataView implements IView {
-    render(data: Order): HTMLElement {
+    render(data: IOrder): HTMLElement {
         return;
     }
 }

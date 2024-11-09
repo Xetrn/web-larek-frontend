@@ -1,7 +1,7 @@
-import { Product } from "../types";
+import { IProduct } from "../types";
 
 export class productActiveView implements IView {
-    render(data: Product): HTMLElement {
+    render(data: IProduct): HTMLElement {
         return;
     }
 }

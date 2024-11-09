@@ -1,7 +1,7 @@
-import { BacketProduct } from "../types";
+import { IBacketProduct } from "../types";
 
 export class backetView implements IView {
-    render(data: BacketProduct): HTMLElement {
+    render(data: IBacketProduct): HTMLElement {
         return;
     }
 }

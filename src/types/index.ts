@@ -1,4 +1,4 @@
-export interface Product {
+export interface IProduct {
     //идентификатор товара
     id: string; 
 
@@ -15,12 +15,12 @@ export interface Product {
     price: number | null;             
 }
 
-export interface ProductList {
+export interface IProductList {
     //список всех продуктов
-    products: Product[];
+    products: IProduct[];
 }
 
-export interface BacketProduct {
+export interface IBacketProduct {
     //идентификатор товара
     id: string;
 
@@ -31,7 +31,7 @@ export interface BacketProduct {
     price: number;
 }
 
-export interface Order {
+export interface IOrder {
     //идентификатор заказа
     id: string;
 
@@ -51,5 +51,5 @@ export interface Order {
     totalPrice: number;
 
     //список приобретаемых товаров
-    products: BacketProduct[];
+    products: IBacketProduct[];
 }
