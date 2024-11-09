@@ -82,6 +82,13 @@ events.on(Events.MODAL_OPEN, () => {
 // Закрытие модального окна
 events.on(Events.MODAL_CLOSE, () => {
 	app.catalogView.offPageLock();
+	app.modal = null;
+		app.render({
+		catalogData: {
+			cartCount: Cart.getCount(),
+			products: Catalog.getProducts(),
+		},
+	});
 });
 
 // Добавление/Удаление продукта в карточке каталога
