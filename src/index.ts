@@ -82,7 +82,6 @@ events.on(Events.MODAL_OPEN, () => {
 // Закрытие модального окна
 events.on(Events.MODAL_CLOSE, () => {
 	app.catalogView.offPageLock();
-	app.modal = null;
 	app.render({
 		catalogData: {
 			cartCount: Cart.getCount(),
@@ -178,15 +177,13 @@ events.on(
 
 // Открытие окна успешного оформления заказа
 events.on(Events.ORDER_SUCCESS_OPEN, () => {
-	Order.createOrder(
-		api,
-		Cart.getProductIds(),
-		Cart.getProductIds().reduce(
-			(partialSum, productId) =>
-				partialSum + Catalog.getProductById(productId).price,
-			0
-		)
-	).then(() => {
+	const total = Cart.getProductIds().reduce(
+		(partialSum, productId) =>
+			partialSum + Catalog.getProductById(productId).price,
+		0
+	);
+
+	Order.createOrder(api, Cart.getProductIds(), total).then(() => {
 		return;
 	});
 
@@ -198,6 +195,6 @@ events.on(Events.ORDER_SUCCESS_OPEN, () => {
 			cartCount: Cart.getCount(),
 			products: Catalog.getProducts(),
 		},
-		modalData: null,
+		modalData: total,
 	});
 });

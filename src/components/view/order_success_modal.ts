@@ -3,7 +3,7 @@ import { Modal } from './modal';
 import { Events } from '../../utils/constants';
 
 export class OrderSuccessModal extends Modal<unknown> {
-	private createElement(button: HTMLButtonElement): HTMLDivElement {
+	private createElement(button: HTMLButtonElement, total: number): HTMLDivElement {
 		return createElement<HTMLDivElement>(
 			'div',
 			{ className: 'order-success' },
@@ -14,7 +14,7 @@ export class OrderSuccessModal extends Modal<unknown> {
 				}),
 				createElement<HTMLParagraphElement>('p', {
 					className: 'order-success__description',
-					textContent: 'Списано 750  синапсов',
+					textContent: `Списано ${total} синапсов`,
 				}),
 				button,
 			]
@@ -28,13 +28,13 @@ export class OrderSuccessModal extends Modal<unknown> {
 		});
 	}
 
-	setContent(): HTMLElement {
+	setContent(total: number): HTMLElement {
 		const button = this.createButton();
 
 		button.addEventListener('click', () => {
 			this.events.emit(Events.CATALOG_LOAD);
 		});
 
-		return this.createElement(button);
+		return this.createElement(button, total);
 	}
 }
