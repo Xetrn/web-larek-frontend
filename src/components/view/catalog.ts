@@ -1,17 +1,19 @@
 import { createElement } from '../../utils/utils';
 import { IEvents } from '../base/events';
 import { HeaderView } from './header';
-import { IView } from '../../types/interface/view';
 import { GalleryView } from './gallery';
 import { CatalogData } from '../../types/data/catalog';
+import { View } from './view';
 
-export class CatalogView implements IView<CatalogData> {
+export class CatalogView extends View<CatalogData> {
 	private element: HTMLDivElement;
 
 	private header: HeaderView;
 	private gallery: GalleryView;
 
 	constructor(protected events: IEvents) {
+		super(events);
+
 		this.header = new HeaderView(events);
 		this.gallery = new GalleryView(events);
 	}
@@ -21,8 +23,8 @@ export class CatalogView implements IView<CatalogData> {
 			'div',
 			{ className: 'page__wrapper' },
 			[
-				this.header.render(data.cartCount),
-				this.gallery.render(data.products),
+				this.header.renderWithCache(data.cartCount),
+				this.gallery.renderWithCache(data.products),
 			]
 		);
 	}

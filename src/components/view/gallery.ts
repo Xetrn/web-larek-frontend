@@ -1,12 +1,9 @@
-import { IView } from '../../types/interface/view';
-import { IEvents } from '../base/events';
 import { createElement } from '../../utils/utils';
 import { ProductCardView } from './product_card';
 import { Product } from '../../types/data/product';
+import { View } from './view';
 
-export class GalleryView implements IView<Product[]> {
-	constructor(protected events: IEvents) {}
-
+export class GalleryView extends View<Product[]> {
 	private createElement(products?: Product[]): HTMLElement {
 		return createElement<HTMLElement>(
 			'main',

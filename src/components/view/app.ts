@@ -12,10 +12,10 @@ export class App {
 	}
 
 	render(data: AppData): void {
-		const elements = [this.catalogView.render(data.catalogData)];
+		const elements = [this.catalogView.renderWithCache(data.catalogData)];
 
 		if (this.modal && data.modalData !== undefined) {
-			elements.push(this.modal.render(data.modalData));
+			elements.push(this.modal.renderWithCache(data.modalData));
 		}
 
 		document.body.replaceChildren(...elements);

@@ -1,13 +1,9 @@
 import { createElement } from '../../utils/utils';
 import { Events, settings } from '../../utils/constants';
-import { IEvents } from '../base/events';
-
-import { IView } from '../../types/interface/view';
 import { Product } from '../../types/data/product';
+import { View } from './view';
 
-export class ProductCardView implements IView<Product> {
-	constructor(protected events: IEvents) {}
-
+export class ProductCardView extends View<Product> {
 	private createElement(product: Product): HTMLButtonElement {
 		return createElement<HTMLButtonElement>(
 			'button',

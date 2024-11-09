@@ -1,13 +1,10 @@
-import { IView } from '../../types/interface/view';
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';
-import { IEvents } from '../base/events';
 import { CartProduct } from '../../types/data/cart';
+import { View } from './view';
 
-export class CardCartModal implements IView<CartProduct> {
+export class CardCartModal extends View<CartProduct> {
 	private element: HTMLElement;
-
-	constructor(protected events: IEvents) {}
 
 	private createElement(
 		product: CartProduct,
@@ -37,7 +34,7 @@ export class CardCartModal implements IView<CartProduct> {
 	private createButton(): HTMLButtonElement {
 		return createElement<HTMLButtonElement>('button', {
 			className: 'basket__item-delete card__button',
-			ariaLabel: 'удалить'
+			ariaLabel: 'удалить',
 		});
 	}
 

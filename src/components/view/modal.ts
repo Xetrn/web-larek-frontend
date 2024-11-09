@@ -1,12 +1,9 @@
-import { IView } from '../../types/interface/view';
-import { IEvents } from '../base/events';
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';
+import { View } from './view';
 
-export abstract class Modal<T> implements IView<T> {
+export abstract class Modal<T> extends View<T> {
 	private element: HTMLElement;
-
-	constructor(protected events: IEvents) {}
 
 	private createCloseButton(): HTMLButtonElement {
 		return createElement<HTMLButtonElement>('button', {

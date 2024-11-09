@@ -1,11 +1,8 @@
 import { createElement } from '../../utils/utils';
-import { IEvents } from '../base/events';
 import { Events } from '../../utils/constants';
-import { IView } from '../../types/interface/view';
+import { View } from './view';
 
-export class HeaderView implements IView<number> {
-	constructor(protected events: IEvents) {}
-
+export class HeaderView extends View<number> {
 	private createElement(button: HTMLButtonElement): HTMLHeadElement {
 		return createElement<HTMLHeadElement>(
 			'header',

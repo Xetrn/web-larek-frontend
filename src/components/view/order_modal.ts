@@ -105,7 +105,7 @@ export class OrderModal extends Modal<OrderForm> {
 				button.disabled = false;
 			}
 
-			this.events.emit(Events.PAYMENT_FORM_DATA_CHANGE, {
+			this.events.emit(Events.ORDER_FORM_DATA_CHANGE, {
 				address: addressInput.value,
 			});
 		});
@@ -117,7 +117,7 @@ export class OrderModal extends Modal<OrderForm> {
 			onlineButton.classList.add('button_alt-active');
 			cashButton.classList.remove('button_alt-active');
 
-			this.events.emit(Events.PAYMENT_FORM_DATA_CHANGE, {
+			this.events.emit(Events.ORDER_FORM_DATA_CHANGE, {
 				payment: 'online',
 			});
 		});
@@ -126,7 +126,7 @@ export class OrderModal extends Modal<OrderForm> {
 			onlineButton.classList.remove('button_alt-active');
 			cashButton.classList.add('button_alt-active');
 
-			this.events.emit(Events.PAYMENT_FORM_DATA_CHANGE, {
+			this.events.emit(Events.ORDER_FORM_DATA_CHANGE, {
 				payment: 'cash',
 			});
 		});

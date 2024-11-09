@@ -23,8 +23,8 @@ export const Events = {
 	CART_OPEN: 'cart:open',
 	CART_REMOVE_PRODUCT: 'cart:remove_product',
 
-	PAYMENT_FORM_OPEN: 'payment_form:open',
-	PAYMENT_FORM_DATA_CHANGE: 'payment_form:data_change',
+	ORDER_FORM_OPEN: 'order_form:open',
+	ORDER_FORM_DATA_CHANGE: 'order_form:data_change',
 
 	CONTACT_FORM_OPEN: 'contact_form:open',
 	CONTACT_FORM_DATA_CHANGE: 'contact_form:data_change',

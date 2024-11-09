@@ -123,8 +123,8 @@ events.on(Events.CART_REMOVE_PRODUCT, ({ id }: { id: string }) => {
 	});
 });
 
-// ...
-events.on(Events.PAYMENT_FORM_OPEN, () => {
+// Открытие окна для заполнения способа оплаты и адреса
+events.on(Events.ORDER_FORM_OPEN, () => {
 	app.modal = new OrderModal(events);
 	app.render({
 		catalogData: {
@@ -135,9 +135,9 @@ events.on(Events.PAYMENT_FORM_OPEN, () => {
 	});
 });
 
-// ...
+// Изменение данных в окне способа оплаты и адреса
 events.on(
-	Events.PAYMENT_FORM_DATA_CHANGE,
+	Events.ORDER_FORM_DATA_CHANGE,
 	(order: { payment?: PaymentMethod; address?: string | null }) => {
 		Order.order = {
 			...Order.order,
@@ -146,7 +146,7 @@ events.on(
 	}
 );
 
-// ...
+// Открытие окна для заполнения контактов
 events.on(Events.CONTACT_FORM_OPEN, () => {
 	app.modal = new ContactsModal(events);
 	app.render({
@@ -158,7 +158,7 @@ events.on(Events.CONTACT_FORM_OPEN, () => {
 	});
 });
 
-// ...
+// Изменение данных в окне контактов
 events.on(
 	Events.CONTACT_FORM_DATA_CHANGE,
 	(contacts: { phone?: string | null; email?: string | null }) => {
@@ -169,7 +169,7 @@ events.on(
 	}
 );
 
-// ...
+// Открытие окна успешного оформления заказа
 events.on(Events.ORDER_SUCCESS_OPEN, () => {
 	Order.createOrder(
 		api,

@@ -52,7 +52,7 @@ export class CartModal extends Modal<CartProduct[]> {
 		const button = this.createButton(products.length);
 
 		button.addEventListener('click', () => {
-			this.events.emit(Events.PAYMENT_FORM_OPEN);
+			this.events.emit(Events.ORDER_FORM_OPEN);
 		});
 
 		return this.createElement(products, button);
