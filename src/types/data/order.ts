@@ -24,7 +24,7 @@ export type OrderResponse = OrderSuccessResponse | OrderErrorResponse;
 export type PaymentMethod = 'online' | 'cash';
 
 // Для формы оплаты
-export type PaymentForm = {
+export type OrderForm = {
 	payment: PaymentMethod;
 	address: string | null;
 };

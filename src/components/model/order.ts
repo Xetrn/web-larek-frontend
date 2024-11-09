@@ -2,12 +2,12 @@ import {
 	ContactsForm,
 	OrderErrorResponse,
 	OrderSuccessResponse,
-	PaymentForm,
+	OrderForm,
 } from '../../types/data/order';
 import { IShopApi } from '../../types/interface/api';
 
-if (!localStorage['payment']) {
-	localStorage['payment'] = JSON.stringify({
+if (!localStorage['order']) {
+	localStorage['order'] = JSON.stringify({
 		payment: 'online',
 		address: null,
 	});
@@ -21,12 +21,12 @@ if (!localStorage['contacts']) {
 }
 
 export class Order {
-	static get payment(): PaymentForm {
-		return JSON.parse(localStorage['payment']);
+	static get order(): OrderForm {
+		return JSON.parse(localStorage['order']);
 	}
 
-	static set payment(data: PaymentForm) {
-		localStorage['payment'] = JSON.stringify(data);
+	static set order(data: OrderForm) {
+		localStorage['order'] = JSON.stringify(data);
 	}
 
 	static get contacts(): ContactsForm {
@@ -39,14 +39,15 @@ export class Order {
 
 	static async createOrder(
 		api: IShopApi,
-		productIds: string[]
+		productIds: string[],
+		total: number
 	): Promise<OrderSuccessResponse | OrderErrorResponse> {
 		return await api.createOrder({
-			payment: this.payment.payment,
+			payment: this.order.payment,
 			email: this.contacts.email,
-			address: this.payment.address,
+			address: this.order.address,
 			phone: this.contacts.phone,
-			total: productIds.length,
+			total: total,
 			items: productIds,
 		});
 	}

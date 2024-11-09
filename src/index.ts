@@ -7,9 +7,11 @@ import { App } from './components/view/app';
 import { CartModal } from './components/view/cart_modal';
 import { Catalog } from './components/model/catalog';
 import { Cart } from './components/model/cart';
-import { PaymentModal } from './components/view/payment_modal';
+import { OrderModal } from './components/view/order_modal';
 import { Order } from './components/model/order';
-import { PaymentForm, PaymentMethod } from './types/data/order';
+import { PaymentMethod } from './types/data/order';
+import { ContactsModal } from './components/view/contacts_modal';
+import { OrderSuccessModal } from './components/view/order_success_modal';
 
 // Инициализация приложения
 const api = new ShopApi(API_URL);
@@ -123,29 +125,72 @@ events.on(Events.CART_REMOVE_PRODUCT, ({ id }: { id: string }) => {
 
 // ...
 events.on(Events.PAYMENT_FORM_OPEN, () => {
-	app.modal = new PaymentModal(events);
+	app.modal = new OrderModal(events);
 	app.render({
 		catalogData: {
 			cartCount: Cart.getCount(),
 			products: Catalog.getProducts(),
 		},
-		modalData: Order.payment,
+		modalData: Order.order,
 	});
 });
 
 // ...
 events.on(
 	Events.PAYMENT_FORM_DATA_CHANGE,
-	(data: { payment?: PaymentMethod; address?: string | null }) => {
-		Order.payment = {
-			...Order.payment,
-			...data,
+	(order: { payment?: PaymentMethod; address?: string | null }) => {
+		Order.order = {
+			...Order.order,
+			...order,
 		};
 	}
 );
 
 // ...
-events.on(Events.CONTACT_FORM_OPEN, (data: PaymentForm) => {
-	Order.payment = data;
-	console.log(data);
+events.on(Events.CONTACT_FORM_OPEN, () => {
+	app.modal = new ContactsModal(events);
+	app.render({
+		catalogData: {
+			cartCount: Cart.getCount(),
+			products: Catalog.getProducts(),
+		},
+		modalData: Order.contacts,
+	});
+});
+
+// ...
+events.on(
+	Events.CONTACT_FORM_DATA_CHANGE,
+	(contacts: { phone?: string | null; email?: string | null }) => {
+		Order.contacts = {
+			...Order.contacts,
+			...contacts,
+		};
+	}
+);
+
+// ...
+events.on(Events.ORDER_SUCCESS_OPEN, () => {
+	Order.createOrder(
+		api,
+		Cart.getProductIds(),
+		Cart.getProductIds()
+			.map((productId, index) => {
+				return Catalog.getProductById(productId).price;
+			})
+			.reduce((partialSum, price) => partialSum + price, 0)
+	).then(() => {
+		return;
+	});
+
+	Cart.clear();
+
+	app.modal = new OrderSuccessModal(events);
+	app.render({
+		catalogData: {
+			cartCount: Cart.getCount(),
+			products: Catalog.getProducts(),
+		},
+		modalData: null,
+	});
 });

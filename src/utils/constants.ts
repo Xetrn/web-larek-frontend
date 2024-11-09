@@ -27,4 +27,7 @@ export const Events = {
 	PAYMENT_FORM_DATA_CHANGE: 'payment_form:data_change',
 
 	CONTACT_FORM_OPEN: 'contact_form:open',
+	CONTACT_FORM_DATA_CHANGE: 'contact_form:data_change',
+
+	ORDER_SUCCESS_OPEN: 'order_success:open',
 };

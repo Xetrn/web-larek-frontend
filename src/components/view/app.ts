@@ -14,7 +14,7 @@ export class App {
 	render(data: AppData): void {
 		const elements = [this.catalogView.render(data.catalogData)];
 
-		if (this.modal) {
+		if (this.modal && data.modalData !== undefined) {
 			elements.push(this.modal.render(data.modalData));
 		}
 
