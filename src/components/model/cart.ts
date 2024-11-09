@@ -1,5 +1,4 @@
 export class Cart {
-	private static SEPARATOR = ',';
 	private static KEY = 'cart';
 
 	static appendProduct(id: string | string[]): void {
@@ -8,10 +7,10 @@ export class Cart {
 		}
 
 		if (localStorage[this.KEY]) {
-			id = id.concat(localStorage[this.KEY].split(this.SEPARATOR));
+			id = id.concat(JSON.parse(localStorage[this.KEY]));
 		}
 
-		localStorage[this.KEY] = [...new Set(id)].join(this.SEPARATOR);
+		localStorage[this.KEY] = JSON.stringify([...new Set(id)]);
 	}
 
 	static getProductIds(): string[] {
@@ -19,15 +18,15 @@ export class Cart {
 			return [];
 		}
 
-		return localStorage[this.KEY].split(this.SEPARATOR);
+		return JSON.parse(localStorage[this.KEY]);
 	}
 
 	static getCount(): number {
-		return this.getProductIds().length
+		return this.getProductIds().length;
 	}
 
 	static contains(productId: string): boolean {
-		return this.getProductIds().includes(productId)
+		return this.getProductIds().includes(productId);
 	}
 
 	static toggleProduct(productId: string): void {
@@ -43,10 +42,9 @@ export class Cart {
 			return;
 		}
 
-		localStorage[this.KEY] = localStorage[this.KEY]
-			.split(this.SEPARATOR)
-			.filter((item: string) => item !== id)
-			.join(this.SEPARATOR);
+		localStorage[this.KEY] = JSON.stringify(
+			JSON.parse(localStorage[this.KEY]).filter((item: string) => item !== id)
+		);
 	}
 
 	static clear(): void {

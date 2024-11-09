@@ -7,6 +7,9 @@ import { App } from './components/view/app';
 import { CartModal } from './components/view/cart_modal';
 import { Catalog } from './components/model/catalog';
 import { Cart } from './components/model/cart';
+import { PaymentModal } from './components/view/payment_modal';
+import { Order } from './components/model/order';
+import { PaymentForm, PaymentMethod } from './types/data/order';
 
 // Инициализация приложения
 const api = new ShopApi(API_URL);
@@ -18,8 +21,13 @@ app.render({
 	catalogData: { cartCount: Cart.getCount() },
 });
 
-// Загрузка данных из API в каталог
+// Загрузка данных из API
 Catalog.load(api).then(() => {
+	events.emit(Events.CATALOG_LOAD);
+});
+
+// Загрузка данных в каталог
+events.on(Events.CATALOG_LOAD, () => {
 	app.render({
 		catalogData: {
 			cartCount: Cart.getCount(),
@@ -111,4 +119,33 @@ events.on(Events.CART_REMOVE_PRODUCT, ({ id }: { id: string }) => {
 			};
 		}),
 	});
+});
+
+// ...
+events.on(Events.PAYMENT_FORM_OPEN, () => {
+	app.modal = new PaymentModal(events);
+	app.render({
+		catalogData: {
+			cartCount: Cart.getCount(),
+			products: Catalog.getProducts(),
+		},
+		modalData: Order.payment,
+	});
+});
+
+// ...
+events.on(
+	Events.PAYMENT_FORM_DATA_CHANGE,
+	(data: { payment?: PaymentMethod; address?: string | null }) => {
+		Order.payment = {
+			...Order.payment,
+			...data,
+		};
+	}
+);
+
+// ...
+events.on(Events.CONTACT_FORM_OPEN, (data: PaymentForm) => {
+	Order.payment = data;
+	console.log(data);
 });

@@ -1,6 +1,6 @@
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';
-import { CardCartModal } from './card_cart_modal';
+import { CardCartModal } from './cart_card';
 import { CartProduct } from '../../types/data/cart';
 import { Modal } from './modal';
 
@@ -52,7 +52,7 @@ export class CartModal extends Modal<CartProduct[]> {
 		const button = this.createButton(products.length);
 
 		button.addEventListener('click', () => {
-			this.events.emit(Events.CART_PLACE_ORDER);
+			this.events.emit(Events.PAYMENT_FORM_OPEN);
 		});
 
 		return this.createElement(products, button);

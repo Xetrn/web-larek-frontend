@@ -32,6 +32,9 @@ export function createElement<T extends HTMLElement>(
 		for (const key in props) {
 			const value = props[key];
 
+			if (value === null)
+				continue
+
 			if (isPlainObject(value) && key === 'dataset') {
 				setElementData(element, value);
 			} else {

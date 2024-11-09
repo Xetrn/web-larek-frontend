@@ -26,10 +26,10 @@ export type PaymentMethod = 'online' | 'cash';
 // Для формы оплаты
 export type PaymentForm = {
 	payment: PaymentMethod;
-	address: string;
+	address: string | null;
 };
 
 export type ContactsForm = {
-	phone: string;
-	email: string;
+	phone: string | null;
+	email: string | null;
 };

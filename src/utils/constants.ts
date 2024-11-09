@@ -12,6 +12,8 @@ export const settings = {
 };
 
 export const Events = {
+	CATALOG_LOAD: 'catalog:load',
+
 	CATALOG_CARD_OPEN: 'catalog_card:open',
 	CATALOG_CARD_TOGGLE_PRODUCT_IN_CART: 'catalog_card:toggle_product_in_cart',
 
@@ -21,5 +23,8 @@ export const Events = {
 	CART_OPEN: 'cart:open',
 	CART_REMOVE_PRODUCT: 'cart:remove_product',
 
-	CART_PLACE_ORDER: 'cart:place_order',
+	PAYMENT_FORM_OPEN: 'payment_form:open',
+	PAYMENT_FORM_DATA_CHANGE: 'payment_form:data_change',
+
+	CONTACT_FORM_OPEN: 'contact_form:open',
 };
