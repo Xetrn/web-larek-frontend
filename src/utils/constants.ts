@@ -12,13 +12,11 @@ export const settings = {
 };
 
 export const Events = {
-	// CATALOG_LOAD: 'catalog:load',
-	CATALOG_PRODUCT_CARD_OPEN: 'catalog:product_card_open',
+	CATALOG_CARD_OPEN: 'catalog_card:open',
+	CATALOG_CARD_TOGGLE_PRODUCT_IN_CART: 'catalog_card:toggle_product_in_cart',
 
 	MODAL_OPEN: 'modal:open',
 	MODAL_CLOSE: 'modal:close',
-
-	CATALOG_CARD_CHANGE_STATUS_PRODUCT: 'cart:change_status_product',
 
 	CART_OPEN: 'cart:open',
 	CART_REMOVE_PRODUCT: 'cart:remove_product',

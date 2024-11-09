@@ -29,22 +29,19 @@ Catalog.load(api).then(() => {
 });
 
 // Открытие карточки из каталога
-events.on(
-	Events.CATALOG_PRODUCT_CARD_OPEN,
-	({ productId }: { productId: string }) => {
-		app.modal = new CardCatalogModal(events);
-		app.render({
-			catalogData: {
-				cartCount: Cart.getCount(),
-				products: Catalog.getProducts(),
-			},
-			modalData: {
-				...Catalog.getProductById(productId),
-				isInCart: Cart.contains(productId),
-			},
-		});
-	}
-);
+events.on(Events.CATALOG_CARD_OPEN, ({ productId }: { productId: string }) => {
+	app.modal = new CardCatalogModal(events);
+	app.render({
+		catalogData: {
+			cartCount: Cart.getCount(),
+			products: Catalog.getProducts(),
+		},
+		modalData: {
+			...Catalog.getProductById(productId),
+			isInCart: Cart.contains(productId),
+		},
+	});
+});
 
 // Открытие корзины
 events.on(Events.CART_OPEN, () => {
@@ -79,10 +76,9 @@ events.on(Events.MODAL_CLOSE, () => {
 
 // Добавление/Удаление продукта в карточке каталога
 events.on(
-	Events.CATALOG_CARD_CHANGE_STATUS_PRODUCT,
+	Events.CATALOG_CARD_TOGGLE_PRODUCT_IN_CART,
 	({ productId }: { productId: string }) => {
 		Cart.toggleProduct(productId);
-
 		app.render({
 			catalogData: {
 				cartCount: Cart.getCount(),
@@ -99,7 +95,6 @@ events.on(
 // Удаление продукта из корзины
 events.on(Events.CART_REMOVE_PRODUCT, ({ id }: { id: string }) => {
 	Cart.removeProduct(id);
-
 	app.render({
 		catalogData: {
 			cartCount: Cart.getCount(),

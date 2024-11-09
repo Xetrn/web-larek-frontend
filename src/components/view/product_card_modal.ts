@@ -59,8 +59,8 @@ export class CardCatalogModal extends Modal<ProductModalData> {
 	setContent(data: ProductModalData): HTMLElement {
 		const button = this.createButton(data);
 		button.addEventListener('click', () => {
-			this.events.emit(Events.CATALOG_CARD_CHANGE_STATUS_PRODUCT, {
-				productID: data.id,
+			this.events.emit(Events.CATALOG_CARD_TOGGLE_PRODUCT_IN_CART, {
+				productId: data.id,
 			});
 		});
 

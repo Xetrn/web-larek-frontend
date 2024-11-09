@@ -38,10 +38,9 @@ export class ProductCardView implements IView<Product> {
 
 	render(data: Product): HTMLElement {
 		const element: HTMLButtonElement = this.createElement(data);
-
 		element.addEventListener('click', () => {
-			this.events.emit(Events.CATALOG_PRODUCT_CARD_OPEN, {
-				productID: data.id,
+			this.events.emit(Events.CATALOG_CARD_OPEN, {
+				productId: data.id,
 			});
 		});
 
