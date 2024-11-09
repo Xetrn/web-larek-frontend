@@ -1,4 +1,4 @@
-import { IView } from '../../types/view';
+import { IView } from '../../types/interface/view';
 import { IEvents } from '../base/events';
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';

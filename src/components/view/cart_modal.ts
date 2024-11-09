@@ -1,7 +1,7 @@
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';
 import { CardCartModal } from './card_cart_modal';
-import { CartProduct } from '../../types/cart';
+import { CartProduct } from '../../types/data/cart';
 import { Modal } from './modal';
 
 export class CartModal extends Modal<CartProduct[]> {

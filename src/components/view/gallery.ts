@@ -1,8 +1,8 @@
-import { IView } from '../../types/view';
+import { IView } from '../../types/interface/view';
 import { IEvents } from '../base/events';
 import { createElement } from '../../utils/utils';
 import { ProductCardView } from './product_card';
-import { Product } from '../../types/product';
+import { Product } from '../../types/data/product';
 
 export class GalleryView implements IView<Product[]> {
 	constructor(protected events: IEvents) {}

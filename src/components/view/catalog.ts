@@ -1,9 +1,9 @@
 import { createElement } from '../../utils/utils';
 import { IEvents } from '../base/events';
 import { HeaderView } from './header';
-import { IView } from '../../types/view';
+import { IView } from '../../types/interface/view';
 import { GalleryView } from './gallery';
-import { CatalogData } from '../../types/view/catalog';
+import { CatalogData } from '../../types/data/catalog';
 
 export class CatalogView implements IView<CatalogData> {
 	private element: HTMLDivElement;

@@ -1,8 +1,8 @@
 import { createElement } from '../../utils/utils';
 
 import { Events, settings } from '../../utils/constants';
-import { Product } from '../../types/product';
-import { ProductModalData } from '../../types/view/catalog';
+import { Product } from '../../types/data/product';
+import { ProductModalData } from '../../types/data/catalog';
 import { Modal } from './modal';
 
 export class CardCatalogModal extends Modal<ProductModalData> {

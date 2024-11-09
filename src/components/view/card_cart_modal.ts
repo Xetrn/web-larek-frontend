@@ -1,8 +1,8 @@
-import { IView } from '../../types/view';
+import { IView } from '../../types/interface/view';
 import { createElement } from '../../utils/utils';
 import { Events } from '../../utils/constants';
 import { IEvents } from '../base/events';
-import { CartProduct } from '../../types/cart';
+import { CartProduct } from '../../types/data/cart';
 
 export class CardCartModal implements IView<CartProduct> {
 	private element: HTMLElement;

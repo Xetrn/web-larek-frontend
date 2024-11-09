@@ -2,8 +2,8 @@ import { createElement } from '../../utils/utils';
 import { Events, settings } from '../../utils/constants';
 import { IEvents } from '../base/events';
 
-import { IView } from '../../types/view';
-import { Product } from '../../types/product';
+import { IView } from '../../types/interface/view';
+import { Product } from '../../types/data/product';
 
 export class ProductCardView implements IView<Product> {
 	constructor(protected events: IEvents) {}

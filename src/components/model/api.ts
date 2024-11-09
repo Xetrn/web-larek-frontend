@@ -1,7 +1,7 @@
-import { IShopApi } from '../types/api';
-import { Api } from './base/api';
-import { Order, OrderResponse } from '../types/order';
-import { Product, Products } from '../types/product';
+import { IShopApi } from '../../types/interface/api';
+import { Api } from '../base/api';
+import { Order, OrderResponse } from '../../types/data/order';
+import { Product, Products } from '../../types/data/product';
 
 export class ShopApi extends Api implements IShopApi {
 	async getProducts(): Promise<Products> {

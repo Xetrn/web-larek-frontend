@@ -1,7 +1,7 @@
 import { createElement } from '../../utils/utils';
 import { IEvents } from '../base/events';
 import { Events } from '../../utils/constants';
-import { IView } from '../../types/view';
+import { IView } from '../../types/interface/view';
 
 export class HeaderView implements IView<number> {
 	constructor(protected events: IEvents) {}

@@ -5,7 +5,3 @@ export type CartProduct = {
 	title: string;
 	price: number;
 };
-
-export type Cart = {
-	products: CartProduct[];
-};

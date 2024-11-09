@@ -1,22 +1,8 @@
-export class Storage {
-	static getValue(key: string): void {
-		return localStorage[key];
-	}
-
-	static setValue(key: string, value: string): void {
-		localStorage[key] = value;
-	}
-
-	static clear(key: string): void {
-		localStorage.removeItem(key);
-	}
-}
-
-export class CartStorage {
+export class Cart {
 	private static SEPARATOR = ',';
 	private static KEY = 'cart';
 
-	static appendItem(id: string | string[]): void {
+	static appendProduct(id: string | string[]): void {
 		if (typeof id === 'string') {
 			id = [id];
 		}
@@ -28,7 +14,7 @@ export class CartStorage {
 		localStorage[this.KEY] = [...new Set(id)].join(this.SEPARATOR);
 	}
 
-	static getItems(): string[] {
+	static getProductIds(): string[] {
 		if (!localStorage[this.KEY]) {
 			return [];
 		}
@@ -36,7 +22,23 @@ export class CartStorage {
 		return localStorage[this.KEY].split(this.SEPARATOR);
 	}
 
-	static removeItem(id: string) {
+	static getCount(): number {
+		return this.getProductIds().length
+	}
+
+	static contains(productId: string): boolean {
+		return this.getProductIds().includes(productId)
+	}
+
+	static toggleProduct(productId: string): void {
+		if (this.contains(productId)) {
+			this.removeProduct(productId);
+		} else {
+			this.appendProduct(productId);
+		}
+	}
+
+	static removeProduct(id: string) {
 		if (!localStorage[this.KEY]) {
 			return;
 		}

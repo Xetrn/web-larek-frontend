@@ -12,7 +12,7 @@ export const settings = {
 };
 
 export const Events = {
-	CATALOG_LOAD: 'catalog:load',
+	// CATALOG_LOAD: 'catalog:load',
 	CATALOG_PRODUCT_CARD_OPEN: 'catalog:product_card_open',
 
 	MODAL_OPEN: 'modal:open',

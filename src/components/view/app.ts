@@ -1,14 +1,11 @@
 import { IEvents } from '../base/events';
 import { CatalogView } from './catalog';
 import { Modal } from './modal';
-import { Product } from '../../types/product';
-import { AppData } from '../../types/view/app';
+import { AppData } from '../../types/data/app';
 
 export class App {
-	public catalogView: CatalogView;
+	public readonly catalogView: CatalogView;
 	public modal: Modal<unknown>;
-
-	public products: Product[];
 
 	constructor(protected events: IEvents) {
 		this.catalogView = new CatalogView(this.events);
