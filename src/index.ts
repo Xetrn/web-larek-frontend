@@ -83,7 +83,7 @@ events.on(Events.MODAL_OPEN, () => {
 events.on(Events.MODAL_CLOSE, () => {
 	app.catalogView.offPageLock();
 	app.modal = null;
-		app.render({
+	app.render({
 		catalogData: {
 			cartCount: Cart.getCount(),
 			products: Catalog.getProducts(),
@@ -181,11 +181,11 @@ events.on(Events.ORDER_SUCCESS_OPEN, () => {
 	Order.createOrder(
 		api,
 		Cart.getProductIds(),
-		Cart.getProductIds()
-			.map((productId) => {
-				return Catalog.getProductById(productId).price;
-			})
-			.reduce((partialSum, price) => partialSum + price, 0)
+		Cart.getProductIds().reduce(
+			(partialSum, productId) =>
+				partialSum + Catalog.getProductById(productId).price,
+			0
+		)
 	).then(() => {
 		return;
 	});
