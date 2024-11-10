@@ -30,12 +30,16 @@ interface IOrder{
     email: string;
     phone: string;
     total: number;
-    items: IProduct[];
+    items: string[];
 }
 
-interface IOrderResult {
+interface IOrderResultSuccess {
     id: string;
     total: number;
+}
+
+interface IOrderResultError {
+    error: string;
 }
 
 interface IFormState {
@@ -51,4 +55,8 @@ interface IPaymentForm extends IFormState {
 interface IContactsForm extends IFormState {
     phone: string;
     email: string;
+}
+
+type Id = {
+    id: string
 }

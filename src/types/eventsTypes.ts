@@ -2,6 +2,7 @@
 export enum Events {
     BUSKET_OPENED = 'busket-open',
     PRODUCT_CARD_OPENED = 'product-card-open',
+    PRODUCT_CARD_CLICKED = 'product-card-clicked',
     ADDED_PRODUCT_TO_BUSKET = 'busket-add-product',
     REMOVED_PRODUCT_FROM_BUSKET = 'busket-remove-product',
     CATALOG_FETCHED = 'catalog-fetched',

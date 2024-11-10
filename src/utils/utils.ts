@@ -1,3 +1,5 @@
+import { correspondingCategories } from "./constants";
+
 export function pascalToKebab(value: string): string {
     return value.replace(/([a-z0–9])([A-Z])/g, "$1-$2").toLowerCase();
 }
@@ -132,4 +134,14 @@ export function createElement<
         }
     }
     return element;
+}
+
+export function setCorrectCategoryClass(category: HTMLElement, prevCategoryType: string, categoryName: CategoryType) {
+    category.classList.remove(`card__category_${prevCategoryType}`);
+    category.classList.add(`card__category_${correspondingCategories[categoryName]}`)
+    category.textContent = categoryName;
+}
+
+export function getCorrectPriceText(price: number | null): string {
+    return price !== null ? `${price} синапсов` : "Бесценно";
 }
