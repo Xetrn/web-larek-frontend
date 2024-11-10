@@ -1,9 +1,11 @@
 import { createElement } from '../../utils/utils';
 import { Modal } from './modal';
-import { Events } from '../../utils/constants';
 
 export class OrderSuccessModal extends Modal<unknown> {
-	private createElement(button: HTMLButtonElement, total: number): HTMLDivElement {
+	private createElement(
+		button: HTMLButtonElement,
+		total: number
+	): HTMLDivElement {
 		return createElement<HTMLDivElement>(
 			'div',
 			{ className: 'order-success' },
@@ -32,7 +34,7 @@ export class OrderSuccessModal extends Modal<unknown> {
 		const button = this.createButton();
 
 		button.addEventListener('click', () => {
-			this.events.emit(Events.CATALOG_LOAD);
+			this.close();
 		});
 
 		return this.createElement(button, total);
