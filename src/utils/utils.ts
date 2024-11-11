@@ -145,3 +145,12 @@ export function setCorrectCategoryClass(category: HTMLElement, prevCategoryType:
 export function getCorrectPriceText(price: number | null): string {
     return price !== null ? `${price} синапсов` : "Бесценно";
 }
+
+export function toggleDisabledIfCondition(condition: boolean, element: HTMLElement) {
+    if (condition) {
+        element.setAttribute("disabled", "");
+    }
+    else {
+        element.removeAttribute("disabled");
+    }
+}

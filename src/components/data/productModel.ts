@@ -2,8 +2,6 @@
 export interface IProductModel {
     getCurrentProduct: () => IProduct | null;
     setCurrentProduct: (product: IProduct) => void;
-    addToBusket: (id: string) => void;
-    removeFromBusket: (id: string) => void;
 }
 
 export default class ProductModel implements IProductModel {
@@ -19,13 +17,5 @@ export default class ProductModel implements IProductModel {
 
     setCurrentProduct(product: IProduct): void {
         this.currentProduct = product;
-    }
-
-    addToBusket(id: string): void {
-        
-    }
-
-    removeFromBusket(id: string): void {
-
     }
 }
