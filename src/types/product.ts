@@ -1,19 +1,27 @@
 export type ProductPreviewButtonLabel = 'В корзину' | 'Удалить из корзины';
 
-type CategoryType =
-  | 'софт-скил'
-  | 'хард-скил'
-  | 'кнопка'
-  | 'другое'
-  | 'дополнительное';
+export enum Category {
+  SOFT = 'софт-скил',
+  HARD = 'хард-скил',
+  BUTTON = 'кнопка',
+  OTHER = 'другое',
+  ADDITIONAL = 'дополнительное',
+}
 
 export interface IProduct {
   id: string;
   description: string;
   image: string;
   title: string;
-  category: CategoryType;
+  category: Category;
   price: number | null;
 }
 
-export type CatalogProduct = Omit<IProduct, 'description'>;
+export interface IBasket {
+  products: Set<BasketItem>;
+  totalPrice: number;
+}
+
+export type CatalogItem = Omit<IProduct, 'description'>;
+
+export type BasketItem = Pick<IProduct, 'id' | 'title' | 'price'>;

@@ -1,6 +1,6 @@
-import { BaseView } from './view';
+import { BaseView } from '../baseView';
 
-export class CatalogView extends BaseView {
+export class CatalogView extends BaseView<{ items: HTMLElement[] }> {
   constructor() {
     super();
     this.element = document.querySelector('.gallery');

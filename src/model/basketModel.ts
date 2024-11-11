@@ -1,26 +1,22 @@
-import { EventEmitter } from '../components/base/events';
-import { BasketProduct, IBasket, IProduct } from '../types';
+import { BasketItem, IBasket } from '../types';
 
 interface IBasketModel extends IBasket {
-  getAll(): BasketProduct[];
-  add(product: IProduct): void;
+  getAll(): BasketItem[];
+  add(product: BasketItem): void;
   remove(id: string): void;
+  get totalPrice(): number;
 }
 
 export class BasketModel implements IBasketModel {
-  products: Set<BasketProduct> = new Set();
-  totalPrice = 0;
+  products: Set<BasketItem> = new Set();
 
-  constructor(private events: EventEmitter) {}
-
-  getAll(): BasketProduct[] {
+  getAll() {
     return Array.from(this.products);
   }
 
-  add(product: BasketProduct) {
+  add(product: BasketItem) {
     if (!Array.from(this.products).some((p) => p.id === product.id)) {
       this.products.add(product);
-      this.totalPrice += product.price;
     }
   }
 
@@ -28,8 +24,12 @@ export class BasketModel implements IBasketModel {
     this.products.forEach((product) => {
       if (product.id === id) {
         this.products.delete(product);
-        this.totalPrice -= product.price;
       }
     });
   }
+
+  get totalPrice(): number {
+    return Array.from(this.products).reduce((acc, product) => acc + product.price, 0);
+  }
 }
+

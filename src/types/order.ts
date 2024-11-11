@@ -1,5 +1,12 @@
-export type PaymentMethod = 'online' | 'cash';
-export type OrderFormStatus = 'address' | 'contacts';
+export enum PaymentMethod {
+  ONLINE = 'online',
+  CASH = 'cash',
+}
+
+export enum OrderFormStatus {
+  ADDRESS = 'address',
+  CONTACTS = 'contacts',
+}
 
 export type OrderResponseSuccess = {
   id: string;

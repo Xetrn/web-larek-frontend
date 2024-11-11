@@ -1,9 +1,9 @@
-import { EventEmitter } from '../components/base/events';
 import {
   IOrder,
   IOrderAPI,
   OrderFormStatus,
   OrderResponseSuccess,
+  PaymentMethod,
 } from '../types';
 
 interface IOrderModel {
@@ -12,6 +12,7 @@ interface IOrderModel {
   isValid: boolean;
   error: string;
   createOrder(order: IOrder): Promise<OrderResponseSuccess>;
+  reset(): void;
 }
 
 export class OrderModel implements IOrderModel {
@@ -20,19 +21,23 @@ export class OrderModel implements IOrderModel {
   isValid: boolean;
   error: string;
 
-  constructor(private api: IOrderAPI, private events: EventEmitter) {
-    this.status = 'address';
+  constructor(private api: IOrderAPI) {
+    this.reset();
+  }
+
+  createOrder(order: IOrder) {
+    return this.api.createOrder(order);
+  }
+
+  reset() {
+    this.status = OrderFormStatus.ADDRESS;
     this.order = {
-      payment: 'online',
+      payment: PaymentMethod.ONLINE,
       email: '',
       phone: '',
       address: '',
       total: 0,
       items: [],
     };
-  }
-
-  createOrder(order: IOrder): Promise<OrderResponseSuccess> {
-    return this.api.createOrder(order);
   }
 }
