@@ -2,13 +2,29 @@
  * Интерфейс для карточки
  */
 export interface ICard {
-	category: string;
-	description: string;
 	id: string;
 	image: string;
 	price: number;
 	title: string;
+	category?: string;
+	description?: string;
 }
+/*export interface IViewCard {
+	id: string;
+	title: string;
+	price: string;
+	image: string;
+	description: string;
+}
+export interface IViewCardCatalogue extends Omit<IViewCard, 'description'> {
+	category: string;
+}
+export interface IViewCardPreview {
+	category: string;
+	invalidPrice: boolean;
+	buttonValidation: boolean;
+}
+export type TViewCardPreview = ICard & { invalidPrice: boolean; buttonValidation: boolean };*/
 
 /**
  * Интерфейс для описания модели данных карточек
@@ -37,7 +53,7 @@ export interface IOrderSuccess {
 }
 
 /**
- * Интерфейс для данных корзины
+ * Интерфейс для корзины
  */
 export interface IBasketData {
 	goods: ICard[];
@@ -50,6 +66,47 @@ export interface IBasketData {
 	getTotal(): number;
 	getIdsOfGoods(): string[];
 }
+export interface IViewBasket {
+	cards: HTMLElement[];
+	total: number;
+	emptyCheck: boolean;
+}
+
+/**
+ * Интерфейс для форм
+ */
+export interface IViewForm {
+	valid: boolean;
+	errorMessage: string;
+	clear(): void;
+}
+export interface IViewFormContacts {
+	email: string;
+	phone: string;
+	valid: boolean;
+}
+export interface IViewFormOrder {
+	payment: TPaymentMethod | null;
+	address: string;
+	valid: boolean;
+	resetButtons(): void;
+}
+
+export interface IViewPage {
+	catalog: HTMLElement[];
+	counter: number;
+	lockScreen(value: boolean): void;
+}
+
+export interface IViewModal {
+	content: HTMLElement;
+	open(): void;
+	close(): void;
+}
+
+/*export interface IViewSuccess {
+	message: string;
+}*/
 
 /**
  * Интерфейс для API приложения
@@ -60,32 +117,31 @@ export interface IAppApi {
 	postOrder(order: IOrderData): Promise<TOrderSuccess>;
 }
 
-/**
- * Данные карточки для вывода на главной странице
- */
-export type TCardInfo = Pick<ICard, 'category' | 'title' | 'image' | 'price'>;
+//* export type TCardInfo = Pick<ICard, 'category' | 'title' | 'image' | 'price'>;
 
-/**
- * Данные карточки для вывода в отдельном поле
- */
-export type TCardPreview = Pick<ICard, 'category' | 'title' | 'description' | 'image' | 'price'>;
+export type TCardView = Omit<ICard, 'price'> & { price: string }; //*
+export type TCardCatalogueView = Omit<TCardView, 'description'>;
 
-/**
- * Данные карточки для вывода в корзине
- */
+export type TCardPreview = TCardView & {
+	invalidPrice: boolean;
+	buttonValidation: boolean;
+};
+
+//* export type TCardPreview = Pick<ICard, 'category' | 'title' | 'description' | 'image' | 'price'>;
+//* export type TViewCardCatalogue = Pick<ICard, 'id' | 'title' | 'price' | 'category' | 'image'>;
+
+export type TCategoryClassNames = 'soft' | 'other' | 'additional' | 'button' | 'hard';
+export type TCategoryClasses = Record<string, TCategoryClassNames>;
+
 export type TBasket = Pick<ICard, 'title' | 'price'>;
+export type TViewBasket = { cards: HTMLElement[]; total: number; emptyCheck: boolean };
 
-/**
- * Данные заказа в общем виде
- */
-export type TOrder = Partial<IOrderData>;
-
-/**
- * Данные заказа для вывода в модальном окне успешно завершенного заказа
- */
-export type TOrderSuccess = Pick<IOrderData, 'total'>; //* items
-
-/**
- * Данные для метода оплаты
- */
 export type TPaymentMethod = 'cash' | 'card';
+export type TPayment = Pick<IOrderData, 'payment'>; //* ?
+
+export type TViewForm = { valid: boolean; errorMessage: string };
+export type TViewFormContacts = { email: string; phone: string; valid: boolean };
+export type TViewFormOrder = { payment: TPayment; address: string; valid: boolean };
+
+export type TOrderSuccess = Pick<IOrderData, 'total'>; //* + 'items'
+export type TOrderSuccessView = { message: string };

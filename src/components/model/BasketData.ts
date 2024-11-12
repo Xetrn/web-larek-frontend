@@ -27,19 +27,19 @@ export class BasketData implements IBasketData {
 	addToBasket(card: ICard) {
 		this._goods.push(card);
 		this.total += card.price;
-		// + basketData changed
+		this.events.emit('basketData:changed', { id: card.id });
 	}
 
 	removeFromBasket(id: string) {
 		this._goods = this._goods.filter((good) => good.id !== id);
 		this.total -= this._goods.find((good) => good.id === id)?.price ?? 0;
-		// + basketData changed
+		this.events.emit('basketData:changed', { id });
 	}
 
 	clearBasket() {
 		this._goods = [];
 		this.total === 0;
-		// + basketData changed
+		this.events.emit('basketData:changed', this._goods);
 	}
 
 	getGoodsNumber = (): number => this._goods.length;

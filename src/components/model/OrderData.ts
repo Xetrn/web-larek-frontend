@@ -11,6 +11,10 @@ export class OrderData implements IOrderData {
 
 	events: IEvents;
 
+	constructor(events: IEvents) {
+		this.events = events;
+	}
+
 	//*
 
 	set payment(type: TPaymentMethod) {

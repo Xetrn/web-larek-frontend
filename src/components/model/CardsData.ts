@@ -12,7 +12,7 @@ export class CardsData implements ICardsData {
 
 	set cards(cards: ICard[]) {
 		this._cards = cards;
-		// cards changed
+		this.events.emit('cards:changed', this.cards);
 	}
 
 	get cards() {
