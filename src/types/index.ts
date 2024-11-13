@@ -23,3 +23,13 @@ export interface IProductResponse {
 	items: IProduct[],
 	total: number
 }
+
+export interface IOrder {
+	payment: 'cash' | 'card' | '',
+	address: string
+}
+
+export interface IContacts {
+	email: string,
+	phone: string
+}

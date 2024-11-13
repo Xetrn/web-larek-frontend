@@ -21,14 +21,6 @@ export class BasketView implements IView {
         const basketList = createElement<HTMLUListElement>('ul', {
             className: 'basket__list',
         })
-        if (itemsView.length) {
-            basketList.replaceChildren(...itemsView);
-        } else {
-            const p = createElement<HTMLParagraphElement>('p', {
-                textContent: 'Корзина пуста'
-            })
-            basketList.append(p)
-        }
 
         const modalAction = createElement<HTMLDivElement>('div', {
             className: 'modal__actions'
@@ -36,10 +28,22 @@ export class BasketView implements IView {
 
         const button = createElement<HTMLButtonElement>('button', {
             className: 'button',
-            textContent: 'Оформить'
         })
         button.onclick = () => {
             this._events.emit('order:open')
+        }
+
+        if (itemsView.length) {
+            basketList.replaceChildren(...itemsView);
+            button.disabled = false;
+            button.textContent = 'Оформить'
+        } else {
+            const p = createElement<HTMLParagraphElement>('p', {
+                textContent: 'Корзина пуста'
+            })
+            basketList.append(p)
+            button.disabled = true;
+            button.textContent = 'Товар не выбран'
         }
 
         const totalPrice = items.reduce((sum, item) => sum + item.price, 0)

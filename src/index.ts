@@ -12,6 +12,8 @@ import { API_URL } from './utils/constants';
 import {BasketView} from "./components/view/basketView";
 import {ProductBasketView} from "./components/view/productBasketView";
 import {OrderView} from "./components/view/orderView";
+import {ContactsView} from "./components/view/contactsView";
+import {SuccessView} from "./components/view/successView";
 
 const api: Api = new Api(API_URL);
 const events: EventEmitter = new EventEmitter();
@@ -30,6 +32,7 @@ const productBasketView: ProductBasketView = new ProductBasketView(events);
 api.get('/product/')
 	.then((res: IProductResponse) => {
 		catalogModel.setItems(res.items)
+		console.log(res.items)
 	})
 	.catch((err) => {
 		console.error(err)
@@ -80,6 +83,9 @@ basketButton.onclick = () => {
 function basketRender() {
 	const products: IProduct[] = Array.from(basketModel.items).map(([id, quantity]) => {
 		const product = catalogModel.getProduct(id);
+		if (product.price === null) {
+			product.price = 0
+		}
 		return product ? { ...product } : null;
 	}).filter((product: IProduct): product is IProduct => product !== null);
 
@@ -119,4 +125,43 @@ events.on('order:open', () => {
 			content: orderView.render()
 		})
 	}, 1)
+})
+
+//открытие contacts
+const contactsView = new ContactsView(events);
+
+events.on('contacts:open', () => {
+	modalView.render({isOpen: false})
+
+	setTimeout(() => {
+		modalView.render({
+			isOpen: true,
+			content: contactsView.render()
+		})
+	}, 1)
+})
+
+//открытие success
+const successView = new SuccessView(events);
+
+events.on('success:open', () => {
+	modalView.render({isOpen: false})
+	const products: IProduct[] = Array.from(basketModel.items).map(([id, quantity]) => {
+		const product = catalogModel.getProduct(id);
+		return product ? { ...product } : null;
+	}).filter((product: IProduct): product is IProduct => product !== null);
+	const totalPrice = products.reduce((sum, item) => sum + item.price, 0)
+
+	setTimeout(() => {
+		modalView.render({
+			isOpen: true,
+			content: successView.render({price: totalPrice})
+		})
+	}, 1)
+})
+
+//за новыми покупками
+events.on('go-main-page', () => {
+	modalView.render({isOpen: false})
+	basketModel.clear()
 })

@@ -1,12 +1,16 @@
 import {IView} from "./view";
 import {EventEmitter} from "../base/events";
 import {createElement} from "../../utils/utils";
+import {IOrder} from "../../types";
 
 
 export class OrderView implements IView {
-    protected _paymentSelected: boolean = false;
-    protected _addressSelected: string = '';
+    protected _orderValues: IOrder;
     constructor(protected _events: EventEmitter) {
+        this._orderValues = {
+            payment: '',
+            address: ''
+        };
     }
 
     render() {
@@ -39,7 +43,7 @@ export class OrderView implements IView {
         cardButton.onclick = () => {
             cardButton.classList.add('button_alt-active')
             cashButton.classList.remove('button_alt-active')
-            this._paymentSelected = true;
+            this._orderValues.payment = 'card';
             toggleNextButton();
         }
 
@@ -51,7 +55,7 @@ export class OrderView implements IView {
         cashButton.onclick = () => {
             cashButton.classList.add('button_alt-active')
             cardButton.classList.remove('button_alt-active')
-            this._paymentSelected = true;
+            this._orderValues.payment = 'cash';
             toggleNextButton();
         }
 
@@ -75,7 +79,7 @@ export class OrderView implements IView {
 
         inputOrder.oninput = (event) => {
             const target = event.target as HTMLInputElement;
-            this._addressSelected = target.value.trim();
+            this._orderValues.address = target.value.trim();
             toggleNextButton();
         }
 
@@ -92,10 +96,13 @@ export class OrderView implements IView {
         })
         nextBtn.onclick = () => {
             this._events.emit("contacts:open")
+            cardButton.classList.remove('button_alt-active')
+            cashButton.classList.remove('button_alt-active')
+            console.log(this._orderValues)
         }
 
         const toggleNextButton = () => {
-            const isFormValid = this._paymentSelected && this._addressSelected.length > 0;
+            const isFormValid: boolean = this._orderValues.payment && this._orderValues.address.length > 0;
             nextBtn.disabled = !isFormValid;
             nextBtn.textContent = isFormValid ? 'Далее' : 'Сначала заполните все поля';
         };
