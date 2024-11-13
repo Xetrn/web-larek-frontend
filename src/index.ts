@@ -3,7 +3,7 @@ import { EventEmitter } from './components/base/events';
 import { BasketModel, OrderModel, CatalogModel } from './model';
 import { CatalogPresenter } from './presenter/catalogPresenter';
 import { ShopAPI } from './service/shop-api';
-import { API_URL } from './utils/constants';
+import { API_URL, Events } from './utils/constants';
 import { ModalView } from './components/view/modalView';
 
 const modal = new ModalView();
@@ -21,10 +21,10 @@ catalogModel.load().then(() => {
   catalogPresenter.init();
 });
 
-events.on('modal:open', (data: HTMLElement) => {
+events.on(Events.MODAL_OPEN, (data: HTMLElement) => {
   modal.render(data);
 });
 
-events.on('modal:close', () => {
+events.on(Events.MODAL_CLOSE, () => {
   modal.close();
 });

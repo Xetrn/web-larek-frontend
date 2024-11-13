@@ -11,3 +11,8 @@ export const categoryClasses: Record<Category, string> = {
   [Category.OTHER]: 'card__category_other',
   [Category.ADDITIONAL]: 'card__category_additional',
 };
+
+export enum Events {
+  MODAL_OPEN = 'modal:open',
+  MODAL_CLOSE = 'modal:close',
+}

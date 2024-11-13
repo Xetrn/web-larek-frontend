@@ -1,23 +1,28 @@
 import { EventEmitter } from '../components/base/events';
+import { Events } from '../utils/constants';
 import {
   CatalogView,
   CatalogItemView,
   CatalogItemFullView,
 } from '../components/view/catalog';
-import { CatalogModel } from '../model';
-import { IProduct } from '../types';
+import { CatalogItem, IProduct } from '../types';
 
 interface ICatalogPresenter {
   init(): void;
 }
 
+interface ICatalogModel {
+  getAll(): CatalogItem[];
+  getPreviewById(id: string): IProduct;
+}
+
 interface ICatalogPresenterDependencies {
-  catalogModel: CatalogModel;
+  catalogModel: ICatalogModel;
   events: EventEmitter;
 }
 
 export class CatalogPresenter implements ICatalogPresenter {
-  private catalogModel: CatalogModel;
+  private catalogModel: ICatalogModel;
   private events: EventEmitter;
 
   private catalogView: CatalogView;
@@ -38,7 +43,7 @@ export class CatalogPresenter implements ICatalogPresenter {
 
     const previewProduct = this.catalogModel.getPreviewById(id);
     this.events.emit(
-      'modal:open',
+      Events.MODAL_OPEN,
       this.catalogItemFullView.render(previewProduct)
     );
   };
@@ -49,7 +54,7 @@ export class CatalogPresenter implements ICatalogPresenter {
   };
 
   init() {
-    const products = this.catalogModel.products;
+    const products = this.catalogModel.getAll();
 
     this.catalogView.render({
       items: products.map((product) =>

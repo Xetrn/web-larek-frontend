@@ -86,26 +86,27 @@ yarn build
 
 #### IProduct - интерфейс продукта, приходящего с сервера
 ```ts
-type CategoryType =
-  | 'софт-скил'
-  | 'хард-скил'
-  | 'кнопка'
-  | 'другое'
-  | 'дополнительное';
+enum Category {
+  SOFT = 'софт-скил',
+  HARD = 'хард-скил',
+  BUTTON = 'кнопка',
+  OTHER = 'другое',
+  ADDITIONAL = 'дополнительное',
+}
 
 interface IProduct {
   id: string;
   description: string;
   image: string;
   title: string;
-  category: CategoryType;
+  category: Category;
   price: number | null;
 }
 ```
 
-#### CatalogProduct - тип продукта без описания, отображаемый в каталоге
+#### CatalogItem - тип продукта без описания, отображаемый в каталоге
 ```ts
-type CatalogProduct = Omit<IProduct, 'description'>;
+type CatalogItem = Omit<IProduct, 'description'>;
 ```
 
 #### ICatalogModel - интерфейс модели каталога
@@ -113,21 +114,20 @@ type CatalogProduct = Omit<IProduct, 'description'>;
 interface ICatalogModel {
   products: IProduct[];
   load(): Promise<void>;
-  getAll(): CatalogProduct[];
-  getById(id: string): IProduct;
+  getAll(): CatalogItem[];
+  getPreviewById(id: string): IProduct;
 }
-
 ```
 
-#### BasketProduct - тип продукта с идентификатором, названием и ценой, отображаемый в корзине
+#### BasketItem - тип продукта с идентификатором, названием и ценой, отображаемый в корзине
 ```ts
-type BasketProduct = Pick<IProduct, 'id' | 'title' | 'price'>;
+type BasketItem = Pick<IProduct, 'id' | 'title' | 'price'>;
 ```
 
 #### IBasket - интерфейс данных корзины
 ```ts
 interface IBasket {
-  products: Set<BasketProduct>;
+  products: Set<BasketItem>;
   totalPrice: number;
 }
 ```
@@ -135,9 +135,10 @@ interface IBasket {
 #### IBasketModel - интерфейс модели корзины
 ```ts
 interface IBasketModel extends IBasket {
-  getAll(): BasketProduct[];
-  add(product: IProduct): void;
+  getAll(): BasketItem[];
+  add(product: BasketItem): void;
   remove(id: string): void;
+  get totalPrice(): number;
 }
 ```
 
@@ -146,7 +147,10 @@ interface IBasketModel extends IBasket {
 
 #### IOrder - интерфейс для заказа, отправляемый на сервер
 ```ts
-type PaymentMethod = 'online' | 'cash';
+enum PaymentMethod {
+  ONLINE = 'online',
+  CASH = 'cash',
+}
 
 interface IOrder {
   payment: PaymentMethod;
@@ -172,7 +176,10 @@ type OrderResponseError = {
 
 #### Интерфейс модели заказа
 ```ts
-type OrderFormStatus = 'address' | 'contacts';
+enum OrderFormStatus {
+  ADDRESS = 'address',
+  CONTACTS = 'contacts',
+}
 
 interface IOrderModel {
   status: OrderFormStatus;
@@ -180,6 +187,7 @@ interface IOrderModel {
   isValid: boolean;
   error: string;
   createOrder(order: IOrder): Promise<OrderResponseSuccess>;
+  reset(): void;
 }
 ```
 
@@ -213,45 +221,54 @@ export interface IShopAPI extends IProductAPI, IOrderAPI {}
 ## Model
 
 ### Каталог
-- [X] `CatalogModel` - модель каталога. Хранит текущие продукты. Реализует метод подгрузки продуктов через сервис. Реализует методы получения всех продуктов и продукта по идентификатору.
+`CatalogModel` - модель каталога. Хранит текущие продукты. Реализует метод подгрузки продуктов через сервис. Реализует методы получения всех продуктов и продукта по идентификатору.
 
 ### Корзина
-- [X] `BasketModel` - модель корзины. Хранит ввиде коллекции уникальных элементов. Реализует метод добавления, удаления продукта и получения всех продуктов в корзине.
+`BasketModel` - модель корзины. Хранит ввиде коллекции уникальных элементов. Реализует метод добавления, удаления продукта и получения всех продуктов в корзине.
 
 ### Заказ
-- [X] `OrderModel` - модель заказа. Хранит состояние заказа. Реализует метод создания заказа через сервис.
+`OrderModel` - модель заказа. Хранит состояние заказа. Реализует метод создания заказа через сервис, сброса состояния заказа.
 
 
 ## View (отображение)
 
 ### Абстракции и интерфейсы
-- [X] `BaseView` - абстрактный класс отображения.
-- [ ] `BaseModal` - абстрактный класс модального окна с реализованной логикой закрытия и т.д.
+`BaseView` - абстрактный класс отображения.
 
+### Модальное окно
+`ModalView` - класс модального окна с логикой закрытия и рендеринга внутреннего контента.
 
 ### Каталог
-- [X] `CatalogView` - отображение каталога с товарами.
-- [X] `ProductView` - продукт без описания (компонент каталога).
-- [ ] `ProductDetailModal` - модальное окно товара.
+* `CatalogView` - отображение каталога с товарами.
+* `CatalogItemView` - продукт без описания (компонент каталога).
+* `CatalogItemFullView` - превью товара (рендерится в модальном окне).
 
 ### Корзина
-- [ ] `BasketModal` - модальное окно с корзиной.
-- [ ] `ProductBasketView` - продукт в корзине (только название и цена).
+* `BasketView` - компонент корзины (рендерится в модальном окне).
+* `BasketItemView` - продукт в корзине (только название и цена).
 
 ### Заказ
-- [ ] `AddressEntryModal` - модальное окно для заполнения адреса и типа товара.
-- [ ] `ContactDetailsModal` - модальное окно для заполнения контактных данных.
-- [ ] `OrderSuccessModal` - модальное окно статуса заказа.
+* `AddressEntryModal` - форма для ввода адреса заказа (рендерится в модальном окне).
+* `ContactDetailsModal` - форма для ввода контактных данных (рендерится в модальном окне).
+* `OrderSuccessModal` - компонент статуса заявки (рендерится в модальном окне).
 
 
 ## Presenter
 
 ### Каталог
-- [ ] `CatalogPresenter` - презентер каталога. Отрисовывает продукты. Отслеживает выбранный продукт и открывает модальное окно. Создает обработчики и передает их в CatalogView, который в свою очередь передает их в ProductView.
+`CatalogPresenter` - презентер каталога. Отрисовывает продукты. Отслеживает выбранный продукт и открывает модальное окно просмотра. Создает обработчики и передает их в компоненты отображения (CatalogItemView, CatalogItemFullView).
 
 ### Корзина
-- [ ] `BasketPresenter` - презентер корзины. Отрисовывает продукты в корзине. Отслеживает изменения в корзине и передает их в BasketModal. Создает обработчики событий и передает ниже в отображение.
+`BasketPresenter` - презентер корзины. Отрисовывает продукты в корзине. Отслеживает изменения в корзине и передает их в BasketModel. Создает обработчики событий и передает ниже в отображение (BasketView, BasketItemView).
 
 ### Заказ
-- [ ] `OrderPresenter` - презентер заказа.  Хранит состояние текущей формы, создает обработчики и распределяет их по модальным окнам.
+`OrderPresenter` - презентер заказа. Хранит состояние текущей формы, создает обработчики и распределяет их по модальным окнам.
 
+## Events
+```ts
+enum Events {
+  MODAL_OPEN = 'modal:open',
+  MODAL_CLOSE = 'modal:close',
+  ...
+  }
+```
