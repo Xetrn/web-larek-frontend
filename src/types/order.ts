@@ -10,5 +10,14 @@ export interface IUserData {
 export interface IOrderData {
     userData: IUserData;
     total: number;
-    items: string[];
+    items: IOrderItem[];
+}
+
+export interface IOrderItem{
+    id: string
+}
+
+export interface IOrderResult {
+    id: string;
+    total: number;
 }

@@ -1,37 +1,39 @@
-import { IBasketModel } from "../types/basket";
+import { IBasketModel, IBasketItem } from "../types/basket";
 import { EventEmitter } from "../components/base/events";
 
 export class BasketModel implements IBasketModel{
 
-    items: Map<string, number> = new Map();
+    items: IBasketItem[] = [];
     totalPrice: number = 0;
 
     constructor(protected emitter: EventEmitter){
     }
 
-    add(id: string): void {
-        this.items.set(id, (this.items.get(id) ?? 0) + 1);
+    add(item: IBasketItem): void {
+        this.items.push(item);
         this._emitChange();
     }
 
     remove(id: string): void {
-       if(!this.items.has(id)) return;
-       const count = this.items.get(id) ?? 0;
-       if(count === 0) this.items.delete(id);
-       else this.items.set(id, count - 1);
+       if(!this.items.find(item => item.id === id)) return;
+       this.items = this.items.filter(item => item.id !== id);
        this._emitChange();
     }
 
     clear(): void {
-        this.items.clear();
+        this.items = [];
         this._emitChange();
     }
 
-    get(id: string): number {
-        return this.items.get(id) ?? 0;
+    getItem(id: string): IBasketItem | undefined {
+        return this.items.find(item => item.id === id);
+    }
+
+    getTotalCount(): number {
+        return this.items.length;
     }
 
     protected _emitChange(): void {
-        this.emitter.emit('basket:change', {items: Array.from(this.items.keys())});
+        this.emitter.emit('basket:change', {items: this.items});
     }
 }

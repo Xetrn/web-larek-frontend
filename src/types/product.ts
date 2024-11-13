@@ -16,8 +16,17 @@ export interface ICatalogModel {
     getAllProducts(): IProduct[] | undefined;
 }
 
-interface IProductAPIResponse {
+export interface IProductAPIResponse {
     total: number;
     items: IProduct[];
 }
+
+export type Category = 'soft' | 'hard' | 'additional' | 'button' | 'other';
+export const categoryMap: { [key: string]: Category } = {
+    'софт-скил': 'soft',
+    'хард-скил': 'hard',
+    'дополнительное': 'additional',
+    'кнопка': 'button',
+    'другое': 'other'
+};
 

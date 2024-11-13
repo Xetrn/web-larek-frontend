@@ -1,4 +1,4 @@
-import { ICatalogModel, IProduct } from "../types/product";
+import { ICatalogModel, IProduct, IProductAPIResponse } from "../types/product";
 import { EventEmitter } from "../components/base/events";
 
 export class Products implements ICatalogModel {
@@ -9,7 +9,14 @@ export class Products implements ICatalogModel {
 
     setProducts(products: IProduct[]): void {
         this.items = products;
-        this._emitChange();
+        this.setInBasketField();
+        this._emitChange('catalog:load');
+    }
+
+    setInBasketField(){
+        this.items.forEach(product => {
+            product.inBasket = false;
+        });
     }
 
     getProduct(id: string): IProduct | undefined {
@@ -25,19 +32,32 @@ export class Products implements ICatalogModel {
         if (product) {
             product.inBasket = true;
         }
-        this._emitChange();
+        this._emitChange('catalog:addBasket');
     }
+
+    
 
     removeProductFromBasket(id: string): void {
         const product = this.getProduct(id);
         if (product) {
             product.inBasket = false;
         }
-        this._emitChange();
+        this._emitChange('catalog:removeBasket');
     }
 
-    protected _emitChange(): void {
-        this.emitter.emit('catalog:change', 
+    protected _emitChange(evt:string): void {
+        console.log(evt, 
+            {items: Array.from(this.items.map(product => 
+                ({
+                    id: product.id,
+                    inBasket: product.inBasket,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    description: product.description,
+                })))
+            }   )
+        this.emitter.emit(evt, 
             {items: Array.from(this.items.map(product => 
                 ({
                     id: product.id,

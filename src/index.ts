@@ -1,64 +1,79 @@
 import './scss/styles.scss';
 import { EventEmitter } from './components/base/events';
 import { BasketModel } from './models/basketModel';
-import { Api } from './components/base/api';
-import { API_URL } from './utils/constants';
 import { Products } from './models/productModel';
 import { ItemView } from './views/ItemView';
 import { CatalogView } from './views/catalogView';
 import { CardPreviewView } from './views/cardPreview';
 import { IProduct } from './types/product';
+import { ProductAPI } from './components/ProductAPi';
+import {API_URL, CDN_URL} from "./utils/constants";
+import { ModalWindow } from './components/ModalWindow';
+import { Page } from './components/Page';
 
-const api = new Api('/');
-const catalogEvents = new EventEmitter();
-const products = new Products(catalogEvents);
-const catalogItemView = new ItemView(catalogEvents);
-const catalogView = new CatalogView(document.querySelector('.gallery') as HTMLElement, catalogEvents, catalogItemView);
-const cardPreviewView = new CardPreviewView(catalogEvents);
+const api = new ProductAPI(CDN_URL, API_URL);
 
-const basketEvents = new EventEmitter();
-const basket = new BasketModel(basketEvents);
+const events = new EventEmitter();
+const page = new Page(document.body, events);
+const products = new Products(events);
+const catalogItemView = new ItemView(events);
+const modalWindow = new ModalWindow(events);
+const catalogView = new CatalogView<Partial<IProduct>>(document.querySelector('.gallery') as HTMLElement, events, catalogItemView);
+const cardPreviewView = new CardPreviewView(events);
 
-catalogEvents.on('catalog:change', (data ) => {
-    console.log('catalog was changed', data);
-    catalogView.render(products.getAllProducts());
+const basket = new BasketModel(events);
+
+events.on('catalog:load', (data ) => {
+   catalogView.render(products.getAllProducts());
 
 });
 
 // добавление в корзину
-catalogEvents.on('ui:add-to-basket', (data:IProduct) => {
+events.on('ui:add-to-basket', (data:IProduct) => {
     console.log('product was added to basket', data);
 
-    basket.add(data.id);
+    basket.add({id: data.id, title: data.title, price: data.price});
     products.addProductToBasket(data.id);
-    catalogView.cardUpdate(data); 
+    cardPreviewView.cardUpdate(true); 
 });
 
-basketEvents.on('basket:change', (data) => {
+events.on('basket:change', (data) => {
     console.log('basket was changed', data);
+    page.counter = basket.getTotalCount();
 });
 
 // открытие карточки товара
-catalogEvents.on('ui:open-product', (data:IProduct) => {
+events.on('ui:open-product', (data:IProduct) => {
     console.log('product was opened', data);
-    cardPreviewView.render(data);
+    cardPreviewView.openCard(data, modalWindow);
 
 });
 
-api.get(API_URL)
+events.on('modal:open', () => {
+    page.locked = true;
+});
+
+events.on('modal:close', () => {
+    page.locked = false;
+});
+
+api.getProductList()
     .then(products.setProducts.bind(products))
+    .then(()=> {basket.add({id: '854cef69-976d-4c2a-a18c-2aa45046c390', title: 'title1', price: 100})
+    products.addProductToBasket('854cef69-976d-4c2a-a18c-2aa45046c390')
+    basket.remove('854cef69-976d-4c2a-a18c-2aa45046c390');
+    products.removeProductFromBasket('854cef69-976d-4c2a-a18c-2aa45046c390')
+})
     .catch(err => console.error(err));
 
+//products.addProductToBasket('1');
+//products.addProductToBasket('2');
+//products.removeProductFromBasket('1');    
 
-
-products.addProductToBasket('1');
-products.addProductToBasket('2');
-products.removeProductFromBasket('1');    
-
-basket.add('1');
-basket.add('2');
-basket.remove('1');
-basket.clear();
+//basket.add({id: '1', title: 'title1', price: 100});
+//basket.add({id: '2', title: 'title2', price: 200});
+//basket.remove('1');
+//basket.clear();
 
 
 

@@ -1,6 +1,7 @@
 import { IView } from "./view";
 import { IProduct } from "../types/product";
 import { EventEmitter } from "../components/base/events";
+import { categoryMap } from "../types/product";
 
 export class ItemView implements IView{
 
@@ -20,18 +21,17 @@ export class ItemView implements IView{
         const titleElement = productElement.querySelector('.card__title') as HTMLHeadingElement;
         const imageElement = productElement.querySelector('.card__image') as HTMLImageElement;
         const priceElement = productElement.querySelector('.card__price') as HTMLSpanElement;
-        const buttonElement = productElement.querySelector('.card__button') as HTMLButtonElement;
-
+        const buttonElement = productElement.querySelector('.card') as HTMLButtonElement;
         categoryElement.textContent = data.category;
         titleElement.textContent = data.title;
         imageElement.src = data.image;
         priceElement.textContent = `${data.price} синапсов`;
-
         buttonElement.addEventListener('click', ()=>{
             this.events.emit('ui:open-product', data);
         });
-
+        categoryElement.classList.add(`card__category_${categoryMap[data.category]}`);
     
         return productElement;
     }
+
 }
