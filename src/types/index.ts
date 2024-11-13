@@ -1,16 +1,17 @@
 export interface IProduct {
-	category: string,
-	description: string,
-	id: string,
-	image: string,
-	price: number,
-	title: string
+	category: string;
+	description: string;
+	id: string;
+	image: string;
+	price: number;
+	title: string;
 }
 
 export interface IBasketModel {
 	items: Map<string, number>;
 	add(id: string): void;
 	remove(id: string): void;
+	clear(): void;
 }
 
 export interface ICatalogModel {
@@ -20,16 +21,16 @@ export interface ICatalogModel {
 }
 
 export interface IProductResponse {
-	items: IProduct[],
-	total: number
+	items: IProduct[];
+	total: number;
 }
 
 export interface IOrder {
-	payment: 'cash' | 'card' | '',
-	address: string
+	payment: 'cash' | 'card' | '';
+	address: string;
 }
 
 export interface IContacts {
-	email: string,
-	phone: string
+	email: string;
+	phone: string;
 }

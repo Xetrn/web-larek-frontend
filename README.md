@@ -24,6 +24,7 @@
 - src/utils/utils.ts — файл с утилитами
 
 ## Установка и запуск
+
 Для установки и запуска проекта необходимо выполнить команды
 
 ```
@@ -37,6 +38,7 @@ npm run start
 yarn
 yarn start
 ```
+
 ## Сборка
 
 ```
@@ -65,7 +67,7 @@ yarn build
         ├── types/ - Все типы
         ├── utils/ - Утилиты
         ├── vendor/ - сторонние библиотеки
-        └── index.tsx
+        └── index.ts - точка входа
 ```
 
 ### Описание интерфейсов
@@ -86,6 +88,7 @@ yarn build
 - items: Map<string, number>; список товаров
 - add: (id: string): void; добавление товара
 - remove: (id: string): void; удаление товара
+- clear: (): void; удаление всех товаров из корзины
 ```
 
 Свойства **ICatalogModel**:
@@ -94,6 +97,27 @@ yarn build
 - items: IProduct[]; список товаров;
 - setItems: (items: IProduct[]): void; добавить товары
 - getProduct: (id: string): IProduct; найти товар
+```
+
+Свойства **IProductResponse**:
+
+```
+- items: IProduct[]; Список продуктов
+- total: number; их общее количество
+```
+
+Свойства **IOrder**:
+
+```
+- payment: 'cash' | 'card' | ''; способ оплаты
+- address: string; адрес доставки
+```
+
+Свойства **IContacts**:
+
+```
+- email: string; почта
+- phone: string; номер телефона
 ```
 
 ### Описание Компонент
