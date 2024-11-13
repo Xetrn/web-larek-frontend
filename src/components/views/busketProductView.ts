@@ -11,11 +11,8 @@ export default class BusketProductView implements IView<BusketProduct> {
     private price: HTMLElement;
     private removeButton: HTMLButtonElement;
 
-    private broker: IEvents;
-
     constructor(productId: string, indexInList: number, template: HTMLTemplateElement, broker: IEvents) {
         this.container = cloneTemplate(template);
-        this.broker = broker;
         this.index = this.container.querySelector(".basket__item-index");
         this.index.textContent = indexInList.toString();
         this.title = this.container.querySelector(".card__title");

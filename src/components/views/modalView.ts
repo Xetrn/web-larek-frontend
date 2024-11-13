@@ -9,11 +9,10 @@ export default class ModalView implements IView<HTMLElement> {
     private innerContainer: HTMLElement;
     private content: HTMLElement;
     private closeButton : HTMLButtonElement;
-    private broker: IEvents;
 
-    constructor(pageWrapper: HTMLElement, modalContainer: HTMLElement, broker: IEvents) {
+
+    constructor(pageWrapper: HTMLElement, modalContainer: HTMLElement) {
         this.container = modalContainer;
-        this.broker = broker;
         this.pageWrapper = pageWrapper;
         this.closeButton = modalContainer.querySelector(".modal__close");
         this.closeButton.addEventListener("click", (e: MouseEvent) => this.close());

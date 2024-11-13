@@ -1,9 +1,11 @@
 type CategoryType = 'софт-скил' | 'хард-скил' | 'кнопка' | 'другое' | 'дополнительное';
-type PaymentType = 'online' | 'cash';
+type PaymentType = 'online' | 'cash' | 'same' | null;
 type ProductButtonState = 'Купить' | 'Удалить из корзины';
 type CatalogProduct = Omit<IProduct, "description">;
 type BusketProduct = Pick<IProduct, "id" | "title" | "price">;
 type FormError = 'Не указан тип оплаты' | 'Не указан адрес' | 'Не указан телефон' | 'Не указана почта';
+type PaymentData = Pick<IPaymentForm, "payment" | "address">
+type ContactsData = Pick<IContactsForm, "email" | "phone">
 
 
 interface IProduct {

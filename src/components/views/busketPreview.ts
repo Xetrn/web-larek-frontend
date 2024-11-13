@@ -6,13 +6,11 @@ export default class BusketPreview implements IView<number> {
     container: HTMLElement;
 
     private counter: HTMLElement;
-    private broker: IEvents;
 
     constructor(container: HTMLElement, broker: IEvents) {
         this.container = container;
         this.container.addEventListener("click", (e: MouseEvent) => broker.emit(Events.BUSKET_OPENED));
         this.counter = this.container.querySelector(".header__basket-counter");
-        this.broker = broker;
     }
 
     render(data: number): HTMLElement {

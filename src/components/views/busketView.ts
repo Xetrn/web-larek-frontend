@@ -1,5 +1,5 @@
 import { Events } from "../../types/eventsTypes";
-import { cloneTemplate, getCorrectPriceText, toggleDisabledIfCondition } from "../../utils/utils";
+import { cloneTemplate, getCorrectPriceText, setDisabledIfCondition } from "../../utils/utils";
 import { IEvents } from "../base/events";
 import BusketProductView from "./busketProductView";
 import IView from "./interfaces/IView";
@@ -19,7 +19,7 @@ export default class BusketView implements IView<IBusket> {
         this.container = cloneTemplate(busketTemplate);
         this.productsList = this.container.querySelector(".basket__list");
         this.startOrdering = this.container.querySelector(".basket__button");
-        this.startOrdering.addEventListener("click", (e: MouseEvent) => broker.emit(Events.PAYMENT_START));
+        this.startOrdering.addEventListener("click", (e: MouseEvent) => this.broker.emit(Events.PAYMENT_START));
         this.price = this.container.querySelector(".basket__price");
     }
 
@@ -33,8 +33,7 @@ export default class BusketView implements IView<IBusket> {
             this.productsList.append(render);
             indexCounter++;
         }
-        toggleDisabledIfCondition(busket.products.length === 0, this.startOrdering);
-        this.broker.emit(Events.MODAL_OPENED, this.container);
+        setDisabledIfCondition(busket.products.length === 0, this.startOrdering);
         return this.container;
     }
 }

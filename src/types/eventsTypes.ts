@@ -9,8 +9,10 @@ export enum Events {
     PAYMENT_START = 'payment-start',
     PAYMENT_SUBMIT = 'payment-submit',
     FORM_SUBMIT = 'form-submit',
+    ORDER_POSTED = 'order-posted',
     ORDER_FINISHED = 'order-finished',
     MODAL_OPENED = 'modal-open',
     MODAL_CLOSED = 'modal-close',
-    FORM_ERROR = 'form-error'
+    PAYMENT_UPDATE = 'payment-update',
+    CONTACTS_UPDATE = 'contacts-update'
 }

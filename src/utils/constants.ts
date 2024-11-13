@@ -5,6 +5,8 @@ export const settings = {
 
 };
 
+export const activeButtonClassName = "button_alt-active";
+
 export const correspondingCategories: Record<CategoryType, string> = {
     "другое": "other",
     "софт-скил": "soft",

@@ -6,6 +6,7 @@ export interface IBusketModel {
     getBusketCount: () => number;
     addToBusket: (product: IProduct) => void;
     removeFromBusket: (id: string) => void;
+    clearBusket: () => void;
     isInBusket: (id: string) => boolean;
 
 }
@@ -14,10 +15,8 @@ export interface IBusketModel {
 export default class BusketModel implements IBusketModel {
 
     private busket: IBusket;
-    private broker: IEvents;
 
-    constructor(broker: IEvents) {
-        this.broker = broker;
+    constructor() {
         this.busket = {products: [], totalPrice: 0};
     }
 
@@ -42,5 +41,10 @@ export default class BusketModel implements IBusketModel {
 
     isInBusket(id: string): boolean {
         return this.busket.products.find(p => p.id === id) !== undefined;
+    }
+
+    clearBusket(): void {
+        this.busket.products = [];
+        this.busket.totalPrice = 0;
     }
 }

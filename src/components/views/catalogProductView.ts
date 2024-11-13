@@ -1,5 +1,5 @@
 import { Events } from "../../types/eventsTypes";
-import { cloneTemplate, getCorrectPriceText, setCorrectCategoryClass, toggleDisabledIfCondition } from "../../utils/utils";
+import { cloneTemplate, getCorrectPriceText, setCorrectCategoryClass, setDisabledIfCondition } from "../../utils/utils";
 import { IEvents } from "../base/events";
 import IView from "./interfaces/IView";
 

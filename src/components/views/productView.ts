@@ -1,5 +1,5 @@
 import { Events } from "../../types/eventsTypes";
-import { cloneTemplate, getCorrectPriceText, setCorrectCategoryClass, toggleDisabledIfCondition } from "../../utils/utils";
+import { cloneTemplate, getCorrectPriceText, setCorrectCategoryClass, setDisabledIfCondition } from "../../utils/utils";
 import { IEvents } from "../base/events";
 import { IProductView } from "./interfaces/IProductView";
 import IView from "./interfaces/IView";
@@ -14,10 +14,8 @@ export default class ProductView implements IProductView {
     private price: HTMLElement;
     private busketButton: HTMLButtonElement;
 
-    private broker: IEvents;
 
     constructor(broker: IEvents, productTemplate: HTMLTemplateElement) {
-        this.broker = broker;
         this.container = cloneTemplate(productTemplate);
         this.title = this.container.querySelector(".card__title");
         this.category = this.container.querySelector(".card__category");
@@ -34,8 +32,7 @@ export default class ProductView implements IProductView {
         setCorrectCategoryClass(this.category, "other", data.category);
         this.image.setAttribute("src", data.image);
         this.price.textContent = getCorrectPriceText(data.price);
-        toggleDisabledIfCondition(data.price === null || isAdded, this.busketButton);
-        this.broker.emit(Events.MODAL_OPENED, this.container);
+        setDisabledIfCondition(data.price === null || isAdded, this.busketButton);
         return this.container;
     }
 }

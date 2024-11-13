@@ -146,11 +146,18 @@ export function getCorrectPriceText(price: number | null): string {
     return price !== null ? `${price} синапсов` : "Бесценно";
 }
 
-export function toggleDisabledIfCondition(condition: boolean, element: HTMLElement) {
+export function setDisabledIfCondition(condition: boolean, element: HTMLElement) {
     if (condition) {
         element.setAttribute("disabled", "");
     }
     else {
         element.removeAttribute("disabled");
     }
+}
+
+export function updateButtons(desiredButton: HTMLButtonElement, targetClass: string,  ...otherButtons: HTMLButtonElement[]) {
+    desiredButton.classList.add(targetClass);
+    otherButtons.forEach(btn => {
+        btn.classList.remove(targetClass);
+    })
 }
