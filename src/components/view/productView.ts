@@ -10,14 +10,14 @@ export class ProductView implements IView {
 		const container = cloneTemplate('#card-catalog') as HTMLButtonElement;
 		container.onclick = () => this._events.emit('product-view: click', product);
 
-		container.querySelector('.card__category').textContent = product.section;
-		container.querySelector('.card__title').textContent = product.name;
+		container.querySelector('.card__category').textContent = product.category;
+		container.querySelector('.card__title').textContent = product.title;
 		container.querySelector('.card__price').textContent = formatSynapseWord(
 			product.price
 		);
 
 		const image = container.querySelector('.card__image') as HTMLImageElement;
-		image.src = `${CDN_URL}${product.pictureUrl}`;
+		image.src = `${CDN_URL}${product.image}`;
 
 		return container;
 	}

@@ -7,7 +7,7 @@ export class CatalogView implements IView {
 		this.container = document.querySelector('.gallery') as HTMLElement;
 	}
 
-	render({ products }: { products: HTMLElement[] }) {
+	render({ products }: { products: HTMLButtonElement[] }) {
 		this.container.replaceChildren(...products);
 
 		return this.container;

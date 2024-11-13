@@ -1,10 +1,10 @@
 export interface IProduct {
-	id: string;
-	name: string;
-	description: string;
-	section: string;
-	price: number;
-	pictureUrl: string;
+	category: string,
+	description: string,
+	id: string,
+	image: string,
+	price: number,
+	title: string
 }
 
 export interface IBasketModel {
@@ -17,4 +17,9 @@ export interface ICatalogModel {
 	items: IProduct[];
 	setItems(items: IProduct[]): void;
 	getProduct(id: string): IProduct;
+}
+
+export interface IProductResponse {
+	items: IProduct[],
+	total: number
 }

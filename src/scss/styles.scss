@@ -19,3 +19,7 @@
 
 @use "variables" as *;
 @use "mixins";
+
+body.modal-open {
+  overflow: hidden;
+}

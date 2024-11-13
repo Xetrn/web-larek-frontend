@@ -3,8 +3,10 @@
 
 .modal {
   @include mixins.sublayer;
-  // height: max-content;
-  position: absolute;
+  //max-content не растягивал корзину, поэтому пришлось 100vh поставить
+  height: 100vh;
+  //из-за absolut каждый раз открывалась в начале страницы, то есть немного пролистнув модалку уже не видно(((
+  position: fixed;
   display: none;
   justify-content: center;
   background-color: $overlayBackground;

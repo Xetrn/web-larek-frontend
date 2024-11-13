@@ -1,46 +1,58 @@
-import { EventEmitter } from '../base/events';
-import { IView } from './view';
+import {IView} from "./view";
+import {IProduct} from "../../types";
+import {EventEmitter} from "../base/events";
+import {createElement, formatSynapseWord} from "../../utils/utils";
+
 
 export class BasketView implements IView {
-	private modalContainer: HTMLElement;
-	private events: EventEmitter;
+    constructor(protected _events: EventEmitter) {
+    }
 
-	constructor(events: EventEmitter) {
-		this.events = events;
+    render({items, itemsView}: {items: IProduct[], itemsView: HTMLElement[]}) {
+        const container = createElement<HTMLDivElement>('div', {
+            className: 'basket'
+        })
 
-		this.modalContainer = document.getElementById('modal-container');
-		this.setup();
-	}
+        const title = createElement<HTMLElement>('h2', {
+            className: 'modal__title',
+            textContent: 'Корзина'
+        })
 
-	private setup() {
-		const closeBtn = this.modalContainer.querySelector(
-			'.modal__close'
-		) as HTMLButtonElement;
+        const basketList = createElement<HTMLUListElement>('ul', {
+            className: 'basket__list',
+        })
+        if (itemsView.length) {
+            basketList.replaceChildren(...itemsView);
+        } else {
+            const p = createElement<HTMLParagraphElement>('p', {
+                textContent: 'Корзина пуста'
+            })
+            basketList.append(p)
+        }
 
-		closeBtn.addEventListener('click', () => {
-			this.events.emit('modal:close');
-		});
+        const modalAction = createElement<HTMLDivElement>('div', {
+            className: 'modal__actions'
+        })
 
-		const modalContent = this.modalContainer.querySelector(
-			'.modal__container'
-		) as HTMLElement;
+        const button = createElement<HTMLButtonElement>('button', {
+            className: 'button',
+            textContent: 'Оформить'
+        })
+        button.onclick = () => {
+            this._events.emit('order:open')
+        }
 
-		this.modalContainer.addEventListener('click', (event) => {
-			if (!modalContent.contains(event.target as Node)) {
-				this.events.emit('modal:close');
-			}
-		});
-	}
+        const totalPrice = items.reduce((sum, item) => sum + item.price, 0)
 
-	render({ content, isOpen }: { content?: HTMLElement; isOpen: boolean }) {
-		const contentWrapper = this.modalContainer.querySelector(
-			'.modal__content'
-		) as HTMLElement;
-		contentWrapper.innerHTML = '';
-		if (content) contentWrapper.appendChild(content);
+        const price = createElement<HTMLSpanElement>('span', {
+            className: 'basket__price',
+            textContent: formatSynapseWord(totalPrice)
+        })
 
-		this.modalContainer.classList.toggle('open', isOpen);
+        modalAction.replaceChildren(button, price);
 
-		return this.modalContainer;
-	}
+        container.append(title, basketList, modalAction)
+
+        return container
+    }
 }
