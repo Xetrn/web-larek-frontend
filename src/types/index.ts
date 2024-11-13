@@ -2,15 +2,14 @@ export interface IProductModel {
     id: string;
     title: string;
     description: string;
-    section: string;
     price: number;
-    picture: string;
+    image: string;
+    category: string;
 }
    
 export interface ICartModel {
-    products: Map<string, number>;
-    totalPrice: number;
-    add(id:string): void;
+    products: IProductModel[];
+    add(product: IProductModel): void;
     remove(id:string): void;
 }
 

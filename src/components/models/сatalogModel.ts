@@ -5,7 +5,7 @@ export class CatalogModel implements ICatalogModel {
     products: IProductModel[];
     setItems(products: IProductModel[]): void {
         this.products = products;
-        this.events.emit('catalog-model:set-items');
+        this.events.emit('catalog-model:set-items', products);
     }
     getProduct(id: string): IProductModel {
         if (!this.products) return;

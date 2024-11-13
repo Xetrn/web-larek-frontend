@@ -1,24 +1,20 @@
-import { ICartModel, IEventEmitter } from "../../types";
+import { ICartModel, IEventEmitter, IProductModel } from "../../types";
 
 export class CartModel implements ICartModel {
     constructor(protected events: IEventEmitter) {}
-    products: Map<string, number> = new Map();
-    totalPrice: number;
-    add(id: string): void {
-        if (!this.products.has(id)) this.products.set(id, 0);
-        this.products.set(id, this.products.get(id)! + 1);
-        this._changed();
+   // products: Map<string, number> = new Map();
+    products: IProductModel[] = [];  
+    add(product: IProductModel): void {
+        if (!this.exist(product)) {
+            this.products.push(product);
+            this.events.emit('basket:change');
+        }
+    }
+    exist(product: IProductModel): boolean {
+        return this.products.some(p => p.id === product.id);
     }
     remove(id: string): void {
-        if (!this.products.has(id)) return;
-        if (this.products.get(id)! > 0) {
-            this.products.set(id, this.products.get(id)! - 1);
-            if (this.products.get(id) === 0) this.products.delete(id);
-        }
-        this._changed();
-    }
-
-    protected _changed() {
-        this.events.emit('basket:change', {products: Array.from(this.products.keys())})
+        this.products = this.products.filter(product => product.id !== id);
+        this.events.emit('basket:change')
     }
 }
