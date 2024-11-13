@@ -1,18 +1,16 @@
 import { Events } from "../../types/eventsTypes";
 import { cloneTemplate, setDisabledIfCondition } from "../../utils/utils";
 import { IEvents } from "../base/events";
+import FormView from "../base/formView";
 import { IFormView } from "./interfaces/IFormView";
-import IView from "./interfaces/IView";
 
-export default class ContactsFormView implements IFormView<IContactsForm> {
+export default class ContactsFormView extends FormView<IContactsForm> {
     container: HTMLElement;
     private email: HTMLInputElement;
     private phone: HTMLInputElement;
-    private submitButton: HTMLButtonElement;
-    private errors: HTMLSpanElement;
 
     constructor(template: HTMLTemplateElement, broker: IEvents) {
-        this.container = cloneTemplate(template);
+        super(template);
         this.email = this.container.querySelector("[name='email']");
         this.phone = this.container.querySelector("[name='phone']");
         this.submitButton = this.container.querySelector("[type='submit']");

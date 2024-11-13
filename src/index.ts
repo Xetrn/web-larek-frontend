@@ -20,7 +20,6 @@ import ProductView from './components/views/productView';
 import './scss/styles.scss';
 import { Events } from './types/eventsTypes';
 import { API_URL, CDN_URL } from './utils/constants';
-import { cloneTemplate } from './utils/utils';
 
 const broker : IEvents = new EventEmitter();
 

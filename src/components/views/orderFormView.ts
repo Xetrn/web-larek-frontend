@@ -2,24 +2,21 @@ import { Events } from "../../types/eventsTypes";
 import { activeButtonClassName } from "../../utils/constants";
 import { cloneTemplate, setDisabledIfCondition, updateButtons } from "../../utils/utils";
 import { IEvents } from "../base/events";
-import { IFormView } from "./interfaces/IFormView";
-import IView from "./interfaces/IView";
+import FormView from "../base/formView";
 
 
-export default class OrderFormView implements IFormView<IPaymentForm> {
+export default class OrderFormView extends FormView<IPaymentForm> {
     container: HTMLElement;
     private payByCashButton: HTMLButtonElement;
     private payOnlineButton: HTMLButtonElement;
     private address: HTMLInputElement;
-    private nextButton: HTMLButtonElement;
-    private errors: HTMLSpanElement;
 
     constructor(template: HTMLTemplateElement, broker: IEvents) {
-        this.container = cloneTemplate(template);
+        super(template);
         this.payByCashButton = this.container.querySelector("button[name='cash']");
         this.payOnlineButton = this.container.querySelector("button[name='card']");
         this.address = this.container.querySelector("input[name='address']");
-        this.nextButton = this.container.querySelector(".order__button");
+        this.submitButton = this.container.querySelector(".order__button");
         this.errors = this.container.querySelector(".form__errors");
         this.payByCashButton.addEventListener("click", (e: MouseEvent) => {
             updateButtons(this.payByCashButton, activeButtonClassName, this.payOnlineButton);
@@ -33,16 +30,10 @@ export default class OrderFormView implements IFormView<IPaymentForm> {
         this.address.addEventListener("input", (e: InputEvent) => {
             broker.emit(Events.PAYMENT_UPDATE, {payment: "same", address: this.address.value} as PaymentData);
         })
-        this.nextButton.addEventListener("click", (e: MouseEvent) => broker.emit(Events.PAYMENT_SUBMIT));
-    }
-
-    render(data: IPaymentForm): HTMLElement {
-        setDisabledIfCondition(!data.isValid, this.nextButton);
-        this.errors.innerHTML = "";
-        if (!data.isValid) {
-            this.errors.append(data.errors[0]);
-        }
-        return this.container;
+        this.submitButton.addEventListener("click", (e: MouseEvent) => {
+            e.preventDefault();
+            broker.emit(Events.PAYMENT_SUBMIT);
+        });
     }
 
     resetForm(): void {

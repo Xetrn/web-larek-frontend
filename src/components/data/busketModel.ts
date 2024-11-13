@@ -1,5 +1,4 @@
-import { Events } from "../../types/eventsTypes";
-import { IEvents } from "../base/events";
+
 
 export interface IBusketModel {
     getBusket: () => IBusket;
