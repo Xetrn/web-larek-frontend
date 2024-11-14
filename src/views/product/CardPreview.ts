@@ -1,7 +1,7 @@
-import { IView } from "./view";
-import { EventEmitter } from "../components/base/events";
-import { categoryMap, IProduct } from "../types/product";
-import { ModalWindow } from "../components/ModalWindow";
+import { IView } from "../view";
+import { EventEmitter } from "../../components/base/events";
+import { categoryMap, IProduct } from "../../types/product";
+import { ModalWindow } from "../../components/ModalWindow";
 
 export class CardPreviewView implements IView{
 
@@ -29,7 +29,12 @@ export class CardPreviewView implements IView{
         categoryElement.textContent = data.category;
         titleElement.textContent = data.title;
         textElement.textContent = data.description;
-        priceElement.textContent = `${data.price} синапсов`;
+        if(data.price) {
+            priceElement.textContent = `${data.price} синапсов`;
+        } else {
+            priceElement.textContent = 'Бесценно';
+            this.buttonElement.disabled = true;
+        }
 
         this.buttonElement.addEventListener('click', ()=>{
             this.events.emit('ui:add-to-basket', data);

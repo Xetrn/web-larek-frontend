@@ -1,7 +1,7 @@
-import { IView } from "./view";
-import { IProduct } from "../types/product";
-import { EventEmitter } from "../components/base/events";
-import { categoryMap } from "../types/product";
+import { IView } from "../view";
+import { IProduct } from "../../types/product";
+import { EventEmitter } from "../../components/base/events";
+import { categoryMap } from "../../types/product";
 
 export class ItemView implements IView{
 
@@ -25,7 +25,12 @@ export class ItemView implements IView{
         categoryElement.textContent = data.category;
         titleElement.textContent = data.title;
         imageElement.src = data.image;
-        priceElement.textContent = `${data.price} синапсов`;
+
+        if(data.price) {
+            priceElement.textContent = `${data.price} синапсов`;
+        } else {
+            priceElement.textContent = 'Бесценно';
+        }
         buttonElement.addEventListener('click', ()=>{
             this.events.emit('ui:open-product', data);
         });

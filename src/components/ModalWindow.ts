@@ -13,6 +13,13 @@ export class ModalWindow implements IModalWindow{
         this.closeButton = this.modal.querySelector('.modal__close') as HTMLElement;
         this.closeButton.addEventListener('click', () => this.close());
         this.modal.addEventListener('click', (event) => event.stopPropagation());
+
+        this.modal.addEventListener('click', (event) => {
+            const content = this.modal.querySelector('.modal__container') as HTMLElement;
+            if (!content.contains(event.target as Node)) {
+                this.close();
+            }
+        });
     }
 
     open(): void {
@@ -28,6 +35,7 @@ export class ModalWindow implements IModalWindow{
 
     render(data: HTMLElement): void {
         this.events.emit('modal:renderContent');
+        this.modal.querySelector('.modal__content').innerHTML = '';
         this.modal.querySelector('.modal__content').appendChild(data);
         this.actionButton = this.modal.querySelector('.button') as HTMLElement;
         this.open();

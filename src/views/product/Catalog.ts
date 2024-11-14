@@ -1,6 +1,6 @@
-import { IView } from "./view";
-import { IProduct } from "../types/product";
-import { EventEmitter } from "../components/base/events";
+import { IView } from "../view";
+import { IProduct } from "../../types/product";
+import { EventEmitter } from "../../components/base/events";
 
 
 export class CatalogView<T extends Partial<IProduct>> implements IView{
