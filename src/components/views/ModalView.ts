@@ -1,6 +1,5 @@
 import { IView } from "./IView"
 import { EventEmitter } from "../base/events";
-import { Actions } from "../../utils/constants";
 
 abstract class ModalView implements IView {
 	protected modalElement: HTMLElement;
@@ -8,20 +7,23 @@ abstract class ModalView implements IView {
     protected events: EventEmitter;
 
 	constructor(events: EventEmitter) {
+		this.modalElement = document.getElementById('modal-container') as HTMLElement;
         this.events = events
-		this.closeButton = this.modalElement.querySelector('.modal__close');
+		this.closeButton = this.modalElement.querySelector('.modal__close') as HTMLButtonElement;
 		this.bindCloseEvent();
 	}
 
 	private bindCloseEvent(): void {
-		this.closeButton.addEventListener('click', () => this.events.emit(Actions.MODAL_CLOSE));
+		this.closeButton.addEventListener('click', () => this.modalElement.classList.remove('modal_active'));
 		this.modalElement.addEventListener('click', (event) => {
             const modal = this.modalElement.querySelector('.modal__container') as HTMLElement;
             if(!modal.contains(event.target as Node)){
-                this.events.emit(Actions.MODAL_CLOSE);
+                this.modalElement.classList.remove('modal_active')
             }
         });
 	}
 
 	abstract render(data?: object): HTMLElement;
 }
+
+export default ModalView;

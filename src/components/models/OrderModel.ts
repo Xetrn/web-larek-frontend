@@ -26,7 +26,6 @@ export class OrderModel implements IOrderModel {
     addItem(item: CartItem) {
         if (!this.items.has(item.id)) {
             this.items.set(item.id, item);
-            this.events.emit(Actions.CART_CHANGE, this.items);
         }
     }
     
