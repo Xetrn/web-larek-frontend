@@ -7,7 +7,7 @@ export class CartModel implements ICartModel {
     add(product: IProductModel): void {
         if (!this.exist(product)) {
             this.products.push(product);
-            this.events.emit('basket:change');
+            this.events.emit('basket:change', product);
         }
     }
     exist(product: IProductModel): boolean {
@@ -17,4 +17,10 @@ export class CartModel implements ICartModel {
         this.products = this.products.filter(product => product.id !== id);
         this.events.emit('basket:change')
     }
+    clearCart = () => {
+        this.products = [] as IProductModel[];
+        this.events.emit('basket:change');
+    }
+
+    
 }

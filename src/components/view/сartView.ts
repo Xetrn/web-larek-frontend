@@ -14,7 +14,10 @@ export class CartView implements IView {
             list.appendChild(new CartProductView(i,products[i], this.events).render());
             this.totalPrice += products[i].price; 
         }
+        const cartButton =  container.querySelector('.basket__button') as HTMLButtonElement;
+        if (products.length == 0) cartButton.disabled = true;
         container.querySelector('.basket__price').textContent = `${this.totalPrice} синапсов`;
+        cartButton.addEventListener('click',() => this.events.emit("cart:make-an-order", { products: products, totalPrice: this.totalPrice }))
         return container;
     }
 }

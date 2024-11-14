@@ -37,5 +37,5 @@ export interface IOrder {
     phone: string;
     address: string;
     total: number | null;
-    products: IProductModel;
+    products: IProductModel[];
 }

@@ -3,13 +3,16 @@ import { EventEmitter } from './components/base/events';
 import { CartModel } from './components/models/сartModel';
 import { CatalogModel } from './components/models/сatalogModel';
 import { CatalogView } from './components/view/catalogView';
+import { ContactsView } from './components/view/contactsView';
 import { ModalView } from './components/view/modalView';
+import { OrderView } from './components/view/orderView';
 import { ProductView } from './components/view/productView';
 import { ProductPreviewView } from './components/view/prouctPreviewView';
+import { OrderCompleteView } from './components/view/orderCompleteView';
 import { CartProductView } from './components/view/сartProductView';
 import { CartView } from './components/view/сartView';
 import './scss/styles.scss';
-import { IProductModel } from './types';
+import { IOrder, IProductModel } from './types';
 import { API_URL } from './utils/constants';
 import { cloneTemplate } from './utils/utils';
 
@@ -67,17 +70,35 @@ events.on('ui:basket-remove', (product: IProductModel) => {
 })
 
 
-events.on('basket:change', () => {
+events.on('basket:change', (product: IProductModel) => {
     cartButton.querySelector('.header__basket-counter').textContent = `${cartModel.products.length}`;
+    if (product) modalView.render(new ProductPreviewView(events, cartModel.exist(product)).render(product));
+    
 })
 
 events.on('product-view:click', (product: IProductModel) => {
-    modalView.render(new ProductPreviewView(events).render(product));
+    modalView.render(new ProductPreviewView(events, cartModel.exist(product)).render(product));
     modalView.toggle();
 })
 
 events.on("product-preview:basket-add", (product: IProductModel) => {
     cartModel.add(product);
-    console.log(cartModel.products);
 })
 
+events.on("order:next-button-click", (orderInfo: IOrder) => {
+    modalView.render(new ContactsView(events, orderInfo).render());
+})
+
+events.on("cart:make-an-order", (data: { products: IProductModel[], totalPrice: number }) => {
+    modalView.render(new OrderView(events, data.products, data.totalPrice).render());
+})
+
+events.on("contacts:accept", (orderInfo: IOrder) => {
+    modalView.render(new OrderCompleteView(events).render({ totalPrice: orderInfo.total }));
+    console.log(orderInfo);
+});
+
+events.on("success:close", () => {
+    modalView.toggle();
+    cartModel.clearCart();
+});
