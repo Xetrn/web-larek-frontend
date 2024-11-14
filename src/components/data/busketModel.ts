@@ -7,7 +7,6 @@ export interface IBusketModel {
     removeFromBusket: (id: string) => void;
     clearBusket: () => void;
     isInBusket: (id: string) => boolean;
-
 }
 
 

@@ -6,8 +6,8 @@ import IView from "./interfaces/IView";
 
 export default class OrderResultView implements IView<IOrderResultSuccess> {
     container: HTMLElement;
-    price: HTMLElement;
-    toMainPage: HTMLButtonElement;
+    private price: HTMLElement;
+    private toMainPage: HTMLButtonElement;
 
     constructor(template: HTMLTemplateElement, broker: IEvents) {
         this.container = cloneTemplate(template);

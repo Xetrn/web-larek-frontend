@@ -25,15 +25,6 @@ export default class ContactsFormView extends FormView<IContactsForm> {
         });
     }
 
-    render(data: IContactsForm): HTMLElement {
-        setDisabledIfCondition(!data.isValid, this.submitButton);
-        this.errors.innerHTML = "";
-        if (!data.isValid) {
-            this.errors.append(data.errors[0]);
-        }
-        return this.container;
-    }
-
     resetForm(): void {
         this.email.value = "";
         this.phone.value = "";
