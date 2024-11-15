@@ -48,7 +48,7 @@ export interface IOrderData {
 /**
  * Интерфейс для модели данных успешного оформления заказа
  */
-export interface IOrderSuccess {
+export interface IOrderSuccessData {
 	orderSuccess: TOrderSuccess;
 }
 
@@ -133,7 +133,6 @@ export type TCardPreview = TCardView & {
 export type TCategoryClassNames = 'soft' | 'other' | 'additional' | 'button' | 'hard';
 export type TCategoryClasses = Record<string, TCategoryClassNames>;
 
-export type TBasket = Pick<ICard, 'title' | 'price'>;
 export type TViewBasket = { cards: HTMLElement[]; total: number; emptyCheck: boolean };
 
 export type TPaymentMethod = 'cash' | 'card';
