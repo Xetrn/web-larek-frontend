@@ -166,3 +166,11 @@ export function getCategoryClass(category: string): string {
 			return 'card__category_soft';
 	}
 }
+
+export function debounce(func: Function, wait: number) {
+	let timeout: ReturnType<typeof setTimeout>;
+	return (...args: unknown[]) => {
+		clearTimeout(timeout);
+		timeout = setTimeout(() => func(...args), wait);
+	};
+}
