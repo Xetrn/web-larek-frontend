@@ -1,14 +1,18 @@
 export type Payment = "online" | "on-site";
 
-export interface IUserData {
-    payment: Payment;
-    address: string;
+export interface IUserForm {
     email: string;
     phone: string;
 }
 
+export interface IOrderForm {
+    payment: Payment;
+    address: string;
+}
+
 export interface IOrderData {
-    userData: IUserData;
+    userData: IUserForm;
+    orderForm: IOrderForm;
     total: number;
     items: IOrderItem[];
 }

@@ -11,24 +11,30 @@ import {API_URL, CDN_URL} from "./utils/constants";
 import { ModalWindow } from './components/ModalWindow';
 import { Page } from './components/Page';
 import { BasketView } from './views/basket/Basket';
-import { IBasketItem } from './types/basket';
+import { IBasketCatalog, IBasketItem } from './types/basket';
+import { OrderModel } from './models/Order';
+import { OrderForm } from './views/order/OrderForm';
+import { IOrderForm } from './types/order';
 
 const api = new ProductAPI(CDN_URL, API_URL);
-
 const events = new EventEmitter();
 const page = new Page(document.body, events);
+
 const products = new Products(events);
 const catalogItemView = new ItemView(events);
-const modalWindow = new ModalWindow(events);
 const catalogView = new CatalogView<Partial<IProduct>>(document.querySelector('.gallery') as HTMLElement, events, catalogItemView);
 const cardPreviewView = new CardPreviewView(events);
 
+const modalWindow = new ModalWindow(events);
+
+const orderModel = new OrderModel(events);
+const orderView = new OrderForm(events, modalWindow);
 
 const basketView = new BasketView(events);
-
 const basket = new BasketModel(events);
 
-events.on('catalog:load', (data ) => {
+
+events.on('catalog:load', () => {
    catalogView.render(products.getAllProducts());
 
 });
@@ -67,9 +73,20 @@ events.on('basket:remove', (data: IBasketItem) => {
     //console.log('item was removed', data);
 });
 
-events.on('basket:place-order', (data: IBasketItem[]) => {
-    console.log('order was placed', data);
+// открытие окна оформления заказа
+events.on('basket:place-order', (data: IBasketCatalog) => {
+    orderModel.setProduct(data);
+    orderView.render();
 });
+
+events.on('order-form:submit', (data:IOrderForm) => {
+    console.log('order was submitted', data);
+    orderModel.setPayment(data.payment);
+    orderModel.setAddress(data.address);
+    console.log(orderModel.getOrderData());
+});
+
+
 
 
 

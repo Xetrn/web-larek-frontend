@@ -31,6 +31,8 @@ export class BasketView implements IView{
 
         basketPriceElement.textContent = `${data.total.toString()} синапсов`;
 
+        basketButtonElement.addEventListener('click', (event)=> event.stopPropagation());
+
         basketButtonElement.addEventListener('click', () => {
             this.events.emit('basket:place-order', {items: data.items, total: data.total});
         });

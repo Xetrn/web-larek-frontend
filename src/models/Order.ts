@@ -1,39 +1,57 @@
-import { IOrderData, IOrderItem, IUserData, Payment } from "../types/order";
-import { EventEmitter } from "events";
+import { IBasketCatalog } from "../types/basket";
+import { IOrderData, IOrderForm, IOrderItem, IUserForm, Payment } from "../types/order";
+import { EventEmitter } from "../components/base/events";
 
-export class OrderModel {
-    private orderData: { userData: IUserData; total: number; items: IOrderItem[] };
-    protected emitter: EventEmitter;
+export class OrderModel  {
+    protected total: number = 0;
+    protected items: IOrderItem[] = [];
 
-    constructor(orderData: { total: number; items: IOrderItem[] }, eventEmitter: EventEmitter) {
-        this.orderData.total = orderData.total;
-        this.orderData.items = orderData.items;
-        this.emitter = eventEmitter;
-        this._emitChange('order:init');
+    protected userData: IUserForm = {
+        email: '',
+        phone: ''
+    };
+
+    protected orderForm: IOrderForm = {
+        payment: 'online',
+        address: ''
+    };
+
+     constructor(protected emitter: EventEmitter) {
+    }
+
+    setProduct(orderData: IBasketCatalog): void {
+        this.total = orderData.total;
+        this.items = orderData.items;
+        console.log('orderData', this.getOrderData());
     }
 
     setPayment(payment: Payment): void {
-        this.orderData.userData.payment = payment;
+        this.orderForm.payment = payment;
         this._emitChange('payment:set');
     }
 
     setAddress(address: string): void {
-        this.orderData.userData.address = address;
+        this.orderForm.address = address;
         this._emitChange('address:set');
     }
 
     setEmail(email: string): void {
-        this.orderData.userData.email = email;
+        this.userData.email = email;
         this._emitChange('email:set');
     }
 
     setPhone(phone: string): void {
-        this.orderData.userData.phone = phone;
+        this.userData.phone = phone;
         this._emitChange('phone:set');
     }
 
     getOrderData(): IOrderData {
-        return this.orderData;
+        return {
+            userData: this.userData,
+            orderForm: this.orderForm,
+            total: this.total,
+            items: this.items,
+        };
     }
 
     makeOrder(): void {
@@ -41,6 +59,6 @@ export class OrderModel {
     }
 
     protected _emitChange(event: string): void {
-        this.emitter.emit(event, this.orderData);
+        this.emitter.emit(event, this.getOrderData());
     }
 }

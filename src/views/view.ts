@@ -1,5 +1,5 @@
 
 
 export interface IView {
-    render(data: unknown): HTMLElement;
+    render(data?: unknown): HTMLElement;
 }
