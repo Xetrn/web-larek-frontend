@@ -7,13 +7,13 @@ import { IView } from './view';
 export class ModalProductView implements IView {
 	constructor(protected _events: EventEmitter) {}
 
-	render({ item, isInBasket }: { item: IProduct, isInBasket: boolean }) {
+	render({ item, isInBasket }: { item: IProduct; isInBasket: boolean }) {
 		const button = createElement('button', {
 			className: 'button',
-			textContent: isInBasket ? "Уже в корзине" :'В корзину',
+			textContent: isInBasket ? 'Уже в корзине' : 'В корзину',
 		}) as HTMLButtonElement;
-		if (isInBasket) {
-			button.disabled = true
+		if (isInBasket || item.price === null) {
+			button.disabled = true;
 		}
 		button.onclick = () =>
 			this._events.emit('product-modal-view: add', { id: item.id });
