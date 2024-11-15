@@ -15,7 +15,7 @@ export type BaseCartItem = {
     /**
      * Цена
      */
-    price: number | null;
+    price: number;
 }
 
 export type CartItem = BaseCartItem & {

@@ -25,7 +25,7 @@ export type Product = {
     /**
      * Цена продукта
      */
-    price: string | null;
+    price: number | null;
 
     /**
      * Категория

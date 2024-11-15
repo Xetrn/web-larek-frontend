@@ -25,5 +25,5 @@ export type OrderForm = {
     /**
      * Общая сумма заказа
      */
-    totalPrice: string | number;
+    totalPrice: number;
 }
