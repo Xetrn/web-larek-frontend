@@ -48,7 +48,7 @@ events.on('productCards:receive', () => {
 events.on('card:select', (item: IProduct) => { dataModel.setPreview(item); });
 
 events.on('modalCard:open', (item: IProduct) => {
-  const cardPreview = new CardPreview(cardPreviewTemplate, events);
+  const cardPreview = new CardPreview(cardPreviewTemplate, events, (data: IProduct) => basketModel.isProductInBasket(data));
   modal.content = cardPreview.render(item);
   modal.render();
 });
@@ -85,7 +85,9 @@ events.on('order:open', () => {
   formModel.items = basketModel.basketProducts.map(item => item.id);
 });
 
-events.on('order:paymentSelection', (button: HTMLButtonElement) => { formModel.payment = button.name; });
+events.on('order:paymentSelection', (button: HTMLButtonElement) => { 
+  formModel.setOrderPayment(button.name); 
+});
 
 events.on('order:changeAddress', (data: { field: string; value: string; }) => {
   formModel.setOrderAddress(data.field, data.value);

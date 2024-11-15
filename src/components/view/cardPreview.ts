@@ -11,16 +11,21 @@ export interface ICard {
 export class CardPreview extends Card implements ICard {
   text: HTMLElement;
   button: HTMLElement;
+  isProductInBasket: (data: IProduct) => boolean;
 
-  constructor(template: HTMLTemplateElement, protected events: IEvents, actions?: IActions) {
+  constructor(template: HTMLTemplateElement, protected events: IEvents, isProductInBasket: (data: IProduct) => boolean, actions?: IActions) {
     super(template, events, actions);
+    this.isProductInBasket = isProductInBasket;
     this.text = this._cardElement.querySelector('.card__text') as HTMLElement;
     this.button = this._cardElement.querySelector('.card__button') as HTMLElement;
     this.button.addEventListener('click', () => this.events.emit('card:addBasket'));
   }
 
   notSale(data: IProduct): string {
-    if (data.price) {
+    if (this.isProductInBasket(data)) {
+      this.button.setAttribute('disabled', 'true');
+      return 'Уже в корзине';
+    } else if (data.price) {
       return 'Купить';
     } else {
       this.button.setAttribute('disabled', 'true');

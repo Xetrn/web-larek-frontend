@@ -4,6 +4,7 @@ export interface IBasketModel {
   basketProducts: IProduct[];
   getCounter: () => number;
   getSumAllProducts: () => number;
+  isProductInBasket(data: IProduct): boolean;
   setSelectedCard(data: IProduct): void;
   deleteCardFromBasket(item: IProduct): void;
   clearBasketProducts(): void;
@@ -30,6 +31,10 @@ export class BasketModel implements IBasketModel {
 
   getSumAllProducts() {
     return this.basketProducts.reduce((sum, item) => sum + (item.price || 0), 0); 
+  }
+
+  isProductInBasket(data: IProduct) {
+    return this._basketProducts.some(elem => elem.id == data.id);
   }
 
   setSelectedCard(data: IProduct) {

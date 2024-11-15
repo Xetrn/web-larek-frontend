@@ -36,6 +36,14 @@ export class FormModel implements IFormModel {
     }
   }
 
+  setOrderPayment(name: string) {
+    this.payment = name;
+    
+    if (this.validateOrder()) {
+      this.events.emit('order:ready', this.getOrderLot());
+    }
+  }
+
   validateOrder(): boolean {
     const regexp = /^[а-яА-ЯёЁa-zA-Z0-9\s\/.,-]{7,}$/;
     const errors: Errors = {};
