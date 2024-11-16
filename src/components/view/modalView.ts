@@ -6,16 +6,16 @@ interface IModalView {
 }
 
 export class ModalView extends BaseView<HTMLElement> implements IModalView {
+  protected page: HTMLBodyElement;
   protected element: HTMLElement;
   protected modalCloseButton: HTMLButtonElement;
   protected modalContainer: HTMLElement;
   protected modalContent: HTMLElement;
-  protected pageWrapper: HTMLElement;
 
   constructor() {
     super();
+    this.page = document.querySelector('.page');
     this.element = document.querySelector('#modal-container');
-    this.pageWrapper = document.querySelector('.page__wrapper');
     this.modalCloseButton = this.element.querySelector('.modal__close');
     this.modalContainer = this.element.querySelector('.modal__container');
     this.modalContent = this.element.querySelector('.modal__content');
@@ -53,13 +53,15 @@ export class ModalView extends BaseView<HTMLElement> implements IModalView {
 
   open = () => {
     this.element.classList.add('modal_active');
-    this.pageWrapper.classList.add('page__wrapper_locked');
+    this.page.style.overflow = 'hidden';
+    this.page.style.paddingRight = '20px';
     this.setListeners();
   };
 
   close = () => {
     this.element.classList.remove('modal_active');
-    this.pageWrapper.classList.remove('page__wrapper_locked');
+    this.page.style.overflow = 'auto';
+    this.page.style.paddingRight = '0';
     this.modalContent.innerHTML = '';
     this.removeListeners();
   };

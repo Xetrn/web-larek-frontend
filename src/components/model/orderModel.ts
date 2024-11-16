@@ -1,17 +1,17 @@
 import {
   IOrder,
   IOrderAPI,
+  IOrderResult,
   OrderFormStatus,
-  OrderResponseSuccess,
   PaymentMethod,
-} from '../types';
+} from '../../types';
 
 interface IOrderModel {
   status: OrderFormStatus;
   order: IOrder;
   isValid: boolean;
   error: string;
-  createOrder(order: IOrder): Promise<OrderResponseSuccess>;
+  createOrder(order: IOrder): Promise<IOrderResult>;
   reset(): void;
 }
 

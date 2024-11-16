@@ -1,11 +1,11 @@
-import { EventEmitter } from '../components/base/events';
-import { Events } from '../utils/constants';
+import { EventEmitter } from '../base/events';
+import { Events } from '../../utils/constants';
 import {
   CatalogView,
   CatalogItemView,
   CatalogItemFullView,
-} from '../components/view/catalog';
-import { CatalogItem, IProduct } from '../types';
+} from '../view/catalog';
+import { CatalogItem, IProduct } from '../../types';
 
 interface ICatalogPresenter {
   init(): void;

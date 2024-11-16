@@ -8,20 +8,22 @@ export enum OrderFormStatus {
   CONTACTS = 'contacts',
 }
 
-export type OrderResponseSuccess = {
-  id: string;
-  total: number;
-};
-
-export type OrderResponseError = {
-  error: string;
-};
-
-export interface IOrder {
+export interface IOrderAddress {
   payment: PaymentMethod;
+  address: string;
+}
+
+export interface IOrderContacts {
   email: string;
   phone: string;
-  address: string;
+}
+
+export interface IOrder extends IOrderAddress, IOrderContacts {
   total: number;
   items: string[];
+}
+
+export interface IOrderResult {
+  id: string;
+  total: number;
 }

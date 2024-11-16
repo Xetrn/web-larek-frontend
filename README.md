@@ -152,26 +152,28 @@ enum PaymentMethod {
   CASH = 'cash',
 }
 
-interface IOrder {
+interface IOrderAddress {
   payment: PaymentMethod;
+  address: string;
+}
+
+interface IOrderContacts {
   email: string;
   phone: string;
-  address: string;
+}
+
+interface IOrder extends IOrderAddress, IOrderContacts {
   total: number;
   items: string[];
 }
 ```
 
-#### Типы ответа сервера при создании заказа
+#### IOrderResult - интерфейс ответа сервера при создании заказа
 ```ts
-type OrderResponseSuccess = {
+export interface IOrderResult {
   id: string;
   total: number;
-};
-
-type OrderResponseError = {
-  error: string;
-};
+}
 ```
 
 #### Интерфейс модели заказа
@@ -194,9 +196,13 @@ interface IOrderModel {
 
 ## API
 
-#### Тип ответа сервера при получении продуктов
+#### Типы ответа сервера
 ```ts
-export type ApiListResponse<T> = {
+export type ErrorResponse = {
+  error: string;
+};
+
+type ApiListResponse<T> = {
   total: number;
   items: T[];
 };
@@ -206,16 +212,16 @@ export type ApiListResponse<T> = {
 Каждый интерфейс предназначен своей модели при инъекции сервиса, при этом оба интерфейса должны быть реализованы ShopAPI
 
 ```ts
-export interface IProductAPI {
+interface IProductAPI {
   getProducts(): Promise<ApiListResponse<IProduct>>;
   getProductById(id: string): Promise<IProduct>;
 }
 
-export interface IOrderAPI {
+interface IOrderAPI {
   createOrder(order: IOrder): Promise<OrderResponseSuccess>;
 }
 
-export interface IShopAPI extends IProductAPI, IOrderAPI {}
+interface IShopAPI extends IProductAPI, IOrderAPI {}
 ```
 
 ## Model

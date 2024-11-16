@@ -1,5 +1,9 @@
-import { IOrder, OrderResponseSuccess } from './order';
+import { IOrder, IOrderResult } from './order';
 import { IProduct } from './product';
+
+export type ErrorResponse = {
+  error: string;
+};
 
 export type ApiListResponse<T> = {
   total: number;
@@ -12,7 +16,7 @@ export interface IProductAPI {
 }
 
 export interface IOrderAPI {
-  createOrder(order: IOrder): Promise<OrderResponseSuccess>;
+  createOrder(order: IOrder): Promise<IOrderResult>;
 }
 
 export interface IShopAPI extends IProductAPI, IOrderAPI {}

@@ -1,8 +1,8 @@
 import './scss/styles.scss';
 import { EventEmitter } from './components/base/events';
-import { BasketModel, OrderModel, CatalogModel } from './model';
-import { CatalogPresenter } from './presenter/catalogPresenter';
-import { ShopAPI } from './service/shop-api';
+import { BasketModel, OrderModel, CatalogModel } from './components/model';
+import { CatalogPresenter } from './components/presenter/catalogPresenter';
+import { ShopAPI } from './components/service/shop-api';
 import { API_URL, Events } from './utils/constants';
 import { ModalView } from './components/view/modalView';
 

@@ -1,4 +1,4 @@
-import { BasketItem, IBasket } from '../types';
+import { BasketItem, IBasket } from '../../types';
 
 interface IBasketModel extends IBasket {
   getAll(): BasketItem[];

@@ -1,4 +1,4 @@
-import { CatalogItem, IProduct, IProductAPI } from '../types';
+import { CatalogItem, IProduct, IProductAPI } from '../../types';
 
 interface ICatalogModel {
   products: IProduct[];
@@ -13,7 +13,8 @@ export class CatalogModel implements ICatalogModel {
   constructor(private api: IProductAPI) {}
 
   async load() {
-    this.products = (await this.api.getProducts()).items;
+    const { items } = await this.api.getProducts();
+    this.products = items;
   }
 
   getAll() {
