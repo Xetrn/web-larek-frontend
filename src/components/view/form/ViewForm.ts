@@ -1,8 +1,8 @@
-import { IEvents } from '../base/events';
-import { ensureAllElements, ensureElement } from '../../utils/utils';
+import { IEvents } from '../../base/events';
+import { ensureAllElements, ensureElement } from '../../../utils/utils';
 
-import { View } from '../view/View';
-import { IViewForm, TViewForm } from '../../types/index';
+import { View } from '../../view/View';
+import { IViewForm, TViewForm } from '../../../types/index';
 
 export abstract class ViewForm<T extends TViewForm> extends View<T> implements IViewForm {
 	protected _container: HTMLFormElement;

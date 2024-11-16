@@ -1,9 +1,9 @@
-import { IEvents } from '../base/events';
-import { ensureElement } from '../../utils/utils';
+import { IEvents } from '../../base/events';
+import { ensureElement } from '../../../utils/utils';
 
-import { ContactFormErrors } from '../../utils/constants';
+import { ContactFormErrors } from '../../../utils/constants';
 import { ViewForm } from './ViewForm';
-import { TViewFormContacts, IViewForm } from '../../types/index';
+import { TViewFormContacts, IViewForm } from '../../../types/index';
 
 export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IViewForm {
 	protected _emailInput: HTMLInputElement;

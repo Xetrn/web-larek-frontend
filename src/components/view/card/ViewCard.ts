@@ -1,9 +1,9 @@
-import { IEvents } from '../base/events';
-import { ensureElement } from '../../utils/utils';
-import { categories } from '../../utils/constants';
+import { IEvents } from '../../base/events';
+import { ensureElement } from '../../../utils/utils';
+import { categories } from '../../../utils/constants';
 
-import { View } from '../view/View';
-import { TCardView, IViewCard } from '../../types/index';
+import { View } from '../../view/View';
+import { TCardView, IViewCard } from '../../../types/index';
 
 export abstract class ViewCard<T extends TCardView> extends View<T> implements IViewCard {
 	//*

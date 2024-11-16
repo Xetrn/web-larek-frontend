@@ -1,7 +1,7 @@
-import { IEvents } from '../base/events';
+import { IEvents } from '../../base/events';
 
 import { ViewCard } from './ViewCard';
-import { TCardCatalogueView, IViewCard } from '../../types/index';
+import { TCardCatalogueView, IViewCard } from '../../../types/index';
 
 export class ViewCardCatalogue extends ViewCard<TCardCatalogueView> implements IViewCard {
 	constructor(container: HTMLElement, events: IEvents) {

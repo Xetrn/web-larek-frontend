@@ -1,9 +1,9 @@
-import { IEvents } from '../base/events';
-import { ensureElement } from '../../utils/utils';
+import { IEvents } from '../../base/events';
+import { ensureElement } from '../../../utils/utils';
 
-import { BasketActs } from '../../utils/constants';
+import { BasketActs } from '../../../utils/constants';
 import { ViewCard } from './ViewCard';
-import { TCardPreview, IViewCard } from '../../types/index';
+import { TCardPreview, IViewCard } from '../../../types/index';
 
 export class ViewCardPreview extends ViewCard<TCardPreview> implements IViewCard {
 	//*

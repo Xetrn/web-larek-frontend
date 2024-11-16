@@ -6,7 +6,7 @@ import { BasketData } from './components/model/BasketData';
 import { CardsData } from './components/model/CardsData';
 import { OrderData } from './components/model/OrderData';
 import { OrderSuccessData } from './components/model/OrderSuccessData';
-import { ViewCardPreview } from './components/view/ViewCardPreview';
+import { ViewCardPreview } from './components/view/card/ViewCardPreview';
 import { ViewModal } from './components/view/ViewModal';
 import { ViewPage } from './components/view/ViewPage';
 
