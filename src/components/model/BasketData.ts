@@ -1,9 +1,9 @@
 import { IBasketData } from '../../types/index';
 import { IEvents } from '../base/events';
-import { ICard } from '../../types/index';
+import { ICardData } from '../../types/index';
 
 export class BasketData implements IBasketData {
-	protected _goods: ICard[] = [];
+	protected _goods: ICardData[] = [];
 	total: 0;
 	events: IEvents;
 
@@ -14,8 +14,7 @@ export class BasketData implements IBasketData {
 	get goods() {
 		return this._goods;
 	}
-
-	set goods(cards: ICard[]) {
+	set goods(cards: ICardData[]) {
 		this._goods = cards;
 	}
 
@@ -24,12 +23,11 @@ export class BasketData implements IBasketData {
 	}
 	//*
 
-	addToBasket(card: ICard) {
+	addToBasket(card: ICardData) {
 		this._goods.push(card);
 		this.total += card.price;
 		this.events.emit('basketData:changed', { id: card.id });
 	}
-
 	removeFromBasket(id: string) {
 		this._goods = this._goods.filter((good) => good.id !== id);
 		this.total -= this._goods.find((good) => good.id === id)?.price ?? 0;
@@ -43,9 +41,7 @@ export class BasketData implements IBasketData {
 	}
 
 	getGoodsNumber = (): number => this._goods.length;
-
 	getTotal = (): number => this._goods.reduce((acc, good) => acc + good.price, 0);
-
 	getIdsOfGoods = (): string[] => this._goods.map((good) => good.id);
 
 	//*

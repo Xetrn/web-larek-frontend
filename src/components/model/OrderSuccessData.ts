@@ -1,7 +1,7 @@
 import { IOrderSuccessData, TOrderSuccess } from '../../types';
 import { IEvents } from '../base/events';
 
-export class OrderSuccess implements IOrderSuccessData {
+export class OrderSuccessData implements IOrderSuccessData {
 	protected _orderSuccess: TOrderSuccess;
 	events: IEvents;
 

@@ -4,7 +4,7 @@ import { ensureAllElements, ensureElement } from '../../utils/utils';
 import { View } from '../view/View';
 import { IViewForm, TViewForm } from '../../types/index';
 
-export abstract class ViewForm<T> extends View<TViewForm> implements IViewForm {
+export abstract class ViewForm<T extends TViewForm> extends View<T> implements IViewForm {
 	protected _container: HTMLFormElement;
 	protected _inputs: HTMLInputElement[];
 	protected _submitButton: HTMLButtonElement;
@@ -41,12 +41,12 @@ export abstract class ViewForm<T> extends View<TViewForm> implements IViewForm {
 		this._container.reset;
 	}
 
-	render(data: TViewForm & Partial<T>) {
+	/*render(data: TViewForm & Partial<T>) {
 		const { valid, errorMessage, ...inputs } = data;
 
 		super.render({ valid, errorMessage });
 		Object.assign(this, inputs);
 
 		return this._container;
-	}
+	}*/
 }

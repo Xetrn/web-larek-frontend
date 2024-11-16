@@ -2,9 +2,9 @@ import { IEvents } from '../base/events';
 import { ensureElement } from '../../utils/utils';
 
 import { View } from './View';
-import { IViewPage } from '../../types/index';
+import { TViewPage } from '../../types/index';
 
-export class ViewPage extends View<IViewPage> implements IViewPage {
+export class ViewPage extends View<TViewPage> {
 	//*
 	protected _catalog: HTMLElement;
 	protected _buttonBasket: HTMLButtonElement;

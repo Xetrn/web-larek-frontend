@@ -3,10 +3,10 @@ import { ensureElement } from '../../utils/utils';
 
 import { OrderFormErrors } from '../../utils/constants';
 import { ViewForm } from './ViewForm';
-import { IViewFormOrder, TViewFormOrder, TPaymentMethod } from '../../types';
+import { TViewFormOrder, TPaymentMethod, IViewForm } from '../../types';
 
 // Форма заказа со способом оплаты и адресом доставки
-export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewFormOrder {
+export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewForm {
 	protected _buttonsContainer: HTMLDivElement;
 	protected _buttonOnline: HTMLButtonElement; //* _buttonBycard
 	protected _buttonOnDelivery: HTMLButtonElement; //* _buttonInCash

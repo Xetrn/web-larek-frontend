@@ -1,9 +1,9 @@
 import { IEvents } from '../base/events';
 import { View } from './View';
-import { TViewBasket, IViewBasket } from '../../types/index';
+import { TViewBasket } from '../../types/index';
 import { ensureElement } from '../../utils/utils';
 
-export class ViewBasket extends View<TViewBasket> implements IViewBasket {
+export class ViewBasket extends View<TViewBasket> {
 	protected _cardList: HTMLUListElement;
 	protected _totalCost: HTMLSpanElement;
 	protected _basketToOrderBtn: HTMLButtonElement; // _placeOrderBtn

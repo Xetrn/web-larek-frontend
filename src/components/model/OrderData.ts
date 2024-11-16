@@ -20,23 +20,18 @@ export class OrderData implements IOrderData {
 	set payment(type: TPaymentMethod) {
 		this._payment = type;
 	}
-
 	set email(value: string) {
 		this._email = value;
 	}
-
 	set address(value: string) {
 		this._address = value;
 	}
-
 	set phone(value: string) {
 		this._phone = value;
 	}
-
 	set total(value: number) {
 		this._total = value;
 	}
-
 	set items(value: string[]) {
 		this._items = value;
 	}

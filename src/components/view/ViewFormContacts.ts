@@ -3,9 +3,9 @@ import { ensureElement } from '../../utils/utils';
 
 import { ContactFormErrors } from '../../utils/constants';
 import { ViewForm } from './ViewForm';
-import { IViewFormContacts, TViewFormContacts } from '../../types/index';
+import { TViewFormContacts, IViewForm } from '../../types/index';
 
-export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IViewFormContacts {
+export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IViewForm {
 	protected _emailInput: HTMLInputElement;
 	protected _phoneInput: HTMLInputElement;
 

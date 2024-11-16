@@ -95,7 +95,7 @@ yarn build
 
 В проекте используются следующие интерфейсы:
 
-### ICard
+### ICardData
 
 Интерфейс для карточки товара со свойствами:
 
@@ -127,16 +127,16 @@ yarn build
 
 Интерфейс для модели данных карточек со свойством:
 
-- **cards**: массив карточек товаров (тип: ICard[])
+- **cards**: массив карточек товаров (тип: ICardData[])
 
 ### IBasketData
 
 Интерфейс для описания данных корзины со свойствами:
 
-- **goods**: список товаров в корзине (тип: ICard[])
+- **goods**: список товаров в корзине (тип: ICardData[])
 - **total**: общая стоимость товаров в корзине (тип: number)
 - **isInBasket(id: string)**: метод для проверки наличия товара в корзине (тип: boolean)
-- **addToBasket(card: ICard)**: метод для добавления товара в корзину (тип: void)
+- **addToBasket(card: ICardData)**: метод для добавления товара в корзину (тип: void)
 - **removeFromBasket(id: string)**: метод для удаления товара из корзины (тип: void)
 - **clearBasket()**: метод для очистки корзины (тип: void)
 - **getGoodsNumber()**: метод для получения количества товаров в корзине (тип: number)
@@ -155,8 +155,8 @@ yarn build
 
 Интерфейс для API приложения со следующими методами:
 
-- **getCards()**: получение карточек (тип: Promise<ICard[]>)
-- **getCardById(id: string)**: получение карточки по идентификатору (тип: Promise<ICard>)
+- **getCards()**: получение карточек (тип: Promise<ICardData[]>)
+- **getCardById(id: string)**: получение карточки по идентификатору (тип: Promise<ICardData>)
 - **postOrder(order: IOrder)**: отправка заказа (тип: Promise<TOrderSuccess>)
 
 ### IViewPage

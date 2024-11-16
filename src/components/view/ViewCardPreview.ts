@@ -3,9 +3,9 @@ import { ensureElement } from '../../utils/utils';
 
 import { BasketActs } from '../../utils/constants';
 import { ViewCard } from './ViewCard';
-import { TCardPreview } from '../../types/index';
+import { TCardPreview, IViewCard } from '../../types/index';
 
-export class ViewCardPreview extends ViewCard<TCardPreview> {
+export class ViewCardPreview extends ViewCard<TCardPreview> implements IViewCard {
 	//*
 	protected _buyBtn: HTMLButtonElement;
 

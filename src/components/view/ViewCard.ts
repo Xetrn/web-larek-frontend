@@ -3,9 +3,9 @@ import { ensureElement } from '../../utils/utils';
 import { categories } from '../../utils/constants';
 
 import { View } from '../view/View';
-import { TCardView } from '../../types/index'; //* IViewCard
+import { TCardView, IViewCard } from '../../types/index';
 
-export abstract class ViewCard<T extends TCardView> extends View<T> {
+export abstract class ViewCard<T extends TCardView> extends View<T> implements IViewCard {
 	//*
 	protected _id: string;
 	protected _title: HTMLHeadingElement;
