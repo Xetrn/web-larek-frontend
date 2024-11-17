@@ -31,10 +31,7 @@ export class BasketPresenter implements IPresenter {
 
   init() {
     this.updateBasketCounter();
-    this.events.on(Events.BASKET_UPDATE, () => {
-      this.updateBasketCounter();
-      this.updateBasket();
-    });
+    this.events.on(Events.BASKET_UPDATE, this.updateBasketCounter);
     this.basketView.setHandlers({
       onDeleteClick: this.handleDeleteClick,
       onSubmitClick: this.handleBasketSubmit,
@@ -42,7 +39,7 @@ export class BasketPresenter implements IPresenter {
     this.basketButton.addEventListener('click', this.handleBasketClick);
   }
 
-  private updateBasket = () => {
+  private renderBasket = () => {
     const products = this.basketModel.getAll();
     const totalPrice = this.basketModel.totalPrice;
     return this.basketView.render({
@@ -57,15 +54,15 @@ export class BasketPresenter implements IPresenter {
   };
 
   private handleBasketSubmit = () => {
-    console.log(this.basketModel.count);
-    this.events.emit(Events.MODAL_CLOSE);
+    this.events.emit(Events.ORDER_CREATE, this.basketModel.getAll());
   };
 
   private handleBasketClick = () => {
-    this.events.emit(Events.MODAL_OPEN, this.updateBasket());
+    this.events.emit(Events.MODAL_OPEN, this.renderBasket());
   };
 
   private handleDeleteClick = (id: string) => {
     this.basketModel.remove(id);
+    this.renderBasket();
   };
 }

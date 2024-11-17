@@ -12,10 +12,26 @@ export const categoryClasses: Record<Category, string> = {
   [Category.ADDITIONAL]: 'card__category_additional',
 };
 
+export const phoneRegex = /^\+?[78]\d{10}$/;
+export const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+export const orderErrors = {
+  phone: {
+    empty: 'Введите номер телефона',
+    invalid: 'Введите корректный номер телефона',
+  },
+  email: {
+    empty: 'Введите адрес электронной почты',
+    invalid: 'Введите корректный адрес электронной почты',
+  },
+  address: 'Введите адрес доставки',
+  payment: 'Выберите способ оплаты',
+};
+
 export enum Events {
   MODAL_OPEN = 'modal:open',
   MODAL_CLOSE = 'modal:close',
   BASKET_UPDATE = 'basket:update',
-  BASKET_ADD = 'basket:add',
-  BASKET_REMOVE = 'basket:remove',
+  ORDER_CREATE = 'order:create',
+  ORDER_FINISHED = 'order:finished',
 }

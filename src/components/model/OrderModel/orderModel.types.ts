@@ -1,10 +1,21 @@
-import { IOrder, IOrderResult, OrderFormStatus } from "../../../types";
+import { IOrder, IOrderAPI, IOrderResult, IProduct } from '../../../types';
+import { EventEmitter } from '../../base/events';
 
 export interface IOrderModel {
-  status: OrderFormStatus;
   order: IOrder;
-  isValid: boolean;
-  error: string;
-  createOrder(order: IOrder): Promise<IOrderResult>;
+  createOrder(): Promise<IOrderResult>;
+  updateOrderInputs(options: Partial<Omit<IOrder, 'items' | 'total'>>): void;
+  validateAddressForm(): string | null;
+  validateContactsForm(): string | null;
   reset(): void;
 }
+
+export interface OrderModelDependencies {
+  api: IOrderAPI;
+  events: EventEmitter;
+}
+
+export type SetProductsProps = {
+  products: IProduct[];
+  total: number;
+};

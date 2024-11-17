@@ -1,4 +1,4 @@
-import { CatalogItem, IProduct } from '../../../types';
+import { CatalogItem } from '../../../types';
 import { BaseView } from '../baseView';
 import { CatalogItemView } from './catalogItemView';
 

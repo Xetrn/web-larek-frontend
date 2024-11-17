@@ -1,10 +1,13 @@
 import { IProduct, IProductAPI } from '../../../types';
-import { ICatalogModel } from './catalogModel.types';
+import { CatalogModelDependencies, ICatalogModel } from './catalogModel.types';
 
 export class CatalogModel implements ICatalogModel {
+  private api: IProductAPI;
   products: IProduct[];
 
-  constructor(private api: IProductAPI) {}
+  constructor({ api }: CatalogModelDependencies) {
+    this.api = api;
+  }
 
   async load() {
     const { items } = await this.api.getProducts();

@@ -31,6 +31,11 @@ export class BasketModel implements IBasketModel {
     });
   }
 
+  reset() {
+    this.products.clear();
+    this.events.emit(Events.BASKET_UPDATE);
+  }
+
   has(id: string) {
     return Array.from(this.products).some((p) => p.id === id);
   }
