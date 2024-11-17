@@ -1,3 +1,7 @@
+import {
+  disableScrollOnElement,
+  enableScrollOnElement,
+} from '../../utils/utils';
 import { BaseView } from './baseView';
 
 interface IModalView {
@@ -29,20 +33,18 @@ export class ModalView extends BaseView<HTMLElement> implements IModalView {
     return this.element;
   }
 
-  protected setListeners = () => {
+  protected setModalListeners = () => {
     document.addEventListener('keydown', this.handleEscapeKeydown);
     this.element.addEventListener('click', this.close);
     this.modalCloseButton.addEventListener('click', this.close);
-    this.modalContainer.addEventListener('click', (e) => e.stopPropagation());
+    this.modalContainer.addEventListener('click', this.handleContainerClick);
   };
 
-  protected removeListeners = () => {
+  protected removeModalListeners = () => {
     document.removeEventListener('keydown', this.handleEscapeKeydown);
     this.element.removeEventListener('click', this.close);
     this.modalCloseButton.removeEventListener('click', this.close);
-    this.modalContainer.removeEventListener('click', (e) =>
-      e.stopPropagation()
-    );
+    this.modalContainer.removeEventListener('click', this.handleContainerClick);
   };
 
   protected handleEscapeKeydown = (e: KeyboardEvent) => {
@@ -51,18 +53,20 @@ export class ModalView extends BaseView<HTMLElement> implements IModalView {
     }
   };
 
+  protected handleContainerClick = (e: MouseEvent) => {
+    e.stopPropagation();
+  };
+
   open = () => {
     this.element.classList.add('modal_active');
-    this.page.style.overflow = 'hidden';
-    this.page.style.paddingRight = '20px';
-    this.setListeners();
+    disableScrollOnElement(this.page);
+    this.setModalListeners();
   };
 
   close = () => {
     this.element.classList.remove('modal_active');
-    this.page.style.overflow = 'auto';
-    this.page.style.paddingRight = '0';
+    enableScrollOnElement(this.page);
     this.modalContent.innerHTML = '';
-    this.removeListeners();
+    this.removeModalListeners();
   };
 }

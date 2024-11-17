@@ -1,14 +1,25 @@
+import { CatalogItem, IProduct } from '../../../types';
 import { BaseView } from '../baseView';
+import { CatalogItemView } from './catalogItemView';
 
-export class CatalogView extends BaseView<{ items: HTMLElement[] }> {
+type CatalogRenderProps = {
+  products: CatalogItem[];
+  onPreviewClick: (id: string) => void;
+};
+
+export class CatalogView extends BaseView<CatalogRenderProps> {
   constructor() {
     super();
     this.element = document.querySelector('.gallery');
   }
 
-  render(data: { items: HTMLElement[] }): HTMLElement {
-    if (data) {
-      this.element.replaceChildren(...data.items);
+  render({ products, onPreviewClick }: CatalogRenderProps): HTMLElement {
+    if (products) {
+      this.element.replaceChildren(
+        ...products.map((product) =>
+          new CatalogItemView().render({ product, onPreviewClick })
+        )
+      );
     }
     return this.element;
   }

@@ -4,13 +4,22 @@ import { CDN_URL } from '../../../utils/constants';
 import { cloneTemplate } from '../../../utils/utils';
 import { BaseView } from '../baseView';
 
-type CatalogItemFullViewProps = {
-  onAddToBasket: (product: IProduct) => void;
+type CatalogItemFullRenderProps = {
+  product: IProduct;
+  inBasket: boolean;
+  onAddToBasketClick: (product: IProduct) => void;
 };
 
-export class CatalogItemFullView extends BaseView<IProduct> {
-  private onAddToBasket: (product: IProduct) => void;
-  private addToBasketHandler: () => void;
+interface ICatalogItemFullView {
+  renderButton: (inBasket: boolean, isDisabled?: boolean) => void;
+  clear: () => void;
+}
+
+export class CatalogItemFullView
+  extends BaseView<CatalogItemFullRenderProps>
+  implements ICatalogItemFullView
+{
+  private addToBasketClickHandler: () => void;
 
   private cardImage: HTMLImageElement;
   private cardCategory: HTMLSpanElement;
@@ -19,9 +28,8 @@ export class CatalogItemFullView extends BaseView<IProduct> {
   private cardPrice: HTMLSpanElement;
   private cardButton: HTMLButtonElement;
 
-  constructor({ onAddToBasket }: CatalogItemFullViewProps) {
+  constructor() {
     super();
-    this.onAddToBasket = onAddToBasket;
     this.element = cloneTemplate('#card-preview') as HTMLButtonElement;
     this.cardCategory = this.element.querySelector('.card__category');
     this.cardTitle = this.element.querySelector('.card__title');
@@ -31,21 +39,30 @@ export class CatalogItemFullView extends BaseView<IProduct> {
     this.cardButton = this.element.querySelector('.card__button');
   }
 
-  render(product: IProduct): HTMLElement {
-    this.addToBasketHandler = () => this.onAddToBasket(product);
-    this.cardButton.addEventListener('click', this.addToBasketHandler);
+  render({
+    product,
+    inBasket,
+    onAddToBasketClick,
+  }: CatalogItemFullRenderProps): HTMLElement {
+    this.renderButton(inBasket, !product.price);
+    this.addToBasketClickHandler = () => onAddToBasketClick(product);
+    this.cardButton.addEventListener('click', this.addToBasketClickHandler);
     this.cardTitle.textContent = product.title;
     this.cardImage.src = `${CDN_URL}${product.image}`;
     this.cardPrice.textContent = getProductPrice(product.price);
     this.cardText.textContent = product.description;
-    this.cardButton.textContent = 'В корзину';
     this.cardCategory.textContent = product.category;
     setCategoryClass(this.cardCategory, product.category);
 
     return this.element;
   }
 
+  renderButton(inBasket: boolean, isDisabled = false) {
+    this.cardButton.disabled = isDisabled;
+    this.cardButton.textContent = inBasket ? 'Удалить из корзины' : 'В корзину';
+  }
+
   clear = () => {
-    this.cardButton.removeEventListener('click', this.addToBasketHandler);
+    this.cardButton.removeEventListener('click', this.addToBasketClickHandler);
   };
 }

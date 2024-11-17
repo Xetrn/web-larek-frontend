@@ -15,4 +15,7 @@ export const categoryClasses: Record<Category, string> = {
 export enum Events {
   MODAL_OPEN = 'modal:open',
   MODAL_CLOSE = 'modal:close',
+  BASKET_UPDATE = 'basket:update',
+  BASKET_ADD = 'basket:add',
+  BASKET_REMOVE = 'basket:remove',
 }

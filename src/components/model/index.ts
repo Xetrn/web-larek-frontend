@@ -1,3 +1,3 @@
-export * from './basketModel';
-export * from './catalogModel';
-export * from './orderModel';
+export * from './BasketModel';
+export * from './CatalogModel';
+export * from './OrderModel';

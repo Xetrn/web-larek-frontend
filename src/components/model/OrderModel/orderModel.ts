@@ -1,19 +1,10 @@
 import {
   IOrder,
   IOrderAPI,
-  IOrderResult,
   OrderFormStatus,
   PaymentMethod,
-} from '../../types';
-
-interface IOrderModel {
-  status: OrderFormStatus;
-  order: IOrder;
-  isValid: boolean;
-  error: string;
-  createOrder(order: IOrder): Promise<IOrderResult>;
-  reset(): void;
-}
+} from '../../../types';
+import { IOrderModel } from './orderModel.types';
 
 export class OrderModel implements IOrderModel {
   status: OrderFormStatus;

@@ -1,11 +1,5 @@
-import { CatalogItem, IProduct, IProductAPI } from '../../types';
-
-interface ICatalogModel {
-  products: IProduct[];
-  load(): Promise<void>;
-  getAll(): CatalogItem[];
-  getPreviewById(id: string): IProduct;
-}
+import { IProduct, IProductAPI } from '../../../types';
+import { ICatalogModel } from './catalogModel.types';
 
 export class CatalogModel implements ICatalogModel {
   products: IProduct[];
