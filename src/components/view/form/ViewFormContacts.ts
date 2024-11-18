@@ -1,7 +1,7 @@
 import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 
-import { ContactFormErrors } from '../../../utils/constants';
+import { ContactFormErrors, Events } from '../../../utils/constants';
 import { ViewForm } from './ViewForm';
 import { TViewFormContacts, IViewForm } from '../../../types/index';
 
@@ -16,12 +16,12 @@ export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IVi
 		this._phoneInput = ensureElement<HTMLInputElement>('.form__input[name=phone]', container);
 
 		this._emailInput.addEventListener('input', () => {
-			this.events.emit('email:input');
-			this.events.emit('contacts:valid'); //* contacts:needs-validation
+			this.events.emit(Events.CONTACTS_EMAIL_INPUT);
+			this.events.emit(Events.CONTACTS_VALID); //* contacts:needs-validation
 		});
 		this._phoneInput.addEventListener('input', () => {
-			this.events.emit('telephone:input');
-			this.events.emit('contacts:valid'); //* contacts:needs-validation
+			this.events.emit(Events.CONTACTS_TELEPHONE_INPUT);
+			this.events.emit(Events.CONTACTS_VALID); //* contacts:needs-validation
 		});
 	}
 

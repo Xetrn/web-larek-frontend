@@ -1,5 +1,7 @@
-import { IEvents } from '../base/events';
 import { ensureElement } from '../../utils/utils';
+
+import { IEvents } from '../base/events';
+import { Events } from '../../utils/constants';
 
 import { View } from './View';
 import { TViewModal } from '../../types';
@@ -35,11 +37,11 @@ export class ViewModal extends View<TViewModal> {
 
 	open() {
 		this.toggleClass(this._container, 'modal_active', true);
-		this.events.emit('viewModal:open');
+		this.events.emit(Events.MODAL_OPEN);
 	}
 
 	close() {
 		this.toggleClass(this._container, 'modal_active', false);
-		this.events.emit('viewModal:close');
+		this.events.emit(Events.MODAL_CLOSE);
 	}
 }

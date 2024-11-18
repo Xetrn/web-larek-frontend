@@ -1,9 +1,9 @@
-import { IEvents } from '../base/events';
-import { ensureElement } from '../../utils/utils';
+import { IEvents } from '../../base/events';
+import { ensureElement } from '../../../utils/utils';
 
-import { OrderFormErrors } from '../../utils/constants';
+import { OrderFormErrors, Events } from '../../../utils/constants';
 import { ViewForm } from './ViewForm';
-import { TViewFormOrder, TPaymentMethod, IViewForm } from '../../types';
+import { TViewFormOrder, TPaymentMethod, IViewForm } from '../../../types';
 
 // Форма заказа со способом оплаты и адресом доставки
 export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewForm {
@@ -24,21 +24,21 @@ export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewForm
 			this.toggleClass(this._buttonOnDelivery, 'button_alt-active', true);
 			this.toggleClass(this._buttonOnline, 'button_alt-active', false);
 
-			this.events.emit('payment:input');
-			this.events.emit('order:valid'); //* order:needs-validation or mb dell?!
+			this.events.emit(Events.PAYMENT_INPUT);
+			this.events.emit(Events.ORDER_VALID); //* order:needs-validation or mb dell?!
 		});
 
 		this._buttonOnline.addEventListener('click', () => {
 			this.toggleClass(this._buttonOnDelivery, 'button_alt-active', false);
 			this.toggleClass(this._buttonOnline, 'button_alt-active', true);
 
-			this.events.emit('payment:input');
-			this.events.emit('order:valid'); //* order:needs-validation or mb dell?!
+			this.events.emit(Events.PAYMENT_INPUT);
+			this.events.emit(Events.ORDER_VALID); //* order:needs-validation or mb dell?!
 		});
 
 		this._addressInput.addEventListener('input', () => {
-			this.events.emit('address:input');
-			this.events.emit('order:valid'); //* order:needs-validation
+			this.events.emit(Events.ADDRESS_INPUT);
+			this.events.emit(Events.ORDER_VALID); //* order:needs-validation
 		});
 	}
 

@@ -1,4 +1,5 @@
 import { IEvents } from '../../base/events';
+import { Events } from '../../../utils/constants';
 
 import { ViewCard } from './ViewCard';
 import { TCardCatalogueView, IViewCard } from '../../../types/index';
@@ -9,7 +10,7 @@ export class ViewCardCatalogue extends ViewCard<TCardCatalogueView> implements I
 
 		//* cardPreviewView:open
 		this._container.addEventListener('click', () =>
-			this.events.emit('viewCardPreview:open', { id: this.id })
+			this.events.emit(Events.CARD_OPEN_PREVIEW, { id: this.id })
 		);
 	}
 }

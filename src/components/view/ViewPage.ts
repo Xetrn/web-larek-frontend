@@ -1,5 +1,7 @@
-import { IEvents } from '../base/events';
 import { ensureElement } from '../../utils/utils';
+
+import { IEvents } from '../base/events';
+import { Events } from '../../utils/constants';
 
 import { View } from './View';
 import { TViewPage } from '../../types/index';
@@ -19,7 +21,7 @@ export class ViewPage extends View<TViewPage> {
 		this._catalog = ensureElement<HTMLElement>('.gallery', container);
 		this._screen = ensureElement<HTMLDivElement>('.page__wrapper', container);
 
-		this._buttonBasket.addEventListener('click', () => events.emit('viewBasket:open'));
+		this._buttonBasket.addEventListener('click', () => events.emit(Events.BASKET_OPEN));
 	}
 
 	set catalog(viewCards: HTMLElement[]) {

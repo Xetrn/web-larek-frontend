@@ -1,7 +1,10 @@
+import { ensureElement } from '../../utils/utils';
+
 import { IEvents } from '../base/events';
+import { Events } from '../../utils/constants';
+
 import { View } from './View';
 import { TViewBasket } from '../../types/index';
-import { ensureElement } from '../../utils/utils';
 
 export class ViewBasket extends View<TViewBasket> {
 	protected _cardList: HTMLUListElement;
@@ -15,7 +18,7 @@ export class ViewBasket extends View<TViewBasket> {
 		this._totalCost = ensureElement<HTMLSpanElement>('.basket__price', container);
 		this._basketToOrderBtn = ensureElement<HTMLButtonElement>('.basket__button', container);
 
-		this._basketToOrderBtn.addEventListener('click', () => this.events.emit('viewOrder:open'));
+		this._basketToOrderBtn.addEventListener('click', () => this.events.emit(Events.ORDER_OPEN));
 	}
 
 	set cards(items: HTMLElement[]) {

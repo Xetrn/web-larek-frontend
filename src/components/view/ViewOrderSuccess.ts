@@ -1,5 +1,7 @@
-import { IEvents } from '../base/events';
 import { ensureElement } from '../../utils/utils';
+
+import { IEvents } from '../base/events';
+import { Events } from '../../utils/constants';
 
 import { View } from './View';
 import { TOrderSuccessView } from '../../types/index';
@@ -15,7 +17,7 @@ export class ViewSuccess extends View<TOrderSuccessView> {
 		this._successBtn = ensureElement<HTMLButtonElement>('.order-success__close', container);
 
 		this._successBtn.addEventListener('click', () => {
-			this.events.emit('success:submit'); //* order-success:submit
+			this.events.emit(Events.ORDER_SUCCESS_SUBMIT); //* order-success:submit
 		});
 	}
 

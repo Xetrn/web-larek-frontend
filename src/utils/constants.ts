@@ -16,8 +16,6 @@ export enum BasketActs {
 	ADD = 'Купить',
 	REMOVE = 'Убрать из корзины',
 	NOT_FOR_SALE = 'Не продается',
-	ADD_EVENT = 'viewCard:addToBasket',
-	REMOVE_EVENT = 'viewCard:deleteFromBasket',
 }
 
 export enum ContactFormErrors {
@@ -29,4 +27,25 @@ export enum ContactFormErrors {
 export enum OrderFormErrors {
 	EMPTY_ADDRESS = 'Заполните поле адреса',
 	EMPTY_PAYMENT_METHOD = 'Выберите метод платежа',
+}
+
+export enum Events {
+	BASKET_ADD = 'viewCard:addToBasket',
+	BASKET_REMOVE = 'viewCard:deleteFromBasket', //* viewCard:removeFromBasket
+
+	CARD_OPEN_PREVIEW = 'viewCardPreview:open',
+
+	CONTACTS_EMAIL_INPUT = 'email:input',
+	CONTACTS_VALID = 'contacts:valid', //* contacts:needs-validation
+	CONTACTS_TELEPHONE_INPUT = 'telephone:input',
+
+	PAYMENT_INPUT = 'payment:input',
+	ORDER_VALID = 'order:valid', //* order:needs-validation or mb dell?!
+	ADDRESS_INPUT = 'address:input',
+
+	ORDER_OPEN = 'viewOrder:open',
+	MODAL_OPEN = 'viewModal:open',
+	MODAL_CLOSE = 'viewModal:close',
+	ORDER_SUCCESS_SUBMIT = 'success:submit', //* order-success:submit
+	BASKET_OPEN = 'viewBasket:open',
 }
