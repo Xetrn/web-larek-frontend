@@ -1,7 +1,8 @@
 import { TCategoryClasses } from '../types/index';
 
-export const API_URL = `${process.env.API_ORIGIN}/api/weblarek`;
-export const CDN_URL = `${process.env.API_ORIGIN}/content/weblarek`;
+//* ${process.env.API_ORIGIN}
+export const API_URL = `https://larek-api.nomoreparties.co/api/weblarek`;
+export const CDN_URL = `https://larek-api.nomoreparties.co/content/weblarek`;
 export const settings = {};
 
 export const categories: TCategoryClasses = {
@@ -29,23 +30,27 @@ export enum OrderFormErrors {
 	EMPTY_PAYMENT_METHOD = 'Выберите метод платежа',
 }
 
+//* лучше всё поренеймить
 export enum Events {
-	BASKET_ADD = 'viewCard:addToBasket',
-	BASKET_REMOVE = 'viewCard:deleteFromBasket', //* viewCard:removeFromBasket
+	BASKET_ITEM_ADDED = 'viewCard:addToBasket',
+	BASKET_ITEM_REMOVED = 'viewCard:deleteFromBasket', //* viewCard:removeFromBasket
 
-	CARD_OPEN_PREVIEW = 'viewCardPreview:open',
+	CARD_PREVIEW_OPENED = 'viewCardPreview:open',
 
 	CONTACTS_EMAIL_INPUT = 'email:input',
 	CONTACTS_VALID = 'contacts:valid', //* contacts:needs-validation
 	CONTACTS_TELEPHONE_INPUT = 'telephone:input',
 
-	PAYMENT_INPUT = 'payment:input',
+	ORDER_PAYMENT_INPUT = 'payment:input',
 	ORDER_VALID = 'order:valid', //* order:needs-validation or mb dell?!
-	ADDRESS_INPUT = 'address:input',
+	ORDER_ADDRESS_INPUT = 'address:input',
 
 	ORDER_OPEN = 'viewOrder:open',
-	MODAL_OPEN = 'viewModal:open',
-	MODAL_CLOSE = 'viewModal:close',
+	MODAL_OPENED = 'viewModal:open',
+	MODAL_CLOSED = 'viewModal:close',
 	ORDER_SUCCESS_SUBMIT = 'success:submit', //* order-success:submit
-	BASKET_OPEN = 'viewBasket:open',
+	BASKET_OPENED = 'viewBasket:open',
+
+	BASKET_DATA_CHANGED = 'basketData:changed',
+	CARDS_DATA_CHANGED = 'cards:changed',
 }

@@ -3,12 +3,13 @@
  */
 export interface ICardData {
 	id: string;
-	image: string;
 	price: number;
 	title: string;
+	image?: string; //*
 	category?: string;
 	description?: string;
 }
+//* Возможно лишнее
 export interface ICardsData {
 	cards: ICardData[];
 }
@@ -44,7 +45,7 @@ export interface IBasketData {
 	clearBasket(): void;
 	getGoodsNumber(): number;
 	getTotal(): number;
-	getIdsOfGoods(): string[];
+	getGoodsIds(): string[];
 }
 
 /**
@@ -67,6 +68,9 @@ export interface IAppApi {
 
 export type TCardView = Omit<ICardData, 'price'> & { price: string }; //*
 export type TCardCatalogueView = Omit<TCardView, 'description'>;
+export type TCardBasketView = Pick<IViewCard, 'id' | 'title' | 'price'> & { index: number };
+
+export type TId = Pick<ICardData, 'id'>;
 
 export type TCardPreview = TCardView & {
 	invalidPrice: boolean;

@@ -24,7 +24,7 @@ export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewForm
 			this.toggleClass(this._buttonOnDelivery, 'button_alt-active', true);
 			this.toggleClass(this._buttonOnline, 'button_alt-active', false);
 
-			this.events.emit(Events.PAYMENT_INPUT);
+			this.events.emit(Events.ORDER_PAYMENT_INPUT);
 			this.events.emit(Events.ORDER_VALID); //* order:needs-validation or mb dell?!
 		});
 
@@ -32,12 +32,12 @@ export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewForm
 			this.toggleClass(this._buttonOnDelivery, 'button_alt-active', false);
 			this.toggleClass(this._buttonOnline, 'button_alt-active', true);
 
-			this.events.emit(Events.PAYMENT_INPUT);
+			this.events.emit(Events.ORDER_PAYMENT_INPUT);
 			this.events.emit(Events.ORDER_VALID); //* order:needs-validation or mb dell?!
 		});
 
 		this._addressInput.addEventListener('input', () => {
-			this.events.emit(Events.ADDRESS_INPUT);
+			this.events.emit(Events.ORDER_ADDRESS_INPUT);
 			this.events.emit(Events.ORDER_VALID); //* order:needs-validation
 		});
 	}
@@ -53,10 +53,6 @@ export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewForm
 
 	//* isValid
 	get valid() {
-		if (this._addressInput.value && this.payment) {
-			this.errorMessage = '';
-			return true;
-		}
 		if (!this._addressInput.value) {
 			this.errorMessage = OrderFormErrors.EMPTY_ADDRESS;
 			return false;
@@ -65,8 +61,11 @@ export class ViewFormOrder extends ViewForm<TViewFormOrder> implements IViewForm
 			this.errorMessage = OrderFormErrors.EMPTY_PAYMENT_METHOD;
 			return false;
 		}
+
+		this.errorMessage = '';
 		return true;
 	}
+
 	//* isValid
 	set valid(value: boolean) {
 		super.valid = value;

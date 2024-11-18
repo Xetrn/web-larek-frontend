@@ -1,5 +1,7 @@
-import { IBasketData } from '../../types/index';
 import { IEvents } from '../base/events';
+import { Events } from '../../utils/constants';
+
+import { IBasketData } from '../../types/index';
 import { ICardData } from '../../types/index';
 
 export class BasketData implements IBasketData {
@@ -26,23 +28,28 @@ export class BasketData implements IBasketData {
 	addToBasket(card: ICardData) {
 		this._goods.push(card);
 		this.total += card.price;
-		this.events.emit('basketData:changed', { id: card.id });
+		this.events.emit(Events.BASKET_DATA_CHANGED, { id: card.id });
 	}
 	removeFromBasket(id: string) {
-		this._goods = this._goods.filter((good) => good.id !== id);
-		this.total -= this._goods.find((good) => good.id === id)?.price ?? 0;
-		this.events.emit('basketData:changed', { id });
+		const itemIndex = this._goods.findIndex((good) => good.id === id);
+
+		if (itemIndex === -1) {
+			return;
+		}
+
+		this.total -= this._goods[itemIndex].price;
+		this._goods.splice(itemIndex, 1);
+		this.events.emit(Events.BASKET_DATA_CHANGED, { id });
 	}
 
 	clearBasket() {
 		this._goods = [];
 		this.total === 0;
-		this.events.emit('basketData:changed', this._goods);
+		this.events.emit(Events.BASKET_DATA_CHANGED, this._goods);
 	}
 
 	getGoodsNumber = (): number => this._goods.length;
 	getTotal = (): number => this._goods.reduce((acc, good) => acc + good.price, 0);
-	getIdsOfGoods = (): string[] => this._goods.map((good) => good.id);
-
-	//*
+	getGoodsIds = (): string[] => this._goods.map((good) => good.id);
+	isEmpty = (): boolean => this._goods.length === 0;
 }

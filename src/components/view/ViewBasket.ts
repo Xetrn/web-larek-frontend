@@ -29,7 +29,7 @@ export class ViewBasket extends View<TViewBasket> {
 		this.setText(this._totalCost, `${value} синапсов`);
 	}
 
-	// blockPlaceOrderBtn
+	//* blockPlaceOrderBtn
 	set emptyCheck(state: boolean) {
 		this.setDisabled(this._basketToOrderBtn, state);
 	}

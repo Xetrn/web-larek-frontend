@@ -16,7 +16,9 @@ export class ViewCardPreview extends ViewCard<TCardPreview> implements IViewCard
 
 		this._buyBtn.addEventListener('click', () => {
 			const action =
-				this._buyBtn.textContent === BasketActs.REMOVE ? Events.BASKET_REMOVE : Events.BASKET_ADD;
+				this._buyBtn.textContent === BasketActs.REMOVE
+					? Events.BASKET_ITEM_REMOVED
+					: Events.BASKET_ITEM_ADDED;
 			this.events.emit(action, { id: this.id });
 		});
 	}

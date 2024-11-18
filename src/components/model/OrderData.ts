@@ -7,7 +7,7 @@ export class OrderData implements IOrderData {
 	protected _phone: string;
 	protected _email: string;
 	protected _total: number;
-	protected _items: string[];
+	protected _items: string[]; //* itemsIds
 
 	events: IEvents;
 

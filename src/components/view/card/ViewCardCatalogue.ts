@@ -10,7 +10,7 @@ export class ViewCardCatalogue extends ViewCard<TCardCatalogueView> implements I
 
 		//* cardPreviewView:open
 		this._container.addEventListener('click', () =>
-			this.events.emit(Events.CARD_OPEN_PREVIEW, { id: this.id })
+			this.events.emit(Events.CARD_PREVIEW_OPENED, { id: this.id })
 		);
 	}
 }

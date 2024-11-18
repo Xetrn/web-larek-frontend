@@ -37,11 +37,11 @@ export class ViewModal extends View<TViewModal> {
 
 	open() {
 		this.toggleClass(this._container, 'modal_active', true);
-		this.events.emit(Events.MODAL_OPEN);
+		this.events.emit(Events.MODAL_OPENED);
 	}
 
 	close() {
 		this.toggleClass(this._container, 'modal_active', false);
-		this.events.emit(Events.MODAL_CLOSE);
+		this.events.emit(Events.MODAL_CLOSED);
 	}
 }
