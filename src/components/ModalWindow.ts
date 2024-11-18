@@ -14,7 +14,7 @@ export class ModalWindow implements IModalWindow{
         this.closeButton.addEventListener('click', () => this.close());
         this.modal.addEventListener('click', (event) => event.stopPropagation());
 
-        this.modal.addEventListener('click', (event) => {
+        this.modal.addEventListener('mousedown', (event) => {
             const content = this.modal.querySelector('.modal__container') as HTMLElement;
             if (!content.contains(event.target as Node)) {
                 this.close();

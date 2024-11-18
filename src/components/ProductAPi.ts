@@ -1,11 +1,11 @@
 import { Api, ApiListResponse } from './base/api';
-import {IOrderData, IOrderResult} from "../types/order";
+import {IOrderApiData, IOrderData, IOrderResult} from "../types/order";
 import {IProduct} from "../types/product";
 
 export interface IProductAPI {
     getProductList: () => Promise<IProduct[]>;
     getProductItem: (id: string) => Promise<IProduct>;
-    makeOrder: (order: IOrderData) => Promise<IOrderResult>;
+    makeOrder: (order: IOrderApiData) => Promise<IOrderResult>;
 }
 
 export class ProductAPI extends Api implements IProductAPI {
@@ -34,7 +34,7 @@ export class ProductAPI extends Api implements IProductAPI {
         );
     }
 
-    makeOrder(order: IOrderData): Promise<IOrderResult> {
+    makeOrder(order: IOrderApiData): Promise<IOrderResult> {
         return this.post('/order', order).then(
             (data: IOrderResult) => data
         );
