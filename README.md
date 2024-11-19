@@ -59,6 +59,12 @@ MVP-паттерн делит код на три слоя:
 ### Api
 Класс Api предназначен для работы с HTTP-запросами. Его функции: осуществление запросов к серверу на получение данных, отправку данных.
 
+### View
+Абстрактный базовый класс View для создания компонентов.
+
+### Model
+Абстрактный базовый класс Model для создания моделей.
+
 
 ## Компоненты модели данных
 
@@ -73,9 +79,6 @@ MVP-паттерн делит код на три слоя:
 
 
 ## Компоненты отображения
-
-### View
-Абстрактный класс View отображения.
 
 ### PageView
 Класс PageView предназначен для отображения страницы.
@@ -107,7 +110,7 @@ MVP-паттерн делит код на три слоя:
 
 ## Типы данных
 
-## IProduct - интерфейс продукта
+### IProduct - интерфейс продукта
 ```ts
 interface IProduct {
   id: string;
@@ -119,7 +122,7 @@ interface IProduct {
 }
 ```
 
-## IProductList - интерфейс списка продуктов
+### IProductList - интерфейс списка продуктов
 ```ts
 interface IProductList {
   total: number;
@@ -127,12 +130,12 @@ interface IProductList {
 }
 ```
 
-## BasketProductItem - тип продукта с индификатором, названием и ценой
+### BasketProductItem - тип продукта с индификатором, названием и ценой
 ```ts
 type BasketProductItem = Pick<IProduct, 'id' | 'title' | 'price'>;
 ```
 
-## IBasket - интерфейс корзины
+### IBasket - интерфейс корзины
 ```ts
 interface IBasket {
   items: Map<BasketProductItem, number>;
@@ -140,7 +143,7 @@ interface IBasket {
 }
 ```
 
-## IOrder - интерфейс заказа
+### IOrder - интерфейс заказа
 ```ts
 interface IOrder {
   payment: string,
@@ -149,5 +152,13 @@ interface IOrder {
   phone: string,
   total: number,
   items: string[]
+}
+```
+
+### IOrder - интерфейс ответа с сервера о заказе
+```ts
+interface IOrderResult {
+  id: string;
+  total: number;
 }
 ```

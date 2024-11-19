@@ -18,12 +18,3 @@ export interface IBasket {
   items: Map<BasketProductItem, number>;
   totalPrice: number;
 }
-
-export interface IOrder {
-  payment: string,
-  email: string,
-  address: string,
-  phone: string,
-  total: number,
-  items: string[]
-}
