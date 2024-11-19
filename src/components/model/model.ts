@@ -10,8 +10,15 @@ export class Model {
 		this._events = events;
 	}
 
-	setCatalog(catalog: IProduct[]) {
+	set catalog(catalog: IProduct[]) {
 		this._catalog = catalog;
+
+		console.log('this._catalog');
+		this._events.emit('CARDS', this._catalog);
+	}
+
+	get catalog() {
+		return this._catalog;
 	}
 
 	addProduct(product: IProduct) {
@@ -38,6 +45,6 @@ export class Model {
 			return 0;
 		}
 
-		return [...this._basketProducts.values()].reduce((acc, product) => acc + parseInt(product.price), 0);
+		return [...this._basketProducts.values()].reduce((acc, product) => acc + product.price, 0);
 	}
 }
