@@ -1,6 +1,4 @@
-/**
- * Интерфейсы для работы с карточками товаров
- */
+// Интерфейсы для карточек товаров
 export interface ICardData {
 	id: string;
 	price: number;
@@ -9,18 +7,12 @@ export interface ICardData {
 	category?: string;
 	description?: string;
 }
-//* Возможно лишнее
-export interface ICardsData {
-	cards: ICardData[];
-}
 export interface IViewCard extends Omit<ICardData, 'price' | 'category'> {
 	price: string;
 	description: string;
 }
 
-/**
- * Интерфейсы для работы с данными заказа
- */
+// Интерфейсы для данных заказа
 export interface IOrderData {
 	payment: TPaymentMethod;
 	address: string;
@@ -34,7 +26,7 @@ export interface IOrderSuccessData {
 }
 
 /**
- * Интерфейс для работы с данными корзины
+ * Интерфейс для данных корзины
  */
 export interface IBasketData {
 	goods: ICardData[];
@@ -49,7 +41,7 @@ export interface IBasketData {
 }
 
 /**
- * Интерфейс для работы с формами
+ * Интерфейс для представления формы заказа
  */
 export interface IViewForm {
 	valid: boolean;
@@ -69,25 +61,24 @@ export interface IAppApi {
 export type TCardView = Omit<ICardData, 'price'> & { price: string }; //*
 export type TCardCatalogueView = Omit<TCardView, 'description'>;
 export type TCardBasketView = Pick<IViewCard, 'id' | 'title' | 'price'> & { index: number };
-
-export type TId = Pick<ICardData, 'id'>;
-
 export type TCardPreview = TCardView & {
 	invalidPrice: boolean;
 	buttonValidation: boolean;
 };
 
-export type TCategoryClassNames = 'soft' | 'other' | 'additional' | 'button' | 'hard';
-export type TCategoryClasses = Record<string, TCategoryClassNames>;
-
 export type TViewBasket = { cards: HTMLElement[]; total: number; emptyCheck: boolean };
-
-export type TPaymentMethod = 'cash' | 'card';
-export type TPayment = Pick<IOrderData, 'payment'>; //* ?
 
 export type TViewForm = { valid: boolean; errorMessage: string };
 export type TViewFormContacts = TViewForm & { email: string; phone: string; valid: boolean };
 export type TViewFormOrder = TViewForm & { payment: TPayment; address: string; valid: boolean };
+
+export type TCategoryClassNames = 'soft' | 'other' | 'additional' | 'button' | 'hard';
+export type TCategoryClasses = Record<string, TCategoryClassNames>;
+
+export type TPaymentMethod = 'cash' | 'card';
+export type TPayment = Pick<IOrderData, 'payment'>; //* ?
+
+export type TId = Pick<ICardData, 'id'>;
 
 export type TOrderSuccess = Pick<IOrderData, 'total' | 'items'>;
 export type TOrderSuccessView = { message: string };
@@ -102,54 +93,3 @@ export type TViewPage = {
 	counter: number;
 	lockScreen(value: boolean): void;
 };
-
-//* export type TCardPreview = Pick<ICardData, 'category' | 'title' | 'description' | 'image' | 'price'>;
-//* export type TViewCardCatalogue = Pick<ICardData, 'id' | 'title' | 'price' | 'category' | 'image'>;
-//* export type TCardInfo = Pick<ICardData, 'category' | 'title' | 'image' | 'price'>;
-
-/* // излишество
-export interface IViewBasket {
-	cards: HTMLElement[];
-	total: number;
-	emptyCheck: boolean;
-}
-
-export interface IViewCardCatalogue extends Omit<IViewCard, 'description'> {
-	category: string;
-}
-export interface IViewCardPreview {
-	category: string;
-	invalidPrice: boolean;
-	buttonValidation: boolean;
-}
-
-export type TViewCardPreview = ICardData & { invalidPrice: boolean; buttonValidation: boolean };
-
-export interface IViewFormContacts { 
-	email: string;
-	phone: string;
-	valid: boolean;
-}
-export interface IViewFormOrder { 
-	payment: TPaymentMethod | null;
-	address: string;
-	valid: boolean;
-	resetButtons(): void;
-}
-
-export interface IViewModal {
-	content: HTMLElement;
-	open(): void;
-	close(): void;
-}
-
-export interface IViewPage {
-	catalog: HTMLElement[];
-	counter: number;
-	lockScreen(value: boolean): void;
-}
-
-export interface IViewSuccess {
-	message: string;
-}
-*/

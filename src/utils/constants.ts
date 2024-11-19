@@ -1,8 +1,7 @@
 import { TCategoryClasses } from '../types/index';
 
-//* ${process.env.API_ORIGIN}
-export const API_URL = `https://larek-api.nomoreparties.co/api/weblarek`;
-export const CDN_URL = `https://larek-api.nomoreparties.co/content/weblarek`;
+export const API_URL = `${process.env.API_ORIGIN}/api/weblarek`;
+export const CDN_URL = `${process.env.API_ORIGIN}/content/weblarek`;
 export const settings = {};
 
 export const categories: TCategoryClasses = {
@@ -31,7 +30,7 @@ export enum OrderFormErrors {
 }
 
 //* лучше всё поренеймить
-export enum Events {
+export enum EventsNames {
 	BASKET_ITEM_ADDED = 'viewCard:addToBasket',
 	BASKET_ITEM_REMOVED = 'viewCard:deleteFromBasket', //* viewCard:removeFromBasket
 
@@ -44,6 +43,9 @@ export enum Events {
 	ORDER_PAYMENT_INPUT = 'payment:input',
 	ORDER_VALID = 'order:valid', //* order:needs-validation or mb dell?!
 	ORDER_ADDRESS_INPUT = 'address:input',
+
+	ORDER_SUBMIT = 'order:submit',
+	CONTACTS_SUBMIT = 'contacts:submit',
 
 	ORDER_OPEN = 'viewOrder:open',
 	MODAL_OPENED = 'viewModal:open',

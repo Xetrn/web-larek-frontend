@@ -36,5 +36,14 @@ export class OrderData implements IOrderData {
 		this._items = value;
 	}
 
-	// getAllData = () => ({ ...this });
+	get allData(): IOrderData {
+		return {
+			payment: this._payment,
+			address: this._address,
+			phone: this._phone,
+			email: this._email,
+			total: this._total,
+			items: this._items,
+		};
+	}
 }

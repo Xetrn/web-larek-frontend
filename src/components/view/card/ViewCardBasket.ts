@@ -1,6 +1,6 @@
 import { ensureElement } from '../../../utils/utils';
 import { IEvents } from '../../base/events';
-import { Events } from '../../../utils/constants';
+import { EventsNames } from '../../../utils/constants';
 
 import { ViewCard } from './ViewCard';
 import { IViewCard, TCardBasketView } from '../../../types';
@@ -16,7 +16,7 @@ export class ViewCardBasket extends ViewCard<TCardBasketView> implements IViewCa
 		this._deleteBtn = ensureElement<HTMLButtonElement>('.basket__item-delete', container);
 
 		this._deleteBtn.addEventListener('click', () =>
-			this.events.emit(Events.BASKET_ITEM_REMOVED, { id: this.id })
+			this.events.emit(EventsNames.BASKET_ITEM_REMOVED, { id: this.id })
 		);
 	}
 
@@ -24,6 +24,6 @@ export class ViewCardBasket extends ViewCard<TCardBasketView> implements IViewCa
 		return Number(this._index.textContent);
 	}
 	set index(value: number) {
-		this.setText(this._index, value + 1);
+		this.setText(this._index, value);
 	}
 }

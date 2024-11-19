@@ -1,5 +1,5 @@
 import { IEvents } from '../base/events';
-import { Events } from '../../utils/constants';
+import { EventsNames } from '../../utils/constants';
 
 import { IBasketData } from '../../types/index';
 import { ICardData } from '../../types/index';
@@ -28,7 +28,7 @@ export class BasketData implements IBasketData {
 	addToBasket(card: ICardData) {
 		this._goods.push(card);
 		this.total += card.price;
-		this.events.emit(Events.BASKET_DATA_CHANGED, { id: card.id });
+		this.events.emit(EventsNames.BASKET_DATA_CHANGED, { id: card.id });
 	}
 	removeFromBasket(id: string) {
 		const itemIndex = this._goods.findIndex((good) => good.id === id);
@@ -39,13 +39,13 @@ export class BasketData implements IBasketData {
 
 		this.total -= this._goods[itemIndex].price;
 		this._goods.splice(itemIndex, 1);
-		this.events.emit(Events.BASKET_DATA_CHANGED, { id });
+		this.events.emit(EventsNames.BASKET_DATA_CHANGED, { id });
 	}
 
 	clearBasket() {
 		this._goods = [];
 		this.total === 0;
-		this.events.emit(Events.BASKET_DATA_CHANGED, this._goods);
+		this.events.emit(EventsNames.BASKET_DATA_CHANGED, this._goods);
 	}
 
 	getGoodsNumber = (): number => this._goods.length;

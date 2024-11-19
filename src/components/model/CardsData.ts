@@ -1,10 +1,9 @@
 import { IEvents } from '../base/events';
-import { Events } from '../../utils/constants';
+import { EventsNames } from '../../utils/constants';
 
 import { ICardData } from '../../types/index';
-import { ICardsData } from '../../types/index';
 
-export class CardsData implements ICardsData {
+export class CardsData {
 	protected _cards: ICardData[];
 	events: IEvents;
 
@@ -14,7 +13,7 @@ export class CardsData implements ICardsData {
 
 	set cards(cards: ICardData[]) {
 		this._cards = cards;
-		this.events.emit(Events.CARDS_DATA_CHANGED, this.cards);
+		this.events.emit(EventsNames.CARDS_DATA_CHANGED, this._cards);
 	}
 	get cards() {
 		return this._cards;

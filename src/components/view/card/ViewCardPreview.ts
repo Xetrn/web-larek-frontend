@@ -1,7 +1,7 @@
 import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 
-import { BasketActs, Events } from '../../../utils/constants';
+import { BasketActs, EventsNames } from '../../../utils/constants';
 import { ViewCard } from './ViewCard';
 import { TCardPreview, IViewCard } from '../../../types/index';
 
@@ -17,8 +17,8 @@ export class ViewCardPreview extends ViewCard<TCardPreview> implements IViewCard
 		this._buyBtn.addEventListener('click', () => {
 			const action =
 				this._buyBtn.textContent === BasketActs.REMOVE
-					? Events.BASKET_ITEM_REMOVED
-					: Events.BASKET_ITEM_ADDED;
+					? EventsNames.BASKET_ITEM_REMOVED
+					: EventsNames.BASKET_ITEM_ADDED;
 			this.events.emit(action, { id: this.id });
 		});
 	}

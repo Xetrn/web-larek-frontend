@@ -1,12 +1,12 @@
 import { ensureElement } from '../../utils/utils';
 
 import { IEvents } from '../base/events';
-import { Events } from '../../utils/constants';
+import { EventsNames } from '../../utils/constants';
 
 import { View } from './View';
 import { TOrderSuccessView } from '../../types/index';
 
-export class ViewSuccess extends View<TOrderSuccessView> {
+export class ViewOrderSuccess extends View<TOrderSuccessView> {
 	protected _message: HTMLParagraphElement;
 	protected _successBtn: HTMLButtonElement;
 
@@ -17,13 +17,14 @@ export class ViewSuccess extends View<TOrderSuccessView> {
 		this._successBtn = ensureElement<HTMLButtonElement>('.order-success__close', container);
 
 		this._successBtn.addEventListener('click', () => {
-			this.events.emit(Events.ORDER_SUCCESS_SUBMIT); //* order-success:submit
+			this.events.emit(EventsNames.ORDER_SUCCESS_SUBMIT); //* order-success:submit
 		});
 	}
 
 	render(data: TOrderSuccessView): HTMLElement {
+		const message = `Списано ${data.message} синапсов`;
 		if (data) {
-			this.setText(this._message, data.message);
+			this.setText(this._message, message);
 		}
 		return this._container;
 	}

@@ -42,7 +42,7 @@ export abstract class ViewCard<T extends TCardView> extends View<T> implements I
 
 	//* number ????
 	set price(value: string) {
-		this.setText(this._price, value ? `${value} синапсов` : `Бесценно`);
+		this.setText(this._price, !value ? `Бесценно` : `${value} синапсов`);
 	}
 	get price() {
 		return this._price.textContent ?? '';
