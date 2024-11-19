@@ -10,13 +10,18 @@ import {ProductList} from "./types/ProductList";
 import {ModalView} from "./components/view/ModalView";
 import {ProductModalView} from "./components/view/ProductModalView";
 import {BasketModel} from "./models/BasketModel";
+import {BasketOpenButtonView} from "./components/view/BasketOpenButtonView";
+import {BasketModalView} from "./components/view/BasketModalView";
 
 const api = new Api(API_URL)
 const events = new EventEmitter()
 
 const catalogModel = new CatalogModel(events)
-const bucketModel = new BasketModel(events)
+const basketModel = new BasketModel(events)
 const catalogView = new CatalogView(events)
+
+const basketOpenButtonView = new BasketOpenButtonView(events)
+
 events.on("catalog-model: change items", (products: Product[]) => {
     catalogView.render({items: products.map(product => new ProductView(events).render(product))})
 })
@@ -28,11 +33,18 @@ events.on("modal-view: close", () => {
 })
 
 events.on("product-view: click", (product: Product) => {
-    modalView.render({opened: true, content: new ProductModalView(events).render({product})})
+    modalView.render({
+        opened: true,
+        content: new ProductModalView(events).render({product, inBasket: basketModel.has(product.id)})
+    })
 })
 events.on("product-modal-view: add", ({id}: {id: string}) => {
-    bucketModel.add(id)
+    basketModel.add(id)
     modalView.render({opened: false})
+})
+
+events.on("basket-open-button-view: click", () => {
+    modalView.render({opened: true, content: new BasketModalView(events).render({items: []})})
 })
 
 api.get('/product/')

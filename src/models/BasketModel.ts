@@ -21,4 +21,8 @@ export class BasketModel {
         this.#items.delete(id)
        this._events.emit("basket-model: remove")
    }
+
+   has(id: string){
+        return this.#items.has(id)
+   }
 }

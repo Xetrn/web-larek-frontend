@@ -5,11 +5,15 @@ import {createElement} from "../../utils/utils";
 import {CDN_URL} from "../../utils/constants";
 
 export class ProductModalView extends View {
-    render({product}:{product: Product}){
+    render({product, inBasket}:{product: Product, inBasket: boolean}){
         const button = createElement("button", {className: "button", textContent: "В корзину"}) as HTMLButtonElement
+        button.disabled = inBasket || product.price === null
         button.onclick = () => this._events.emit("product-modal-view: add", {id: product.id})
 
-        const price = createElement("span", {className: "card__price", textContent: `${product.price} синапсов`})
+        const price = createElement("span", {
+            className: "card__price",
+            textContent: product.price !== null ? `${product.price} синапсов` : "Бесценно"
+        })
 
         const row = createElement("div", {className: "card__row"}, [button, price])
         const category = createElement("span", {className: "card__category card__category_soft", textContent: product.category})

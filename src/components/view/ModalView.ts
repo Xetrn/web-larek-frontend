@@ -23,7 +23,7 @@ export class ModalView extends View {
         }
     }
 
-    render({content, opened}:{opened: boolean, content?: HTMLElement}){
+    render({content, opened, actions}:{opened: boolean, content?: HTMLElement, actions?: HTMLElement}){
         const contentContainer = this.#container.querySelector('.modal__content') as HTMLElement
         contentContainer.replaceChildren(content)
 
