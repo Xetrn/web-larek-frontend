@@ -8,7 +8,7 @@ export class ProductModalView extends View {
     render({product, inBasket}:{product: Product, inBasket: boolean}){
         const button = createElement("button", {className: "button", textContent: "В корзину"}) as HTMLButtonElement
         button.disabled = inBasket || product.price === null
-        button.onclick = () => this._events.emit("product-modal-view: add", {id: product.id})
+        button.onclick = () => this._events.emit("product-modal-view: add", {product})
 
         const price = createElement("span", {
             className: "card__price",

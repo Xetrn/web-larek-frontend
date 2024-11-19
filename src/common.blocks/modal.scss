@@ -45,6 +45,10 @@
     gap: 2rem;
   }
 
+  &__actions.hidden {
+    display: none;
+  }
+
   &__close {
     position: absolute;
     top: calc(#{$defaultPadding} / 2);

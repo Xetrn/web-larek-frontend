@@ -3,6 +3,11 @@ import {EventEmitter} from "../components/base/events";
 
 export class CatalogModel {
     #items: Product[] | null = null
+
+    get items() {
+        return this.#items
+    }
+
     _events: EventEmitter | null = null
 
     constructor(events: EventEmitter) {

@@ -1,28 +1,27 @@
 import {EventEmitter} from "../components/base/events";
+import {Product} from "../types";
 
 export class BasketModel {
-    #items: Map<string, number> = new Map()
+    #items: Set<Product> = new Set()
     _events: EventEmitter | null = null
 
     constructor(events: EventEmitter) {
         this._events = events
     }
 
-   add(id: string){
-        if(!this.#items.has(id)){
-            this.#items.set(id, 0)
+   add(product: Product){
+        if(!this.#items.has(product)) {
+            this.#items.add(product)
         }
-
-        this.#items.set(id, this.#items.get(id) + 1)
-       this._events.emit("basket-model: add")
+        this._events.emit("basket-model: add")
    }
 
-   remove(id: string){
-        this.#items.delete(id)
-       this._events.emit("basket-model: remove")
+   remove(product: Product){
+        this.#items.delete(product)
+        this._events.emit("basket-model: remove")
    }
 
-   has(id: string){
-        return this.#items.has(id)
+   has(product: Product){
+        return this.#items.has(product)
    }
 }

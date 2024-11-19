@@ -35,16 +35,39 @@ events.on("modal-view: close", () => {
 events.on("product-view: click", (product: Product) => {
     modalView.render({
         opened: true,
-        content: new ProductModalView(events).render({product, inBasket: basketModel.has(product.id)})
+        content: new ProductModalView(events).render({product, inBasket: basketModel.has(product)})
     })
 })
-events.on("product-modal-view: add", ({id}: {id: string}) => {
-    basketModel.add(id)
-    modalView.render({opened: false})
+events.on("product-modal-view: add", ({product}: { product: Product }) => {
+    basketModel.add(product)
+
+    modalView.render({
+        opened: true,
+        content: new ProductModalView(events).render({product, inBasket: basketModel.has(product)})
+    })
 })
 
 events.on("basket-open-button-view: click", () => {
-    modalView.render({opened: true, content: new BasketModalView(events).render({items: []})})
+    const basketModalView = new BasketModalView(events)
+    const products = catalogModel.items.filter(item => basketModel.has(item))
+
+    modalView.render({
+        opened: true,
+        content: basketModalView.render({products}),
+        actions: basketModalView.renderActions({products})
+    })
+})
+
+events.on("product-basket-view: delete", (product: Product) => {
+    basketModel.remove(product)
+
+    const basketModalView = new BasketModalView(events)
+    const products = catalogModel.items.filter(item => basketModel.has(item))
+    modalView.render({
+        opened: true,
+        content: basketModalView.render({products}),
+        actions: basketModalView.renderActions({products})
+    })
 })
 
 api.get('/product/')
