@@ -1,4 +1,4 @@
-@use "../vendor/normalize";
+@use "../vendor/normalize.css";
 @use "../vendor/ys-text";
 @use "../vendor/garamond";
 @use "../vendor/glyphter";
@@ -18,4 +18,4 @@
 
 
 @use "variables" as *;
-@use "mixins";
+@use "mixins/index";
