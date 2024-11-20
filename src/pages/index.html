@@ -39,7 +39,7 @@
 		</div>
 	</div>
 
-	<div class="modal modal_active">
+	<div class="modal" id="modal-card">
 		<div class="modal__container">
 			<button class="modal__close" aria-label="закрыть"></button>
 			<div class="modal__content">
@@ -59,7 +59,7 @@
 		</div>
 	</div>
 
-	<div class="modal">
+	<div class="modal" id="modal-cart">
 		<div class="modal__container">
 			<button class="modal__close" aria-label="закрыть"></button>
 			<div class="modal__content">
@@ -94,7 +94,7 @@
 		</div>
 	</div>
 
-	<div class="modal">
+	<div class="modal" id="modal-form-ship">
 		<div class="modal__container">
 			<button class="modal__close" aria-label="закрыть"></button>
 			<div class="modal__content">
@@ -120,7 +120,7 @@
 		</div>
 	</div>
 
-	<div class="modal">
+	<div class="modal" id="modal-form-userdata">
 		<div class="modal__container">
 			<button class="modal__close" aria-label="закрыть"></button>
 			<div class="modal__content">
@@ -143,7 +143,7 @@
 		</div>
 	</div>
 
-	<div class="modal">
+	<div class="modal" id="modal-success">
 		<div class="modal__container">
 			<button class="modal__close" aria-label="закрыть"></button>
 			<div class="modal__content">
@@ -224,7 +224,7 @@
 				</label>
 			</div>
 			<div class="modal__actions">
-				<button type="submit" disabled class="button order__button">Далее</button>
+				<button type="submit" disabled class="button order__button" id="next-button">Далее</button>
 				<span class="form__errors"></span>
 			</div>
 		</form>
@@ -243,7 +243,7 @@
 				</label>
 			</div>
 			<div class="modal__actions">
-				<button type="submit" disabled class="button">Оплатить</button>
+				<button type="submit" disabled class="button" id="buy-button">Оплатить</button>
 				<span class="form__errors"></span>
 			</div>
 		</form>
