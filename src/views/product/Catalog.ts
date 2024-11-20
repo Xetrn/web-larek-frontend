@@ -1,19 +1,20 @@
 import { IView } from "../view";
 import { IProduct } from "../../types/product";
 import { EventEmitter } from "../../components/base/events";
+import { ItemView } from "./Card";
 
 
-export class CatalogView<T extends Partial<IProduct>> implements IView{
+export class CatalogView implements IView{
 
     
-    constructor(protected container: HTMLElement, protected events: EventEmitter, protected itemView: IView){   
+    constructor(protected container: HTMLElement, protected events: EventEmitter, protected childContainer: HTMLTemplateElement){   
     }
 
 
-    render(products: T[]): HTMLElement { 
+    render(products: IProduct[]): HTMLElement { 
         this.container.innerHTML = '';
         products.forEach(product => {
-            const productElement = this.itemView.render(product);
+            const productElement = new ItemView(this.events, this.childContainer).render(product);
             this.container.appendChild(productElement);
         });
 

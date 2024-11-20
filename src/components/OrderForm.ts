@@ -1,7 +1,7 @@
 import {Form} from "./common/Form";
 import {IOrderForm} from "../types/order";
-import {EventEmitter, IEvents} from "./base/events";
-import {ensureElement} from "../utils/utils";
+import { IEvents } from "./base/events";
+
 
 export class OrderData extends Form<IOrderForm> {
     private cardButton: HTMLButtonElement;
@@ -22,13 +22,10 @@ export class OrderData extends Form<IOrderForm> {
     }
 
     set payment(value: string) {
-        //(this.container.elements.namedItem('payment') as HTMLInputElement).value = value;
-        
-        // Remove active class from both buttons
         this.cardButton.classList.remove('button_alt-active');
         this.cashButton.classList.remove('button_alt-active');
 
-        // Add active class to the selected button
+
         if (value === 'card') {
             this.cardButton.classList.add('button_alt-active');
             this.onInputChange('payment', value);

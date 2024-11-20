@@ -1,5 +1,4 @@
-import { IBasketCatalog } from "../types/basket";
-import { IOrderData, IOrderForm, IOrderItem, IUserForm, Payment, FormErrors, IOrderApiData, IOrderBasketData } from "../types/order";
+import { IOrderForm, IOrderItem, IUserForm, FormErrors, IOrderApiData, IOrderBasketData } from "../types/order";
 import { EventEmitter } from "../components/base/events";
 
 export class OrderModel  {
@@ -66,47 +65,55 @@ export class OrderModel  {
     }
 
     setOrderField(field: keyof (IOrderForm & IUserForm), value: string) {
-        if (field in this.orderData) {
+        const isOrderField = field in this.orderData;
+        const isUserField = field in this.userData;
+
+        if (isOrderField) {
             this.orderData[field as keyof IOrderForm] = value;
-        } else if (field in this.userData) {
+        } else if (isUserField) {
             this.userData[field as keyof IUserForm] = value;
         }
 
         if (this.validateOrder(field)) {
-            if(field in this.orderData) {
-                console.log(`${field}:ready`, this.orderData);
-                this.emitter.emit('order:ready', this.orderData);
-            }
-            else if(field in this.userData) {
-                console.log(`${field}:ready`, this.userData);
-                this.emitter.emit('user:ready', this.userData);
-            }
+            const dataToEmit = isOrderField ? this.orderData : this.userData;
+            const eventType = isOrderField ? 'order:ready' : 'user:ready';
+            this.emitter.emit(eventType, dataToEmit);
         }
     }
 
     validateOrder(field: keyof (IOrderForm & IUserForm)) {
-        const errors: typeof this.orderFormErrors = {};
+        const errors: Partial<IOrderForm & IUserForm> = {};
 
-        if(field in this.orderData) {
-            if (!this.orderData.payment) {
-                errors.payment = 'Не выбран способ оплаты';
-            }
-            else if (!this.orderData.address) {
-                errors.address = 'Необходимо указать адрес';
-            }
+        const isOrderField = field in this.orderData;
+        const isUserField = field in this.userData;
+
+        if (isOrderField) {
+            this.validateOrderFields(errors, this.orderData);
+        } else if (isUserField) {
+            this.validateUserFields(errors, this.userData);
         }
-        else if(field in this.userData) {
-            if (!this.userData.email) {
-                errors.email = 'Необходимо указать email';
-            }
-            else if (!this.userData.phone) {
-                errors.phone = 'Необходимо указать телефон';
-            }
-        }
-        
+
         this.orderFormErrors = errors;
         this.emitter.emit('formErrors:change', this.orderFormErrors);
         return Object.keys(errors).length === 0;
+    }
+
+    private validateOrderFields(errors: Partial<IOrderForm>, data: IOrderForm,) {
+        if (!data.payment) {
+            errors.payment = 'Не выбран способ оплаты';
+        }
+        if (!data.address || data.address.trim() === '') {
+            errors.address = 'Необходимо указать адрес';
+        }
+    }
+
+    private validateUserFields(errors: Partial<IUserForm>, data: IUserForm) {
+        if (!data.email || data.email.trim() === '') {
+            errors.email = 'Необходимо указать email';
+        }
+        if (!data.phone || data.phone.trim() === '') {
+            errors.phone = 'Необходимо указать телефон';
+        }
     }
 
     protected _emitChange(event: string): void {
