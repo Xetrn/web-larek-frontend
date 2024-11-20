@@ -5,6 +5,7 @@ interface IBasketModel {
     items: Map<string, BasketItem>;
     add(item: BasketItem): void;    
     remove(id: string): void;
+    get totalPrice(): number;
 }
 
 export class BasketModel implements IBasketModel {
@@ -27,5 +28,12 @@ export class BasketModel implements IBasketModel {
             this.items.delete(id);
             this._events.emit("basket:change", this.items);
         }
+    }
+
+    get totalPrice(): number {
+        return Array.from(this.items.values()).reduce(
+            (total, item) => total + item.price,
+            0
+        );
     }
 }

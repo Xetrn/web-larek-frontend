@@ -1,13 +1,23 @@
 import { IView } from "./View"; 
 import { EventEmitter } from "../base/events";
+import { Product, ProductList } from "../../types/types";
+import { CatalogItemView } from "./CatalogItemView";
 
-abstract class CatalogView implements IView {
-    protected container: HTMLElement;
-    protected events: EventEmitter;
+export class CatalogView implements IView {
+    protected _container: HTMLElement;
+    protected _events: EventEmitter;
 
     constructor(events: EventEmitter) {
-        this.events = events
+        this._container = document.querySelector('.gallery');
+        this._events = events
 	}
 
-    abstract render(data?: object): HTMLElement;
+    render(data?: ProductList): HTMLElement {
+        if(data?.items && data.items.length > 0) {
+            this._container.replaceChildren(
+                //...data.items.map((item: Product) => new CatalogItemView().render(item))
+            );
+        }
+        return this._container;
+    }
 }
