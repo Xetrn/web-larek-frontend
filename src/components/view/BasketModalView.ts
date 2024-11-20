@@ -26,6 +26,7 @@ export class BasketModalView extends View {
         })
         const button = createElement("button", {className: "button", textContent: "Оформить"})  as HTMLButtonElement
         button.disabled = products.length == 0
+        button.onclick = () => this._events.emit("basket-modal-view: buy")
 
         return [price, button]
     }
