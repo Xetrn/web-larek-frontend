@@ -28,11 +28,12 @@ export class BasketItemView extends View<BasketItem>{
         this.setTextContent(this._productName, title);
     }
     set price(priceValue: number) {
-        if (priceValue !== null) {
+        /* if (priceValue !== null) {
             this.setTextContent(this._productPrice, `${priceValue} синапсов`);
         }
         else {
             this.setTextContent(this._productPrice, `Цена не установлена`);
-        }
+        } */
+        priceValue ? this.setTextContent(this._productPrice, `${priceValue} синапсов`) : this.setTextContent(this._productPrice, `Бесценно`)
     }
 }

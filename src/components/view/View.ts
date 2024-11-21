@@ -20,7 +20,5 @@ export class View<T> implements IView<T>{
     render(data?: Partial<T>): HTMLElement {
         Object.assign(this as object, data ?? {});
         return this.container;
-    }
-
-    
+    }   
 }

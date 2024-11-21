@@ -19,19 +19,7 @@ export class CatalogItemView extends View<Product>{
         this.productName = ensureElement<HTMLHeadingElement>(`.card__title`, this._element);
         this.productImage = ensureElement<HTMLImageElement>(`.card__image`, this._element);
         this.productPrice = ensureElement<HTMLElement>(`.card__price`, this._element);
-
-        /* this.element = document.querySelector('#card-catalog') as HTMLButtonElement;
-        this.productCategory = this.element.querySelector('.card__category');
-        this.productTitle = this.element.querySelector('.card__title');
-        this.productImage = this.element.querySelector('.card__image');
-        this.productPrice = this.element.querySelector('.card__price'); */
     }
-    /* render(product:Product) {
-        this.productTitle.textContent = product.name;
-        this.productImage.src = product.image;
-        this.productPrice.textContent = `${product.price} синапсов`;
-        this.productCategory.textContent = product.description;
-    } */
 
     set name(title: string) {
         this.setTextContent(this.productName, title);
@@ -40,12 +28,7 @@ export class CatalogItemView extends View<Product>{
         this.setImageSrc(this.productImage, src);
     }
     set price(priceValue: number) {
-        if (priceValue !== null) {
-            this.setTextContent(this.productPrice, `${priceValue} синапсов`);
-        }
-        else {
-            this.setTextContent(this.productPrice, `Цена не установлена`);
-        }
+        priceValue ? this.setTextContent(this.productPrice, `${priceValue} синапсов`) : this.setTextContent(this.productPrice, `Бесценно`);
     }
 
 }

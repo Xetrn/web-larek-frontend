@@ -1,4 +1,4 @@
-import { IEvents } from "../base/events";
+import { EventEmitter } from "../base/events";
 
 import { View } from "./View";
 
@@ -10,7 +10,7 @@ export class PageView extends View<HTMLElement[]> {
     protected _wrapper: HTMLElement;
     protected _basket: HTMLElement;
 
-    constructor(container: HTMLElement, protected events: IEvents) {
+    constructor(container: HTMLElement, protected events: EventEmitter) {
         super(container);
 
         this._counter = ensureElement<HTMLElement>('.header__basket-counter');
@@ -18,11 +18,6 @@ export class PageView extends View<HTMLElement[]> {
         this._wrapper = ensureElement<HTMLElement>('.page__wrapper');
         this._basket = ensureElement<HTMLElement>('.header__basket');
 
-        /* this._counter = document.querySelector('.header__basket-counter') as HTMLElement;
-        this._catalog = document.querySelector('.gallery') as HTMLElement;
-        this._wrapper = document.querySelector('.page__wrapper') as HTMLElement;
-        this._basket = document.querySelector('.header__basket') as HTMLElement;
- */
         this._basket.addEventListener('click', () => {
             this.events.emit('basket:open');
           });

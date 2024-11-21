@@ -33,3 +33,9 @@ export type OrderForm = {
     total: string | number;     // общая сумма корзины
     items: string[];            // массив идентификаторов покупаемых товаров
 }
+
+export type FormErrors = Partial<Record<keyof OrderForm, string>>;
+
+export type OrderResult = {
+    id: string;
+}
