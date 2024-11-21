@@ -4,27 +4,27 @@ import { ensureElement } from "../../utils/utils";
 import { IProduct } from "../../types/product";
 import { categoryClasses, Category } from "../../utils/constants";
 
-type CatalogItem = Pick<IProduct, 'image' | 'title' | 'category' | 'price'  | 'id'>;
+type modalProductItem = Pick<IProduct, 'image' | 'title' | 'category' | 'price' | 'description'>;
 
-export class ProductView extends View<CatalogItem> {
+export class ModalProductView extends View<modalProductItem> {
   protected _image: HTMLImageElement;
   protected _title: HTMLElement;
   protected _category: HTMLElement;
   protected _price: HTMLElement;
-  protected _id: string;
+  protected _button: HTMLButtonElement;
+
+  protected _description: HTMLElement;
 
   constructor(container: HTMLElement, protected events: IEvents) {
     super(container);
 
-    this._title = ensureElement<HTMLElement>(`.card__title`, container);
     this._image = ensureElement<HTMLImageElement>(`.card__image`, container);
-    this._price = ensureElement<HTMLElement>(`.card__price`, container);
+    this._title = ensureElement<HTMLElement>(`.card__title`, container);
     this._category = ensureElement<HTMLElement>(`.card__category`, container);
+    this._price = ensureElement<HTMLElement>(`.card__price`, container);
+    this._description = ensureElement<HTMLElement>(`.card__text`, container);
 
-    container.addEventListener('click', () => {
-      this.events.emit('product:clicked', { id: this._id });
-    });
-    
+    this._button = ensureElement<HTMLButtonElement>(`.card__button`, container);
   }
 
   set image(value: string) {
@@ -43,12 +43,14 @@ export class ProductView extends View<CatalogItem> {
   set price(value: number | null) {
     if (value === null) {
       this.setText(this._price, 'Бесценно');
+      this.setDisabled(this._button, true);
     } else {
       this.setText(this._price, value.toString() + ' синапсов');
+      this.setDisabled(this._button, false);
     }
   }
 
-  set id(value: string) {
-    this._id = value;
+  set description(value: string) {
+    this.setText(this._description, value);
   }
 }
