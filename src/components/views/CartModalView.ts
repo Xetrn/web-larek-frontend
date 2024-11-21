@@ -3,11 +3,11 @@ import { CartItem } from '../../types';
 import { Actions } from '../../utils/constants';
 import ModalView from './ModalView';
 
-class CartView extends ModalView {
+class CartModalView extends ModalView {
 	private templateCard: HTMLTemplateElement;
 	private templateCart: HTMLTemplateElement;
 
-	constructor(protected events: EventEmitter) {
+	constructor(events: EventEmitter) {
 		super(events);
 		this.templateCart = document.getElementById(
 			'basket'
@@ -20,13 +20,25 @@ class CartView extends ModalView {
 	render(items: CartItem[]): void {
 		this.modalElement.classList.add('modal_active');
 		this.modalContent.innerHTML = '';
+
 		const containerCart = this.templateCart.content.cloneNode(
 			true
 		) as HTMLElement;
+
 		const cartList = containerCart.querySelector(
 			'.basket__list'
 		) as HTMLUListElement;
 		let total = 0;
+		const checkoutButton = containerCart.querySelector(
+			'.basket__button'
+		) as HTMLButtonElement;
+		if (!items.length) {
+			checkoutButton.disabled = true;
+		}
+
+		checkoutButton.addEventListener('click', () => {
+			this.events.emit(Actions.ORDER_FIRST_STEP);
+		});
 
 		items.forEach((item, index) => {
 			const card = this.templateCard.content.cloneNode(true) as HTMLElement;
@@ -41,9 +53,9 @@ class CartView extends ModalView {
 				'.basket__item-delete'
 			) as HTMLButtonElement;
 
-			if (indexEl) indexEl.textContent = String(index + 1);
-			if (titleEl) titleEl.textContent = item.title;
-			if (priceEl) priceEl.textContent = `${item.price} синапсов`;
+			indexEl.textContent = String(index + 1);
+			titleEl.textContent = item.title;
+			priceEl.textContent = `${item.price} синапсов`;
 
 			deleteButton.addEventListener('click', () => {
 				this.events.emit(Actions.CART_REMOVE, item);
@@ -60,4 +72,4 @@ class CartView extends ModalView {
 	}
 }
 
-export default CartView;
+export default CartModalView;

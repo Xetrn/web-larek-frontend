@@ -4,11 +4,15 @@ import { Actions } from '../../utils/constants';
 
 interface IOrderModel {
 	count: number;
-	total: number;
 	items: Map<string, CartItem>;
 	orderInfo: Omit<Order, 'items' | 'total'>;
+	total: number;
 	addItem(item: CartItem): void;
+	clean(): void;
+	getItems(): CartItem[];
+	getIds(): string[];
 	removeItem(id: string): void;
+	updateOrderInfo(info: Partial<Omit<Order, 'items' | 'total'>>): void;
 }
 
 class OrderModel implements IOrderModel {
@@ -56,6 +60,20 @@ class OrderModel implements IOrderModel {
 
 	getIds(): string[] {
 		return Array.from(this.items.keys());
+	}
+
+	updateOrderInfo(info: Partial<Omit<Order, 'items' | 'total'>>) {
+		this.orderInfo = { ...this.orderInfo, ...info };
+	}
+
+	clean() {
+		this.items = new Map();
+		this.orderInfo = {
+			payment: '',
+			email: '',
+			address: '',
+			phone: '',
+		};
 	}
 }
 

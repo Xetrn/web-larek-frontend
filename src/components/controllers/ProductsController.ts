@@ -13,6 +13,7 @@ import { CDN_URL } from '../../utils/constants';
 class ProductsController {
 	private catalogView: IView;
 	private productModalView: ModalView;
+	private cartButtonCounter: HTMLSpanElement;
 
 	constructor(
 		private events: EventEmitter,
@@ -21,13 +22,17 @@ class ProductsController {
 		private orderModel: OrderModel,
 		private cartButton: HTMLButtonElement
 	) {
+		this.catalogView = new CatalogView(this.events);
+		this.productModalView = new ProductModalView(this.events);
+		this.cartButtonCounter = this.cartButton.querySelector(
+			'.header__basket-counter'
+		);
+		this.cartButtonCounter.textContent = String(this.orderModel.count);
+
 		this.events.on(Actions.CATALOG_CHANGE, this.renderCatalog.bind(this));
 		this.events.on(Actions.MODAL_CARD_OPEN, this.renderCardModal.bind(this));
 		this.events.on(Actions.CART_ADD, this.addToCart.bind(this));
-		this.catalogView = new CatalogView(this.events);
-		this.productModalView = new ProductModalView(this.events);
-		this.cartButton.querySelector('.header__basket-counter').textContent =
-			String(this.orderModel.count);
+
 		this.fetchAndSetProducts();
 	}
 
@@ -35,6 +40,7 @@ class ProductsController {
 		try {
 			const apiProducts = (await this.api.get('/product/')) as ProductsList;
 
+			// Обновление списка товаров с добавлением CDN для изображений
 			const updatedProducts = apiProducts.items.map((product) => ({
 				...product,
 				image: `${CDN_URL}${product.image}`,
@@ -51,13 +57,13 @@ class ProductsController {
 	}
 
 	renderCardModal(product: Product) {
-		this.productModalView.render(product);
+		const isInCart = this.orderModel.getIds().includes(product.id);
+		this.productModalView.render({ item: product, isInCart });
 	}
 
 	addToCart(item: CartItem) {
 		this.orderModel.addItem(item);
-		this.cartButton.querySelector('.header__basket-counter').textContent =
-			String(this.orderModel.count);
+		this.cartButtonCounter.textContent = String(this.orderModel.count);
 	}
 }
 

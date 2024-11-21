@@ -28,13 +28,11 @@ class CatalogView implements IView {
 			const imageEl = card.querySelector('.card__image') as HTMLImageElement;
 			const priceEl = card.querySelector('.card__price') as HTMLSpanElement;
 
-			if (categoryEl) {
-				categoryEl.classList.add(getNameOfClassCategory(item.category));
-				categoryEl.textContent = item.category;
-			}
-			if (titleEl) titleEl.textContent = item.title;
-			if (imageEl) imageEl.src = item.image;
-			if (priceEl) priceEl.textContent = `${item.price} синапсов`;
+			categoryEl.classList.add(getNameOfClassCategory(item.category));
+			categoryEl.textContent = item.category;
+			titleEl.textContent = item.title;
+			imageEl.src = item.image;
+			priceEl.textContent = `${item.price} синапсов`;
 
 			const cardButton = card.querySelector('.card');
 			cardButton.addEventListener('click', () => {

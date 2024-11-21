@@ -4,13 +4,10 @@ import { Product, ProductsList } from '../../types';
 
 interface IProductsModel {
 	items: Product[];
-	total: number;
 	set(products: ProductsList): void;
-	getProduct(id: string): Product;
 }
 
 class ProductsModel implements IProductsModel {
-	total: number;
 	items: Product[] | null = null;
 	private events: EventEmitter | null = null;
 
@@ -19,13 +16,8 @@ class ProductsModel implements IProductsModel {
 	}
 
 	set(products: ProductsList) {
-		this.total = products.total;
 		this.items = products.items;
 		this.events.emit(Actions.CATALOG_CHANGE, this.items);
-	}
-
-	getProduct(id: string): Product {
-		return this.items.find((product: Product) => product.id === id);
 	}
 }
 

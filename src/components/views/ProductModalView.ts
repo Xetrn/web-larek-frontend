@@ -14,7 +14,9 @@ class ProductModalView extends ModalView {
 		) as HTMLTemplateElement;
 	}
 
-	render(item: Product) {
+	render(props: { item: Product; isInCart: boolean }) {
+		const { item, isInCart } = props;
+
 		this.modalElement.classList.add('modal_active');
 		this.modalContent.innerHTML = '';
 
@@ -28,19 +30,15 @@ class ProductModalView extends ModalView {
 			'.card__text'
 		) as HTMLParagraphElement;
 
-		if (categoryEl) {
-			categoryEl.classList.add(getNameOfClassCategory(item.category));
-			categoryEl.textContent = item.category;
-		}
-		if (titleEl) titleEl.textContent = item.title;
-		if (imageEl) imageEl.src = item.image;
-		if (priceEl) {
-			priceEl.textContent = `${item.price} синапсов`;
-		}
-		if (descriptionEl) descriptionEl.textContent = item.description;
+		categoryEl.classList.add(getNameOfClassCategory(item.category));
+		categoryEl.textContent = item.category;
+		titleEl.textContent = item.title;
+		imageEl.src = item.image;
+		priceEl.textContent = `${item.price} синапсов`;
+		descriptionEl.textContent = item.description;
 
 		const cardButton = card.querySelector('.card__button') as HTMLButtonElement;
-		if (!item.price) {
+		if (!item.price || isInCart) {
 			cardButton.disabled = true;
 		}
 
@@ -51,6 +49,7 @@ class ProductModalView extends ModalView {
 		} as CartItem;
 		cardButton.addEventListener('click', () => {
 			this.events.emit(Actions.CART_ADD, cartItem);
+			cardButton.disabled = true;
 		});
 
 		this.modalContent.appendChild(card);

@@ -36,8 +36,3 @@ export type OrderResp  = {
     id: string,
     total: number
 }
-
-//Тип ошибки с сервера  
-export type Error = {
-    error: string
-}

@@ -27,7 +27,6 @@ abstract class ModalView implements IView {
 		);
 
 		this.modalElement.addEventListener('click', (event) => {
-			console.log(event.target, event.currentTarget);
 			if (event.target === event.currentTarget) {
 				this.modalElement.classList.remove('modal_active');
 			}
