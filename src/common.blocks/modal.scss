@@ -4,7 +4,8 @@
 .modal {
   @include mixins.sublayer;
   // height: max-content;
-  position: absolute;
+  position: fixed;
+  inset: 0;
   display: none;
   justify-content: center;
   background-color: $overlayBackground;
@@ -59,7 +60,7 @@
   }
 
   &__message {
-    white-space:nowrap;
+    white-space: nowrap;
     max-width: 60%;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -67,5 +68,9 @@
     &_error {
       color: $error;
     }
+  }
+
+  &__actions.hidden {
+    display: none;
   }
 }

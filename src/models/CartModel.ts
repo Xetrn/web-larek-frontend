@@ -1,33 +1,41 @@
-import { BaseCartItem, CartItem } from '../types';
+import { BaseCartItem, CartItem, Product } from '../types';
+import { EventEmitter } from '../components/base/events';
 
 export class CartModel {
-    private items: Map<string, CartItem> = new Map();
+	private items: Map<string, CartItem> = new Map();
+	private _events: EventEmitter | null = null;
 
-    addItem(item: BaseCartItem): void {
-        const existingItem = this.items.get(item.id);
+	constructor(events: EventEmitter) {
+		this._events = events;
+	}
 
-        if (existingItem) {
-            this.items.set(item.id, { ...existingItem, count: existingItem.count + 1 });
-        } else {
-            this.items.set(item.id, { ...item, count: 1 });
-        }
-    }
+	addItem(item: BaseCartItem): void {
+		const existingItem = this.items.get(item.id);
 
-    removeItem(id: string): void {
-        this.items.delete(id);
-    }
+		if (existingItem) {
+			this.items.set(item.id, { ...existingItem, count: existingItem.count + 1 });
+		} else {
+			this.items.set(item.id, { ...item, count: 1 });
+		}
+	}
 
-    getItems(): CartItem[] {
-        return Array.from(this.items.values());
-    }
+	removeItem(id: string): void {
+		this.items.delete(id);
+	}
 
-    clearCart(): void {
-        this.items.clear();
-    }
+	getItems(): CartItem[] {
+		return Array.from(this.items.values());
+	}
 
-    getTotalPrice(): number {
-        return [...this.items.values()].reduce(
-            (total, item) => total + (item.price || 0) * item.count, 0
-        );
-    }
+	clearCart(): void {
+		this.items.clear();
+	}
+
+	getTotalPrice(): number {
+		return [...this.items.values()].reduce((total, item) => total + (item.price || 0) * item.count, 0);
+	}
+
+	getIsInCart(product: Product) {
+		return this.items.has(product.id);
+	}
 }

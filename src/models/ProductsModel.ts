@@ -1,20 +1,27 @@
-import {Product, ProductList} from "../types";
+import { Product, ProductList } from '../types';
+import { EventEmitter } from '../components/base/events';
 
 export class ProductsModel {
-    private products: Product[] = [];
+	private products: Product[] = [];
+	private _events: EventEmitter | null = null;
 
-    setProducts(products: Product[]): void {
-        this.products = products;
-    }
+	constructor(events: EventEmitter) {
+		this._events = events;
+	}
 
-    getProductById(id: string): Product | undefined {
-        return this.products.find(product => product.id === id);
-    }
+	setProducts(products: Product[]): void {
+		this.products = products;
+		this._events.emit('products.change', products);
+	}
 
-    getProductList(): ProductList {
-        return {
-            items: this.products,
-            total: this.products.length,
-        };
-    }
+	getProductById(id: string): Product | undefined {
+		return this.products.find((product) => product.id === id);
+	}
+
+	getProductList(): ProductList {
+		return {
+			items: this.products,
+			total: this.products.length,
+		};
+	}
 }

@@ -1,16 +1,16 @@
-import {Product} from "./product";
+import { Product } from './product';
 
 /**
  * Модель списка товаров
  */
 export type ProductList = {
-    /**
-     * Товары
-     */
-    items: Product[];
+	/**
+	 * Товары
+	 */
+	items: Product[];
 
-    /**
-     * Количество товаров
-     */
-    total: number;
-}
+	/**
+	 * Количество товаров
+	 */
+	total: number;
+};

@@ -8,6 +8,7 @@
   &_alt {
     @include mixins.button(white, $primaryLight, $primaryLight);
     border: $defaultBorder;
+
     &:hover {
       border: $hoverBorder;
     }

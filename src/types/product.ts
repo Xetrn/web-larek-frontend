@@ -2,33 +2,33 @@
  * Товар
  */
 export type Product = {
-    /**
-     * ID
-     */
-    id: string;
+	/**
+	 * ID
+	 */
+	id: string;
 
-    /**
-     * Название
-     */
-    title: string;
+	/**
+	 * Название
+	 */
+	title: string;
 
-    /**
-     * Описание
-     */
-    description: string;
+	/**
+	 * Описание
+	 */
+	description: string;
 
-    /**
-     * Ссылка на изображение
-     */
-    image: string;
+	/**
+	 * Ссылка на изображение
+	 */
+	image: string;
 
-    /**
-     * Цена продукта
-     */
-    price: number | null;
+	/**
+	 * Цена продукта
+	 */
+	price: number | null;
 
-    /**
-     * Категория
-     */
-    category: string;
-}
+	/**
+	 * Категория
+	 */
+	category: string;
+};

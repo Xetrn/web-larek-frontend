@@ -1,17 +1,23 @@
 import { OrderForm } from '../types';
+import { EventEmitter } from '../components/base/events';
 
 export class OrderModel {
-    private order: OrderForm | null = null;
+	public order: OrderForm | null = null;
+	private _events: EventEmitter | null = null;
 
-    createOrder(order: OrderForm): void {
-        this.order = order;
-    }
+	constructor(events: EventEmitter) {
+		this._events = events;
+	}
 
-    getOrder(): OrderForm | null {
-        return this.order;
-    }
+	createOrder(order: OrderForm): void {
+		this.order = order;
+	}
 
-    clearOrder(): void {
-        this.order = null;
-    }
+	getOrder(): OrderForm | null {
+		return this.order;
+	}
+
+	clearOrder(): void {
+		this.order = null;
+	}
 }

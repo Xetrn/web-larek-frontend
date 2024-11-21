@@ -45,16 +45,19 @@
     aspect-ratio: 1;
     margin: 3.75rem;
   }
+
   &__title {
     font-size: $titleFontSize;
     font-weight: 500;
     margin: 0;
     flex-grow: 1;
   }
+
   &__text {
     text-align: left;
     flex-grow: 1;
   }
+
   &__category {
     padding: 0.5rem 1.25rem;
     border-radius: 2.5rem;
@@ -64,22 +67,28 @@
     &_soft {
       background-color: $category1;
     }
+
     &_hard {
       background-color: $category5;
     }
+
     &_other {
       background-color: $category2;
     }
+
     &_additional {
       background-color: $category3;
     }
+
     &_button {
       background-color: $category4;
     }
   }
+
   &__action {
 
   }
+
   &__price {
 
   }

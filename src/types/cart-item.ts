@@ -2,25 +2,25 @@
  * Товар в корзине
  */
 export type BaseCartItem = {
-    /**
-     * ID
-     */
-    id: string;
+	/**
+	 * ID
+	 */
+	id: string;
 
-    /**
-     * Название
-     */
-    title: string;
+	/**
+	 * Название
+	 */
+	title: string;
 
-    /**
-     * Цена
-     */
-    price: number;
-}
+	/**
+	 * Цена
+	 */
+	price: number;
+};
 
 export type CartItem = BaseCartItem & {
-    /**
-     * Количество
-     */
-    count: number;
-}
+	/**
+	 * Количество
+	 */
+	count: number;
+};
