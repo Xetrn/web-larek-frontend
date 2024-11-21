@@ -34,7 +34,7 @@ export default class CatalogProductView implements IView<CatalogProduct> {
         this.title.textContent = product.title;
         this.price.textContent = getCorrectPriceText(product.price);
         this.image.setAttribute("src", product.image);
-        setCorrectCategoryClass(this.category, "soft", product.category);
+        setCorrectCategoryClass(this.category, product.category);
         this.container.append(this.cardContainer);
         return this.cardContainer;
     }

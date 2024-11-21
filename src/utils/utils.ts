@@ -136,8 +136,8 @@ export function createElement<
     return element;
 }
 
-export function setCorrectCategoryClass(category: HTMLElement, prevCategoryType: string, categoryName: CategoryType) {
-    category.classList.remove(`card__category_${prevCategoryType}`);
+export function setCorrectCategoryClass(category: HTMLElement, categoryName: CategoryType) {
+    category.classList.remove(category.classList[1]);
     category.classList.add(`card__category_${correspondingCategories[categoryName]}`)
     category.textContent = categoryName;
 }

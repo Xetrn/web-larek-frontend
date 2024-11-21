@@ -29,7 +29,7 @@ export default class ProductView implements IProductView {
     render(data: IProduct, isAdded?: boolean): HTMLElement {
         this.title.textContent = data.title;
         this.description.textContent = data.description;
-        setCorrectCategoryClass(this.category, "other", data.category);
+        setCorrectCategoryClass(this.category, data.category);
         this.image.setAttribute("src", data.image);
         this.price.textContent = getCorrectPriceText(data.price);
         setDisabledIfCondition(data.price === null || isAdded, this.busketButton);
