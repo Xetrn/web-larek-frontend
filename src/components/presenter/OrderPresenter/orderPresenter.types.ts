@@ -10,6 +10,7 @@ export interface IOrderModel {
   createOrder(): Promise<IOrderResult>;
   reset(): void;
   updateOrderInputs(options: Partial<Omit<IOrder, 'items' | 'total'>>): void;
+  getOrderInputs(): IOrder;
   validateAddressForm(): string | null;
   validateContactsForm(): string | null;
 }

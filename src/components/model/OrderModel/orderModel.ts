@@ -28,6 +28,10 @@ export class OrderModel implements IOrderModel {
     this.order = { ...this.order, ...options };
   }
 
+  getOrderInputs() {
+    return this.order;
+  }
+
   validateAddressForm(): string | null {
     const { address, payment } = this.order;
 
@@ -52,9 +56,9 @@ export class OrderModel implements IOrderModel {
   reset() {
     this.order = {
       payment: null,
+      address: '',
       email: '',
       phone: '',
-      address: '',
       total: 0,
       items: [],
     };

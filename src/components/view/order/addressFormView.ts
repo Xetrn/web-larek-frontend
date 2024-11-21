@@ -8,7 +8,12 @@ type AddressFormHandlers = {
   onAddressChange: (value: string) => void;
 };
 
-export class AddressFormView extends BaseView<HTMLElement> {
+type AddressFormRenderProps = {
+  payment: PaymentMethod;
+  address: string;
+};
+
+export class AddressFormView extends BaseView<AddressFormRenderProps> {
   private submitHandler: (e: Event) => void;
   private onlinePaymentChangeHandler: () => void;
   private cashPaymentChangeHandler: () => void;
@@ -59,10 +64,18 @@ export class AddressFormView extends BaseView<HTMLElement> {
     };
   }
 
-  render(): HTMLElement {
+  render({ payment, address }: AddressFormRenderProps): HTMLElement {
+    this.error.textContent = '';
     this.onlineButton.classList.remove('button_alt-active');
     this.cashButton.classList.remove('button_alt-active');
-    this.addressInput.value = '';
+
+    if (payment === PaymentMethod.ONLINE) {
+      this.onlineButton.classList.add('button_alt-active');
+    } else if (payment === PaymentMethod.CASH) {
+      this.cashButton.classList.add('button_alt-active');
+    }
+
+    this.addressInput.value = address;
     this.submitEnable();
 
     this.submitButton.addEventListener('click', this.submitHandler);

@@ -1,5 +1,3 @@
-export type ProductPreviewButtonLabel = 'В корзину' | 'Удалить из корзины';
-
 export enum Category {
   SOFT = 'софт-скил',
   HARD = 'хард-скил',

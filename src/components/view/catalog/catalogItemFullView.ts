@@ -4,6 +4,11 @@ import { CDN_URL } from '../../../utils/constants';
 import { cloneTemplate } from '../../../utils/utils';
 import { BaseView } from '../baseView';
 
+enum PreviewButtonLabel {
+  ADD_TO_BASKET = 'В корзину',
+  REMOVE_FROM_BASKET = 'Удалить из корзины',
+}
+
 type CatalogItemFullRenderProps = {
   product: IProduct;
   inBasket: boolean;
@@ -59,7 +64,9 @@ export class CatalogItemFullView
 
   renderButton(inBasket: boolean, isDisabled = false) {
     this.cardButton.disabled = isDisabled;
-    this.cardButton.textContent = inBasket ? 'Удалить из корзины' : 'В корзину';
+    this.cardButton.textContent = inBasket
+      ? PreviewButtonLabel.REMOVE_FROM_BASKET
+      : PreviewButtonLabel.ADD_TO_BASKET;
   }
 
   clear = () => {

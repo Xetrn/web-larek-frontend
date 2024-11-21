@@ -59,11 +59,13 @@ export class OrderPresenter implements IPresenter {
   }
 
   private renderAddressForm = () => {
-    return this.addressFormView.render();
+    const { payment, address } = this.orderModel.getOrderInputs();
+    return this.addressFormView.render({ payment, address });
   };
 
   private renderContactForm = () => {
-    return this.contactFormView.render();
+    const { email, phone } = this.orderModel.getOrderInputs();
+    return this.contactFormView.render({ email, phone });
   };
 
   private renderOrderSuccess = (result: IOrderResult) => {

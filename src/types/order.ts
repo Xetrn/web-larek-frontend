@@ -3,11 +3,6 @@ export enum PaymentMethod {
   CASH = 'cash',
 }
 
-export enum OrderFormStatus {
-  ADDRESS = 'address',
-  CONTACTS = 'contacts',
-}
-
 export interface IOrderAddress {
   payment: PaymentMethod;
   address: string;

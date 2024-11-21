@@ -44,10 +44,8 @@ yarn build
 ```
 
 ## UML диаграмма
-Первая недоделанная версия, подробно рассписаны модели, интерфейсы и API. Брокер событий не реализован, но учтен в использовании моделями и презентером.
-В будущем диаграмма будет доделываться и переделываться, так как сейчас я не смог потянуть ее сложность 😥.
-
-![uml](web-larek-diagram-v1.svg)
+Полная UML диаграмма реализации проекта
+![uml](web-larek-diagram-v2.svg)
 
 ## Архитектура
 
@@ -117,6 +115,10 @@ interface ICatalogModel {
   getAll(): CatalogItem[];
   getPreviewById(id: string): IProduct;
 }
+
+interface CatalogModelDependencies {
+  api: IProductAPI;
+}
 ```
 
 #### BasketItem - тип продукта с идентификатором, названием и ценой, отображаемый в корзине
@@ -135,10 +137,16 @@ interface IBasket {
 #### IBasketModel - интерфейс модели корзины
 ```ts
 interface IBasketModel extends IBasket {
+  products: Set<BasketItem>;
   getAll(): BasketItem[];
   add(product: BasketItem): void;
   remove(id: string): void;
   get totalPrice(): number;
+  get count(): number;
+}
+
+interface BasketModelDependencies {
+  events: EventEmitter;
 }
 ```
 
@@ -178,18 +186,18 @@ export interface IOrderResult {
 
 #### Интерфейс модели заказа
 ```ts
-enum OrderFormStatus {
-  ADDRESS = 'address',
-  CONTACTS = 'contacts',
+interface IOrderModel {
+  order: IOrder;
+  createOrder(): Promise<IOrderResult>;
+  updateOrderInputs(options: Partial<Omit<IOrder, 'items' | 'total'>>): void;
+  validateAddressForm(): string | null;
+  validateContactsForm(): string | null;
+  reset(): void;
 }
 
-interface IOrderModel {
-  status: OrderFormStatus;
-  order: IOrder;
-  isValid: boolean;
-  error: string;
-  createOrder(order: IOrder): Promise<OrderResponseSuccess>;
-  reset(): void;
+interface OrderModelDependencies {
+  api: IOrderAPI;
+  events: EventEmitter;
 }
 ```
 

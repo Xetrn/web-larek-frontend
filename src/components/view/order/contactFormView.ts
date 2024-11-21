@@ -7,7 +7,12 @@ type ContactFormHandlers = {
   onPhoneChange: (value: string) => void;
 };
 
-export class ContactFormView extends BaseView<HTMLElement> {
+type ContactFormRenderProps = {
+  email: string;
+  phone: string;
+};
+
+export class ContactFormView extends BaseView<ContactFormRenderProps> {
   private submitHandler: (e: Event) => void;
   private emailChangeHandler: () => void;
   private phoneChangeHandler: () => void;
@@ -39,9 +44,10 @@ export class ContactFormView extends BaseView<HTMLElement> {
     };
   }
 
-  render(): HTMLElement {
-    this.emailInput.value = '';
-    this.phoneInput.value = '';
+  render({ email, phone }: ContactFormRenderProps): HTMLElement {
+    this.error.textContent = '';
+    this.emailInput.value = email;
+    this.phoneInput.value = phone;
     this.submitEnable();
 
     this.submitButton.addEventListener('click', this.submitHandler);
