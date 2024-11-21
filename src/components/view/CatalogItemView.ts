@@ -3,6 +3,7 @@ import { Product } from "../../types/types";
 import { View } from "./View";
 
 import { ensureElement } from "../../utils/utils";
+import { itemCategories } from "../../utils/constants";
 
 export class CatalogItemView extends View<Product>{
     protected _element: HTMLElement;
@@ -10,6 +11,7 @@ export class CatalogItemView extends View<Product>{
     private productName: HTMLHeadingElement;
     private productImage: HTMLImageElement;
     private productPrice: HTMLSpanElement;
+    private categoryColor = itemCategories;
 
     constructor(container: HTMLElement) {
         super(container);
@@ -30,5 +32,10 @@ export class CatalogItemView extends View<Product>{
     set price(priceValue: number) {
         priceValue ? this.setTextContent(this.productPrice, `${priceValue} синапсов`) : this.setTextContent(this.productPrice, `Бесценно`);
     }
+
+    set category(value: string) {
+        this.setTextContent(this.productCategory, value);
+        this.productCategory.className = `card__category card__category_${this.categoryColor[value]}`
+      }
 
 }

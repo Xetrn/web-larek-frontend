@@ -1,5 +1,5 @@
 import { Product } from "../../types/types";
-import { EventEmitter } from "../base/events";
+import { EventEmitter, IEvents } from "../base/events";
 
 interface IProductsModel {
     items: Product[];
@@ -9,7 +9,7 @@ interface IProductsModel {
 
 export class CatalogModel implements IProductsModel{
     items: Product[] | null = null;
-    _events: EventEmitter | null = null;
+    _events: IEvents | null = null;
 
     constructor(events: EventEmitter) {
         this._events = events
