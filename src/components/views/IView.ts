@@ -1,3 +1,5 @@
-export interface IView {
-    render(data?: object): HTMLElement;
+interface IView {
+	render(data?: object): void;
 }
+
+export default IView;
