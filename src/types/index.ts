@@ -7,9 +7,8 @@ export interface ICardData {
 	category?: string;
 	description?: string;
 }
-export interface ICardView extends Omit<ICardData, 'price' | 'category'> {
+export interface ICardView extends Omit<ICardData, 'price'> {
 	price: string;
-	description: string;
 }
 
 // Интерфейсы для данных заказа
@@ -63,14 +62,14 @@ export type TCardCatalogueView = Omit<TCardView, 'description'>;
 export type TCardBasketView = Pick<ICardView, 'id' | 'title' | 'price'> & { index: number };
 export type TCardPreview = TCardView & { isPriceInvalid: boolean; updateBuyButtonText: boolean };
 
+export type TCategory = { name: string; className: string };
+export type TId = Pick<ICardData, 'id'>;
+
 export type TBasketView = { cards: HTMLElement[]; total: number; blockPlaceOrderBtn: boolean };
 
 export type TFormView = { valid: boolean; errorMessage: string };
-export type TFormContactsView = TFormView & { email: string; phone: string; valid: boolean };
-export type TFormOrderView = TFormView & { payment: TPayment; address: string; valid: boolean };
-
-export type TId = Pick<ICardData, 'id'>;
-export type TCategory = { name: string; className: string };
+export type TFormContactsView = TFormView & { email: string; phone: string };
+export type TFormOrderView = TFormView & { payment: TPayment; address: string };
 
 export type TPaymentMethod = 'cash' | 'card';
 export type TPayment = Pick<IOrderData, 'payment'>;
@@ -78,11 +77,7 @@ export type TPayment = Pick<IOrderData, 'payment'>;
 export type TSuccessOrder = Pick<IOrderData, 'total' | 'items'>;
 export type TSuccessOrderView = { message: string };
 
-export type TModalView = {
-	content: HTMLElement;
-	open(): void;
-	close(): void;
-};
+export type TModalView = { content: HTMLElement; open(): void; close(): void };
 export type TPageView = {
 	catalog: HTMLElement[];
 	counter: number;
