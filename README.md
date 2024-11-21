@@ -22,9 +22,9 @@
 - src/models/Products.ts — файл с моделью для товаров
 - src/models/Basket.ts — файл с моделью для корзины
 - src/models/Order.ts — файл с моделью для заказа
-- src/views/product/CatalogView.ts — файл с представлением для каталога
-- src/views/product/CardPreview.ts — файл с представлением товара
-- src/views/basket/BasketView.ts — файл с представлением для корзины
+- src/components/views/product/CatalogView.ts — файл с представлением для каталога
+- src/components/views/product/CardPreview.ts — файл с представлением товара
+- src/components/views/basket/BasketView.ts — файл с представлением для корзины
 - src/views/order/OrderView.ts — файл с представлением товара в корзине
 - src/index.ts — точка входа приложения
 - src/components/ProductAPI.ts — файл с API для товаров
