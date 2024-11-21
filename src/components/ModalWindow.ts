@@ -20,6 +20,7 @@ export class ModalWindow implements IModalWindow{
                 this.close();
             }
         });
+
     }
 
     open(): void {

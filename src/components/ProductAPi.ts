@@ -1,5 +1,5 @@
 import { Api, ApiListResponse } from './base/api';
-import {IOrderApiData, IOrderData, IOrderResult} from "../types/order";
+import {IOrderApiData,  IOrderResult} from "../types/order";
 import {IProduct} from "../types/product";
 
 export interface IProductAPI {
@@ -29,7 +29,10 @@ export class ProductAPI extends Api implements IProductAPI {
         return this.get('/product/').then((data: ApiListResponse<IProduct>) =>
             data.items.map((item) => ({
                 ...item,
-                image: this.cdn + item.image
+                image: this.cdn + item.image.replace('.svg', '.png')
+                // в ответе с сервера изображения приходят в формате .svg - белые фигуры без теней (в postman также)
+                // в макеты фигмы используются изображения в формате .png с тенями
+                // на сервере есть картинки как в svg так и в png формате
             }))
         );
     }

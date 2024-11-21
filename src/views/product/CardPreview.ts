@@ -15,8 +15,7 @@ export class CardPreviewView implements IView{
         const productElement = cloneTemplate(this.container);
         this.buttonElement = productElement.querySelector('.card__button') as HTMLButtonElement;
 
-        this.populateProductDetails(productElement, data);
-        this.updateButtonState(data.inBasket);
+        this.populateProductDetails(productElement, data); 
         this.addEventListeners(data);
 
         return productElement;
@@ -35,7 +34,14 @@ export class CardPreviewView implements IView{
         titleElement.textContent = data.title;
         textElement.textContent = data.description;
 
-        priceElement.textContent = data.price ? `${data.price} синапсов` : 'Бесценно';
+        if (!data.price) {
+            this.updateButtonState(true);
+            priceElement.textContent = 'Бесценно';
+        }
+        else {
+            priceElement.textContent = `${data.price} синапсов`;
+            this.updateButtonState(data.inBasket);
+        }
     }
 
     updateButtonState(inBasket: boolean): void {

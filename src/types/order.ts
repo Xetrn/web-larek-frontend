@@ -1,4 +1,4 @@
-export type Payment = "online" | "on-site";
+
 
 export interface IUserForm {
     email: string;
@@ -10,12 +10,7 @@ export interface IOrderForm {
     address: string;
 }
 
-export interface IOrderData {
-    userData: IUserForm;
-    orderData: IOrderForm;
-    total: number;
-    items: IOrderItem[];
-}
+
 
 export interface IOrderApiData extends IOrderBasketData, IUserForm, IOrderForm {}
 

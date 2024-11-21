@@ -39,16 +39,15 @@ const modalWindow = new ModalWindow(events);
 const orderModel = new OrderModel(events);
 const basketView = new BasketView(events, basketTemplate, basketItemTemplate);
 const basket = new BasketModel(events);
-const order = new OrderData(cloneTemplate(orderTemplate), events);
-const user = new UserData(cloneTemplate(userTemplate), events);
-const success = new Success(cloneTemplate(successTemplate), events);
+const orderFormView = new OrderData(cloneTemplate(orderTemplate), events);
+const userFormView = new UserData(cloneTemplate(userTemplate), events);
+const successView = new Success(cloneTemplate(successTemplate), events);
 
 events.on('catalog:load', () => {
    catalogView.render(products.getAllProducts());
 
 });
 
-// добавление в корзину
 events.on('ui:add-to-basket', (data:IProduct) => {
 
     basket.add({id: data.id, title: data.title, price: data.price});
@@ -56,18 +55,15 @@ events.on('ui:add-to-basket', (data:IProduct) => {
     cardPreviewView.updateButtonState(true); 
 });
 
-// изменение корзины
 events.on('basket:change', (data) => {
     page.counter = basket.getTotalCount();
 });
 
-// открытие карточки товара
 events.on('ui:open-product', (data:IProduct) => {
     modalWindow.render(cardPreviewView.render(data));
 
 });
 
-// открытие корзины
 events.on('basket:open', () => {
    modalWindow.render(basketView.render({items: basket.items, total: basket.totalPrice}));
 });
@@ -79,12 +75,11 @@ events.on('basket:remove', (data: IBasketItem) => {
 
 });
 
-// открытие окна оформления заказа
 events.on('basket:open-order', () => {
     orderModel.setProduct(basket.content);
     const orderData = orderModel.getOrderData();
-    modalWindow.render(order.render({
-        address: orderData.address,
+    modalWindow.render(orderFormView.render({
+        address: orderData.address, // в описании проекта не указано, должны быть поля этой формы пустыми или заполнеными
         payment: orderData.payment,
         valid: false,
         errors: []
@@ -92,35 +87,31 @@ events.on('basket:open-order', () => {
 });
 
 events.on('order:submit', () => {
-    const userData = orderModel.getUserData();
-    modalWindow.render(user.render({
-        email: userData.email,
-        phone: userData.phone,
+    modalWindow.render(userFormView.render({
+        email: '', // в описании проекта чётко указано, при открытии этой формы поля пустые
+        phone: '',
         valid: false,
         errors: []
     }));
 });
 
-// Изменилось состояние валидации формы
 events.on('formErrors:change', (errors: Partial<IOrderForm & IUserForm>) => {
         const {address, payment, email, phone} = errors;
-        order.valid = !address && !payment;
-        order.errors = Object.values({address, payment}).filter(i => !!i).join('; ');
-        user.valid = !email && !phone;
-        user.errors = Object.values({email, phone}).filter(i => !!i).join('; ');
+        orderFormView.valid = !address && !payment;
+        orderFormView.errors = address || payment ? Object.values({address, payment}).filter(i => !!i)[0] : '';
+        userFormView.valid = !email && !phone;
+        userFormView.errors = email || phone ? Object.values({email, phone}).filter(i => !!i)[0] : '';
 });
 
 const changeHandler = (data: { field: keyof (IOrderForm & IUserForm), value: string }) => {
     orderModel.setOrderField(data.field, data.value);
 };
 
-// Изменилось одно из полей
 events.on(/^order\..*:change/, changeHandler);
 events.on(/^contacts\..*:change/, changeHandler);
 
 events.on('contacts:submit', () => {
-    console.log(orderModel.getAllData());
-    modalWindow.render(success.render({
+    modalWindow.render(successView.render({
         total: orderModel.getTotal()
     }));
 
