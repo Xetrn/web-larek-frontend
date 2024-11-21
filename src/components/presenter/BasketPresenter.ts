@@ -1,10 +1,10 @@
-import { Api } from "./api";
-import { BasketItenView } from "./view";
-import { EventEmitter } from "./events";
-import { BasketView } from "./view";
+import { BasketItemView } from "../view/BasketItemView";
+import { EventEmitter } from "../base/events";
+import { BasketView } from "../view/BasketView";
+import { BasketModel } from "../models/BasketModel";
+import { CatalogModel } from "../models/CatalogModel";
 
 // инициализация брокера событий
-const api = new Api("базовый URL");
 const events = new EventEmitter();
 const basketView = new BasketView(document.querySelector('.basket'));
 const basketModel = new BasketModel(events);
@@ -24,7 +24,7 @@ function getBasketItemContainer(): HTMLElement {
 function renderBasket(items: string[]) {
     basketView.render({
         items: items.map(id => {
-            const itemView = new BasketItenView(getBasketItemContainer(), events);
+            const itemView = new BasketItemView(getBasketItemContainer(), events);
             return itemView.render(catalogModel.getProduct(id));
         })
     });

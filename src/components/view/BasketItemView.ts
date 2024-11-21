@@ -1,12 +1,10 @@
-interface IViewConstructor {
-    new (container: HTMLElement, events?: IEventEmitter): IView;
+import { IView } from "./View"
+
+interface IEventEmitter {
+    emit: (event: string, data: unknown) => void;
 }
 
-interface IView {
-    render(data?: object): HTMLElement;
-}
-
-export class BasketItenView implements IView {
+export class BasketItemView implements IView {
 
     // элементы внутри контейнера
     protected title: HTMLSpanElement;
@@ -34,16 +32,6 @@ export class BasketItenView implements IView {
         if (data) {
             this.id = data.id;
             this.title.textContent = data.title;
-        }
-        return this.container;
-    }
-}
-
-export class BasketView implements IView {
-    constructor(protected container: HTMLElement) {}
-    render(data: { items: HTMLElement[] }) {
-        if (data) {
-            this.container.replaceChildren(...data.items);
         }
         return this.container;
     }

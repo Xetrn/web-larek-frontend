@@ -1,28 +1,18 @@
+import { EventEmitter } from "../base/events";
+
 interface IBasketModel {
     items: Map<string, number>;
     add(id: string): void;
     remove(id: string): void;
 }
 
-interface IEventEmitter {
-    emit: (event: string, data: unknown) => void;
-}
-
-interface IProduct {
-    id: string;
-    title: string;
-}
-    
-interface ICatalogModel {
-    items: IProduct [];
-    setItems(items: IProduct[]): void;
-    getProduct(id: string): IProduct; 
-}
-
-class BasketModel implements IBasketModel {
+export class BasketModel implements IBasketModel {
     items: Map<string, number> = new Map();
+    _events: EventEmitter | null = null;
 
-    constructor(protected events: IEventEmitter) {}
+    constructor(protected events: EventEmitter) {
+        this._events = events
+    }
     
     add(id: string): void {
         if (!this.items.has(id)) this.items.set(id, 0);
@@ -41,16 +31,5 @@ class BasketModel implements IBasketModel {
 
     protected _changed() {
         this.events.emit('basket:change', {items: Array.from(this.items.keys())});
-    }
-}
-
-class CatalogModel implements ICatalogModel {
-    items: IProduct[] = [];
-    constructor(private events: IEventEmitter) { }
-    setItems(items: IProduct[]): void {
-        this.items = items;
-    }
-    getProduct(id: string): IProduct | null {
-        return this.items.find(item => item.id === id) || null;
     }
 }
