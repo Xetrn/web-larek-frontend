@@ -3,7 +3,7 @@ import { IProduct, IProductList } from "../types/product";
 import {IOrder, IOrderResult } from "../types/order";
 
 export interface ILarekAPI {
-    geProductItem: (id: string) => Promise<IProduct>;
+    getProductItem: (id: string) => Promise<IProduct>;
     getProductList: () => Promise<IProductList>;
     orderProducts: (order: IOrder) => Promise<IOrderResult>;
 }
@@ -16,7 +16,7 @@ export class LarekAPI extends Api implements ILarekAPI {
         this.cdn = cdn;
     }
 
-    geProductItem(id: string): Promise<IProduct> {
+    getProductItem(id: string): Promise<IProduct> {
         return this.get(`/product/${id}`).then(
             (item: IProduct) => ({
                 ...item,
