@@ -1,9 +1,9 @@
 import { View } from '../View';
-import { EventEmitter } from '../../base/events';
+import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 import { IProductView, TProductView } from '../../../types';
 
-export class ProductView<T extends TProductView> extends View<IProductView> implements IProductView {
+export class ProductView<T extends TProductView> extends View<T> implements IProductView {
 	protected _id: string;
 	protected _title: HTMLHeadingElement;
 	protected _price: HTMLSpanElement;
@@ -12,7 +12,7 @@ export class ProductView<T extends TProductView> extends View<IProductView> impl
 	protected _description: HTMLParagraphElement | null;
 	protected _category: HTMLSpanElement | null;
 
-	constructor(container: HTMLElement, events: EventEmitter) {
+	constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
 
 		this._title = ensureElement<HTMLHeadingElement>('.card__title', container);

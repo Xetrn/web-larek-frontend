@@ -1,10 +1,10 @@
-import { EventEmitter } from '../base/events';
+import { IEvents } from '../base/events';
 
 export abstract class View<T> {
 	protected container : HTMLElement;
-	protected events : EventEmitter;
+	protected events : IEvents;
 
-	protected constructor(container: HTMLElement, events: EventEmitter) {
+	protected constructor(container: HTMLElement, events: IEvents) {
 		this.container = container;
 		this.events = events;
 	}

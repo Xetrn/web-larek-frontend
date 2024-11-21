@@ -1,4 +1,4 @@
-import { EventEmitter } from '../../base/events';
+import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 
 import { IProductView, TProductPreview } from '../../../types';
@@ -7,7 +7,7 @@ import { ProductView } from './product-view';
 export class ProductPreviewView extends ProductView<TProductPreview> implements IProductView {
 	private readonly _buyButton: HTMLButtonElement;
 
-	constructor(container: HTMLElement, events: EventEmitter) {
+	constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
 
 		this._buyButton = ensureElement<HTMLButtonElement>('.button', container);
@@ -21,6 +21,7 @@ export class ProductPreviewView extends ProductView<TProductPreview> implements 
 	get isPriceValid() {
 		return this._buyButton.disabled;
 	}
+
 	set isPriceValid(state: boolean) {
 		if (this._buyButton) {
 			if (state) {

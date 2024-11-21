@@ -1,4 +1,4 @@
-import { EventEmitter } from '../../base/events';
+import { IEvents } from '../../base/events';
 
 import { IProductView, TBasketProductView } from '../../../types';
 import { ProductView } from './product-view';
@@ -8,7 +8,7 @@ export class BasketProductView extends ProductView<TBasketProductView> implement
 	private _index: HTMLSpanElement;
 	private _deleteBtn: HTMLButtonElement;
 
-	constructor(container: HTMLElement, events: EventEmitter) {
+	constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
 
 		this._index = ensureElement<HTMLSpanElement>('.basket__item-index', container);
