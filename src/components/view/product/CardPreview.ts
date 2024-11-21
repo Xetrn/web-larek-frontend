@@ -1,8 +1,7 @@
 import { IView } from "../view";
-import { EventEmitter } from "../../components/base/events";
-import { categoryMap, IProduct } from "../../types/product";
-import { ModalWindow } from "../../components/ModalWindow";
-import { cloneTemplate } from "../../utils/utils";
+import { EventEmitter } from "../../base/events";
+import { categoryMap, IProduct } from "../../../types/product";
+import { cloneTemplate } from "../../../utils/utils";
 
 export class CardPreviewView implements IView{
 

@@ -1,9 +1,9 @@
 import { IView } from "../view";
-import { EventEmitter } from "../../components/base/events";
-import { IBasketCatalog, IBasketItem } from "../../types/basket";
+import { EventEmitter } from "../../base/events";
+import { IBasketCatalog, IBasketItem } from "../../../types/basket";
 import { BasketItemView } from "./BasketItem";
-import { ModalWindow } from "../../components/ModalWindow";
-import { cloneTemplate } from "../../utils/utils";
+import { ModalWindow } from "../../ModalWindow";
+import { cloneTemplate } from "../../../utils/utils";
 
 export class BasketView implements IView{
 

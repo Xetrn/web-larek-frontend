@@ -1,6 +1,6 @@
 import { IView } from "../view";
-import { IProduct } from "../../types/product";
-import { EventEmitter } from "../../components/base/events";
+import { IProduct } from "../../../types/product";
+import { EventEmitter } from "../../base/events";
 import { ItemView } from "./Card";
 
 

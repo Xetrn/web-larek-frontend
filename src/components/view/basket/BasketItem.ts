@@ -1,7 +1,7 @@
 import { IView } from "../view";
-import { EventEmitter } from "../../components/base/events";
-import { IBasketItemView } from "../../types/basket";
-import { cloneTemplate } from "../../utils/utils";
+import { EventEmitter } from "../../base/events";
+import { IBasketItemView } from "../../../types/basket";
+import { cloneTemplate } from "../../../utils/utils";
 
 export class BasketItemView implements IView{
 

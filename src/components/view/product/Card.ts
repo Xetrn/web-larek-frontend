@@ -1,8 +1,8 @@
 import { IView } from "../view";
-import { IProduct } from "../../types/product";
-import { EventEmitter } from "../../components/base/events";
-import { categoryMap } from "../../types/product";
-import { cloneTemplate } from "../../utils/utils";
+import { IProduct } from "../../../types/product";
+import { EventEmitter } from "../../base/events";
+import { categoryMap } from "../../../types/product";
+import { cloneTemplate } from "../../../utils/utils";
 
 export class ItemView implements IView{
 
