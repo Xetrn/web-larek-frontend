@@ -1,15 +1,15 @@
-import { TCategoryClasses } from '../types/index';
+import { TCategory } from '../types/index';
 
 export const API_URL = `${process.env.API_ORIGIN}/api/weblarek`;
 export const CDN_URL = `${process.env.API_ORIGIN}/content/weblarek`;
 export const settings = {};
 
-export const categories: TCategoryClasses = {
-	'софт-скил': 'soft',
-	'хард-скил': 'hard',
-	дополнительное: 'additional',
-	кнопка: 'button',
-	другое: 'other',
+export const categories: Record<string, TCategory> = {
+	'софт-скил': { name: 'софт-скил', className: 'soft' },
+	'хард-скил': { name: 'хард-скил', className: 'hard' },
+	дополнительное: { name: 'дополнительное', className: 'additional' },
+	кнопка: { name: 'кнопка', className: 'button' },
+	другое: { name: 'другое', className: 'other' },
 };
 
 export enum BasketActs {
@@ -20,7 +20,7 @@ export enum BasketActs {
 
 export enum ContactFormErrors {
 	EMPTY_EMAIL_AND_PHONE = 'Заполните поля электронной почты и телефона',
-	EMPTY_EMAIL = 'Заполните поле электронной почты',
+	EMPTY_EMAIL = 'Заполните корректно поле электронной почты',
 	EMPTY_PHONE = 'Заполните поле телефона',
 }
 
@@ -29,30 +29,27 @@ export enum OrderFormErrors {
 	EMPTY_PAYMENT_METHOD = 'Выберите метод платежа',
 }
 
-//* лучше всё поренеймить
 export enum EventsNames {
-	BASKET_ITEM_ADDED = 'viewCard:addToBasket',
-	BASKET_ITEM_REMOVED = 'viewCard:deleteFromBasket', //* viewCard:removeFromBasket
+	BASKET_ITEM_ADDED = 'cardPreviewView:addToBasket',
+	BASKET_ITEM_REMOVED = 'cardPreviewView:removeFromBasket',
 
-	CARD_PREVIEW_OPENED = 'viewCardPreview:open',
+	CARD_PREVIEW_OPENED = 'cardCatalogueView:openCard',
 
-	CONTACTS_EMAIL_INPUT = 'email:input',
-	CONTACTS_VALID = 'contacts:valid', //* contacts:needs-validation
-	CONTACTS_TELEPHONE_INPUT = 'telephone:input',
+	CONTACTS_EMAIL_INPUT = 'contacts:emailInput',
+	CONTACTS_TELEPHONE_INPUT = 'contacts:telephoneInput',
 
-	ORDER_PAYMENT_INPUT = 'payment:input',
-	ORDER_VALID = 'order:valid', //* order:needs-validation or mb dell?!
-	ORDER_ADDRESS_INPUT = 'address:input',
+	ORDER_PAYMENT_INPUT = 'order:paymentInput',
+	ORDER_ADDRESS_INPUT = 'order:addressInput',
 
 	ORDER_SUBMIT = 'order:submit',
 	CONTACTS_SUBMIT = 'contacts:submit',
 
-	ORDER_OPEN = 'viewOrder:open',
-	MODAL_OPENED = 'viewModal:open',
-	MODAL_CLOSED = 'viewModal:close',
-	ORDER_SUCCESS_SUBMIT = 'success:submit', //* order-success:submit
-	BASKET_OPENED = 'viewBasket:open',
+	ORDER_OPEN = 'formOrder:open',
+	MODAL_OPENED = 'modal:open',
+	MODAL_CLOSED = 'modal:close',
+	ORDER_SUCCESS_SUBMIT = 'successOrder:submit',
+	BASKET_OPENED = 'basket:open',
 
 	BASKET_DATA_CHANGED = 'basketData:changed',
-	CARDS_DATA_CHANGED = 'cards:changed',
+	CARDS_DATA_CHANGED = 'cardsData:changed',
 }

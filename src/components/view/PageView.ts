@@ -4,10 +4,9 @@ import { IEvents } from '../base/events';
 import { EventsNames } from '../../utils/constants';
 
 import { View } from './View';
-import { TViewPage } from '../../types/index';
+import { TPageView } from '../../types/index';
 
-export class ViewPage extends View<TViewPage> {
-	//*
+export class PageView extends View<TPageView> {
 	protected _catalog: HTMLElement;
 	protected _buttonBasket: HTMLButtonElement;
 	protected _counter: HTMLSpanElement;
@@ -35,12 +34,4 @@ export class ViewPage extends View<TViewPage> {
 	lockScreen(isLocked: boolean) {
 		this.toggleClass(this._screen, 'page__wrapper_locked', isLocked);
 	}
-
-	/** lockScreen(value: boolean) {
-		if (value) {
-			this._screen.classList.add('page__wrapper_locked');
-		} else {
-			this._screen.classList.remove('page__wrapper_locked');
-		}
-	}*/
 }

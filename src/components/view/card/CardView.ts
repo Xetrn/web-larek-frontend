@@ -2,18 +2,17 @@ import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 import { categories } from '../../../utils/constants';
 
-import { View } from '../../view/View';
-import { TCardView, IViewCard } from '../../../types/index';
+import { View } from '../View';
+import { TCardView, ICardView } from '../../../types/index';
 
-export abstract class ViewCard<T extends TCardView> extends View<T> implements IViewCard {
-	//*
+export abstract class CardView<T extends TCardView> extends View<T> implements ICardView {
 	protected _id: string;
 	protected _title: HTMLHeadingElement;
 	protected _price: HTMLSpanElement;
 
-	protected _image: HTMLImageElement | null; //*
-	protected _description: HTMLParagraphElement | null; //*
-	protected _category: HTMLSpanElement | null; //*
+	protected _image: HTMLImageElement | null;
+	protected _description: HTMLParagraphElement | null;
+	protected _category: HTMLSpanElement | null;
 
 	constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
@@ -40,7 +39,6 @@ export abstract class ViewCard<T extends TCardView> extends View<T> implements I
 		return this._title.textContent ?? '';
 	}
 
-	//* number ????
 	set price(value: string) {
 		this.setText(this._price, !value ? `Бесценно` : `${value} синапсов`);
 	}
@@ -60,23 +58,23 @@ export abstract class ViewCard<T extends TCardView> extends View<T> implements I
 	}
 
 	set category(value: string) {
-		this.addClassToCategory(value);
+		this.updateCategoryClass(value);
 		this.setText(this._category, value);
 	}
 	get category() {
 		return this._category?.textContent ?? '';
 	}
 
-	//* updateCategoryClass
-	addClassToCategory(value: string) {
-		if (this._category && value in categories) {
+	updateCategoryClass(value: string) {
+		const category = categories[value];
+		if (this._category && category) {
 			const classes = Array.from(this._category.classList);
 			classes.forEach((item: string) => {
-				if (item.includes('card__category_') && this._category) {
+				if (item.startsWith('card__category_')) {
 					this._category.classList.remove(item);
 				}
 			});
-			this._category.classList.add(`card__category_${categories[value]}`);
+			this._category.classList.add(`card__category_${category.className}`);
 		}
 	}
 }

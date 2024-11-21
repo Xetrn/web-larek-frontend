@@ -1,14 +1,13 @@
 import { IEvents } from '../../base/events';
 import { EventsNames } from '../../../utils/constants';
 
-import { ViewCard } from './ViewCard';
-import { TCardCatalogueView, IViewCard } from '../../../types/index';
+import { CardView } from './CardView';
+import { TCardCatalogueView, ICardView } from '../../../types/index';
 
-export class ViewCardCatalogue extends ViewCard<TCardCatalogueView> implements IViewCard {
+export class CardCatalogueView extends CardView<TCardCatalogueView> implements ICardView {
 	constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
 
-		//* cardPreviewView:open
 		this._container.addEventListener('click', () =>
 			this.events.emit(EventsNames.CARD_PREVIEW_OPENED, { id: this.id })
 		);

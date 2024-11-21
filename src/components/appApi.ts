@@ -1,5 +1,5 @@
 import { Api, ApiListResponse } from './base/api';
-import { IAppApi, ICardData, IOrderData, TOrderSuccess } from '../types/index';
+import { IAppApi, ICardData, IOrderData, TSuccessOrder } from '../types/index';
 
 export class AppApi extends Api implements IAppApi {
 	protected cdn: string; // Content Delivery Network
@@ -38,10 +38,10 @@ export class AppApi extends Api implements IAppApi {
 		}
 	}
 
-	async postOrder(order: IOrderData): Promise<TOrderSuccess> {
+	async postOrder(order: IOrderData): Promise<TSuccessOrder> {
 		try {
 			const response = await this.post('/order', order);
-			return response as TOrderSuccess;
+			return response as TSuccessOrder;
 		} catch (error) {
 			throw new Error(`Ошибка при отправке заказа: ${error}`);
 		}

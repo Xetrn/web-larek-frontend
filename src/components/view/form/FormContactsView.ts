@@ -2,10 +2,10 @@ import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 
 import { ContactFormErrors, EventsNames } from '../../../utils/constants';
-import { ViewForm } from './ViewForm';
-import { TViewFormContacts, IViewForm } from '../../../types/index';
+import { FormView } from './FormView';
+import { TFormContactsView, IFormView } from '../../../types/index';
 
-export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IViewForm {
+export class FormContactsView extends FormView<TFormContactsView> implements IFormView {
 	protected _emailInput: HTMLInputElement;
 	protected _phoneInput: HTMLInputElement;
 
@@ -16,15 +16,17 @@ export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IVi
 		this._phoneInput = ensureElement<HTMLInputElement>('.form__input[name=phone]', container);
 
 		this._emailInput.addEventListener('input', () => {
-			this.events.emit(EventsNames.CONTACTS_EMAIL_INPUT);
-			this.events.emit(EventsNames.CONTACTS_VALID); //* contacts:needs-validation
+			this.handleInput(EventsNames.CONTACTS_EMAIL_INPUT);
 		});
 		this._phoneInput.addEventListener('input', () => {
-			this.events.emit(EventsNames.CONTACTS_TELEPHONE_INPUT);
-			this.events.emit(EventsNames.CONTACTS_VALID); //* contacts:needs-validation
-
+			this.handleInput(EventsNames.CONTACTS_TELEPHONE_INPUT);
 			this._phoneInput.value = this.formatPhone(this._phoneInput.value);
 		});
+	}
+
+	private handleInput(event: string) {
+		this.events.emit(event);
+		this.handleValidation();
 	}
 
 	get email() {
@@ -34,12 +36,40 @@ export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IVi
 	get phone() {
 		return this._phoneInput.value;
 	}
-	set phone(value: string) {
-		this._phoneInput.value = value;
-		this._phoneInput.value = this.formatPhone(this._phoneInput.value);
+
+	get valid() {
+		const { isValid } = this.validate();
+		return isValid;
+	}
+	set valid(value: boolean) {
+		super.valid = value;
 	}
 
-	formatPhone(phone: string): string {
+	protected handleValidation() {
+		const { isValid, errors } = this.validate();
+		this.errorMessage = errors.join('. ');
+		super.valid = isValid;
+	}
+	protected validate(): { isValid: boolean; errors: string[] } {
+		const errors: string[] = [];
+		const phoneLength = 18;
+		const email_value = this._emailInput.value;
+		const phone_value = this._phoneInput.value;
+
+		if (!email_value.trim() || !email_value.includes('@')) {
+			errors.push(ContactFormErrors.EMPTY_EMAIL);
+		}
+		if (!phone_value.trim() || phone_value.length < phoneLength) {
+			errors.push(ContactFormErrors.EMPTY_PHONE);
+		}
+
+		return {
+			isValid: errors.length === 0,
+			errors,
+		};
+	}
+
+	protected formatPhone(phone: string): string {
 		let digits = phone.replace(/\D+/g, '');
 
 		if (digits.startsWith('7') || digits.startsWith('8')) {
@@ -62,30 +92,5 @@ export class ViewFormContacts extends ViewForm<TViewFormContacts> implements IVi
 		}
 
 		return formattedPhone.slice(0, 18);
-	}
-
-	get valid() {
-		const emailValue = this._emailInput.value.trim();
-		const phoneValue = this._phoneInput.value.trim();
-
-		if (!emailValue && !phoneValue) {
-			this.errorMessage = ContactFormErrors.EMPTY_EMAIL_AND_PHONE;
-			return false;
-		}
-		if (!emailValue) {
-			this.errorMessage = ContactFormErrors.EMPTY_EMAIL;
-			return false;
-		}
-		if (!phoneValue) {
-			this.errorMessage = ContactFormErrors.EMPTY_PHONE;
-			return false;
-		}
-		this.errorMessage = '';
-
-		return true;
-	}
-
-	set valid(value: boolean) {
-		super.valid = value;
 	}
 }

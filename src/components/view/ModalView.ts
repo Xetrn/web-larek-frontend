@@ -4,19 +4,19 @@ import { IEvents } from '../base/events';
 import { EventsNames } from '../../utils/constants';
 
 import { View } from './View';
-import { TViewModal } from '../../types';
+import { TModalView } from '../../types';
 
-export class ViewModal extends View<TViewModal> {
+export class ModalView extends View<TModalView> {
 	protected _content: HTMLElement;
-	protected _buttonClose: HTMLButtonElement;
+	protected _closeBtn: HTMLButtonElement;
 
 	constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
 
 		this._content = ensureElement<HTMLElement>('.modal__content', container);
-		this._buttonClose = ensureElement<HTMLButtonElement>('.modal__close', container); //* closeBtn
+		this._closeBtn = ensureElement<HTMLButtonElement>('.modal__close', container);
 
-		this._buttonClose.addEventListener('click', () => {
+		this._closeBtn.addEventListener('click', () => {
 			this.close();
 		});
 

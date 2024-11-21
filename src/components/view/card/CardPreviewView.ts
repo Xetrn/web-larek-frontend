@@ -2,11 +2,10 @@ import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 
 import { BasketActs, EventsNames } from '../../../utils/constants';
-import { ViewCard } from './ViewCard';
-import { TCardPreview, IViewCard } from '../../../types/index';
+import { CardView } from './CardView';
+import { TCardPreview, ICardView } from '../../../types/index';
 
-export class ViewCardPreview extends ViewCard<TCardPreview> implements IViewCard {
-	//*
+export class CardPreviewView extends CardView<TCardPreview> implements ICardView {
 	protected _buyBtn: HTMLButtonElement;
 
 	constructor(container: HTMLElement, events: IEvents) {
@@ -23,18 +22,16 @@ export class ViewCardPreview extends ViewCard<TCardPreview> implements IViewCard
 		});
 	}
 
-	get invalidPrice() {
+	get isPriceInvalid() {
 		return this._buyBtn.disabled;
 	}
-	set invalidPrice(value: boolean) {
-		//* isPriceInvalid
+	set isPriceInvalid(value: boolean) {
 		this.setDisabled(this._buyBtn, value);
 	}
 
-	set buttonValidation(isInBasket: boolean) {
-		//* updateBuyButtonText
+	set updateBuyButtonText(isInBasket: boolean) {
 		const buttonText = isInBasket ? BasketActs.REMOVE : BasketActs.ADD;
-		if (this.invalidPrice) {
+		if (this.isPriceInvalid) {
 			this.setText(this._buyBtn, BasketActs.NOT_FOR_SALE);
 		} else {
 			this.setText(this._buyBtn, buttonText);

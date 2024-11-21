@@ -2,10 +2,10 @@ import { ensureElement } from '../../../utils/utils';
 import { IEvents } from '../../base/events';
 import { EventsNames } from '../../../utils/constants';
 
-import { ViewCard } from './ViewCard';
-import { IViewCard, TCardBasketView } from '../../../types';
+import { CardView } from './CardView';
+import { ICardView, TCardBasketView } from '../../../types';
 
-export class ViewCardBasket extends ViewCard<TCardBasketView> implements IViewCard {
+export class CardBasketView extends CardView<TCardBasketView> implements ICardView {
 	protected _index: HTMLSpanElement;
 	protected _deleteBtn: HTMLButtonElement;
 

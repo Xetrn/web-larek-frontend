@@ -42,7 +42,6 @@ export abstract class View<T> {
 		element.style.removeProperty('display');
 	}
 
-	//* Partial<T> <= T
 	render(data?: Partial<T>): HTMLElement {
 		Object.assign(this as object, data ?? {});
 		return this._container;

@@ -7,15 +7,13 @@ export class OrderData implements IOrderData {
 	protected _phone: string;
 	protected _email: string;
 	protected _total: number;
-	protected _items: string[]; //* itemsIds
+	protected _itemsIds: string[];
 
 	events: IEvents;
 
 	constructor(events: IEvents) {
 		this.events = events;
 	}
-
-	//*
 
 	set payment(type: TPaymentMethod) {
 		this._payment = type;
@@ -33,7 +31,7 @@ export class OrderData implements IOrderData {
 		this._total = value;
 	}
 	set items(value: string[]) {
-		this._items = value;
+		this._itemsIds = value;
 	}
 
 	get allData(): IOrderData {
@@ -43,7 +41,7 @@ export class OrderData implements IOrderData {
 			phone: this._phone,
 			email: this._email,
 			total: this._total,
-			items: this._items,
+			items: this._itemsIds,
 		};
 	}
 }

@@ -117,11 +117,11 @@ yarn build
 - **total**: общая стоимость заказа (тип: number)
 - **items**: список идентификаторов товаров в заказе (тип: string[])
 
-### IOrderSuccessData
+### ISuccessOrderData
 
 Интерфейс для модели данных успешного оформления заказа:
 
-- **orderSuccess**: результат успешного оформления (тип: TOrderSuccess)
+- **orderSuccess**: результат успешного оформления (тип: TSuccessOrder)
 
 ### IBasketData
 
@@ -143,7 +143,7 @@ yarn build
 
 - **cards**: массив карточек товаров (тип: HTMLElement[])
 - **total**: общая стоимость товаров в корзине (тип: number)
-- **emptyCheck**: флаг пустоты корзины (тип: boolean)
+- **blockPlaceOrderBtn**: флаг пустоты корзины (тип: boolean)
 
 ### IAppApi
 
@@ -151,7 +151,7 @@ yarn build
 
 - **getCards()**: получение карточек (тип: Promise<ICardData[]>)
 - **getCardById(id: string)**: получение карточки по идентификатору (тип: Promise<ICardData>)
-- **postOrder(order: IOrder)**: отправка заказа (тип: Promise<TOrderSuccess>)
+- **postOrder(order: IOrder)**: отправка заказа (тип: Promise<TSuccessOrder>)
 
 ### IViewPage
 
@@ -169,7 +169,7 @@ yarn build
 - **open()**: метод для открытия модального окна (тип: void)
 - **close()**: метод для закрытия модального окна (тип: void)
 
-### IViewForm
+### IFormView
 
 Интерфейс для описания формы:
 
@@ -205,8 +205,8 @@ yarn build
 - **description**: описание товара (тип: string)
 - **image**: изображение товара (тип: string)
 - **price**: цена товара (тип: number)
-- **invalidPrice**: флаг некорректности цены (тип: boolean)
-- **buttonValidation**: флаг, указывающий на необходимость валидации кнопки (тип: boolean)
+- **isPriceInvalid**: флаг некорректности цены (тип: boolean)
+- **updateBuyButtonText**: флаг, указывающий на необходимость валидации кнопки (тип: boolean)
 
 ### TCardView
 
@@ -223,37 +223,21 @@ yarn build
 
 - Свойства аналогичны TCardView, но без поля description.
 
-### TCategoryClassNames
-
-Тип данных для классов категорий товаров. Возможные значения:
-
-- **soft**
-- **other**
-- **additional**
-- **button**
-- **hard**
-
-### TCategoryClasses
-
-Тип данных для хранения классов категорий товаров, со свойствами:
-
-- Ключи — строки, значения — типы категорий (тип: Record<string, TCategoryClassNames>)
-
-### TViewBasket
+### TBasketView
 
 Тип данных для представления корзины, со следующими свойствами:
 
 - **cards**: массив карточек товаров (тип: HTMLElement[])
 - **total**: общая стоимость товаров в корзине (тип: number)
-- **emptyCheck**: флаг пустоты корзины (тип: boolean)
+- **blockPlaceOrderBtn**: флаг пустоты корзины (тип: boolean)
 
-### TOrderSuccess
+### TSuccessOrder
 
 Тип данных для описания успешно завершенного заказа, со следующими свойствами:
 
 - **total**: общая стоимость заказа (тип: number)
 
-### TOrderSuccessView
+### TSuccessOrderView
 
 Тип для отображения успешного завершения заказа:
 

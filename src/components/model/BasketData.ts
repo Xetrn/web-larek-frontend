@@ -23,7 +23,6 @@ export class BasketData implements IBasketData {
 	isInBasket(id: string) {
 		return this._goods.some((good) => good.id === id);
 	}
-	//*
 
 	addToBasket(card: ICardData) {
 		this._goods.push(card);
