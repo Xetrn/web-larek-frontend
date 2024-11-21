@@ -4,108 +4,139 @@ import { API_URL, CDN_URL, MODEL_EVENTS, VIEW_EVENTS } from './utils/constants';
 import { cloneTemplate, ensureElement } from './utils/utils';
 import { PageView } from './components/view/page-view';
 import { EventEmitter } from './components/base/events';
-import { IProduct, TProductView } from './types';
+import {
+	IProduct,
+	TContactsFormView,
+	TFormView,
+	TOrderFormView,
+	TProductView,
+} from './types';
 import { CatalogProductView } from './components/view/products/catalog-product-view';
 import { Model } from './components/model/model';
 import { ModalView } from './components/view/modal-view';
 import { ProductPreviewView } from './components/view/products/product-preview-view';
 import { BasketView } from './components/view/basket-view';
 import { BasketProductView } from './components/view/products/basket-product-view';
+import { OrderFormView } from './components/view/forms/order-form-view';
+import { ContactsFormView } from './components/view/forms/contacts-form-view';
+import { FormView } from './components/view/forms/form-view';
+import { SuccessOrderView } from './components/view/succes-order-view';
 
+// Инициализация API, событий и модели данных
 const api = new ApiModel(API_URL, CDN_URL);
 const events = new EventEmitter();
 const productsData = new Model(events);
 
-const pageViewContainer = ensureElement<HTMLElement>('.page');
-const modalViewContainer = ensureElement<HTMLElement>('#modal-container');
+// Инициализация представлений
+const views = initializeViews();
 
+// Получение данных продуктов и обновление модели
+initializeProductsData();
 
-const templateCatalogProductView = ensureElement<HTMLTemplateElement>('#card-catalog');
-const productPreviewTemplate = ensureElement<HTMLTemplateElement>('#card-preview');
-const basketViewContainer = ensureElement<HTMLTemplateElement>('#basket');
-const basketProductTemplate = ensureElement<HTMLTemplateElement>('#card-basket');
+// Регистрация обработчиков событий
+registerEventHandlers();
 
-const pageView = new PageView(pageViewContainer, events);
-const basketView = new BasketView(cloneTemplate(basketViewContainer), events);
-const modalView = new ModalView(modalViewContainer, events);
-const productPreviewView = new ProductPreviewView(cloneTemplate(productPreviewTemplate), events);
+// Функция инициализации представлений
+function initializeViews() {
+	const pageView = new PageView(ensureElement<HTMLElement>('.page'), events);
+	const modalView = new ModalView(ensureElement<HTMLElement>('#modal-container'), events);
+	const basketView = new BasketView(cloneTemplate(ensureElement<HTMLTemplateElement>('#basket')), events);
+	const productPreviewView = new ProductPreviewView(cloneTemplate(ensureElement<HTMLTemplateElement>('#card-preview')), events);
+	const orderFormView = new OrderFormView(cloneTemplate(ensureElement<HTMLTemplateElement>('#order')), events);
+	const contactsFormView = new ContactsFormView(cloneTemplate(ensureElement<HTMLTemplateElement>('#contacts')), events);
+	const successOrderView = new SuccessOrderView(cloneTemplate(ensureElement<HTMLTemplateElement>('#success')), events);
 
-api.getProducts().then((prods) => {
-		productsData.catalog = prods;
-})
-	.catch(console.error);
+	return {
+		pageView,
+		modalView,
+		basketView,
+		productPreviewView,
+		orderFormView,
+		contactsFormView,
+		successOrderView,
+	};
+}
 
-events.on(MODEL_EVENTS.FETCHED_CATALOG, (products: IProduct[]) => {
+// Функция для получения данных продуктов и обновления модели
+function initializeProductsData() {
+	api.getProducts()
+		.then((products) => {
+			productsData.catalog = products;
+		})
+		.catch(console.error);
+}
 
-	const productsList = products.map((products) => {
+// Функция для регистрации обработчиков событий
+function registerEventHandlers() {
+	events.on(MODEL_EVENTS.FETCHED_CATALOG, handleCatalogFetched);
+	events.on(VIEW_EVENTS.MODAL_OPEN, () => views.pageView.lock(true));
+	events.on(VIEW_EVENTS.MODAL_CLOSE, () => views.pageView.lock(false));
+	events.on(VIEW_EVENTS.PRODUCT_PREVIEW_OPENED, handleProductPreviewOpened);
+	events.on(VIEW_EVENTS.ADD_TO_BASKET, handleAddToBasket);
+	events.on(VIEW_EVENTS.REMOVE_FROM_BASKET, handleRemoveFromBasket);
+	events.on(MODEL_EVENTS.ADD_TO_BASKET, updateBasketCounter);
+	events.on(VIEW_EVENTS.BASKET_OPEN, handleBasketOpen);
+	events.on(VIEW_EVENTS.ORDER_OPEN, handleOrderOpen);
+	events.on(VIEW_EVENTS.ORDER_SUBMIT, handleOrderSubmit);
+	events.on(VIEW_EVENTS.CONTACTS_SUBMIT, handleContactsSubmit);
+	events.on(MODEL_EVENTS.ORDER_VALIDATED, handleOrderValidated);
+	events.on(MODEL_EVENTS.CONTACTS_VALIDATED, handleContactsValidated);
+	events.on(VIEW_EVENTS.SUCCESS_ORDER_CLOSE, () => views.modalView.toggleOpen());
+}
 
+// Обработчики событий
+function handleCatalogFetched(products: IProduct[]) {
+	const productsList = products.map((product) => {
 		const transformedCard: TProductView = {
-			...products,
-			price: products.price?.toString(),
+			...product,
+			price: product.price?.toString(),
 		};
-
-		const catalogProductView = new CatalogProductView(cloneTemplate(templateCatalogProductView), events);
-
+		const catalogProductView = new CatalogProductView(cloneTemplate(ensureElement<HTMLTemplateElement>('#card-catalog')), events);
 		return catalogProductView.render(transformedCard);
 	});
 
-	pageView.render({ catalog: productsList });
-});
+	views.pageView.render({ catalog: productsList });
+}
 
-events.on(VIEW_EVENTS.MODAL_OPEN, () => {
-	pageView.lock(true);
-});
-events.on(VIEW_EVENTS.MODAL_CLOSE, () => {
-	pageView.lock(false);
-});
-
-
-events.on(VIEW_EVENTS.PRODUCT_PREVIEW_OPENED, (data: TProductView) => {
+function handleProductPreviewOpened(data: TProductView) {
 	const previewProduct = data.id ? productsData.getProductById(data.id) : null;
-	if (!previewProduct) {
-		return;
-	}
+	if (!previewProduct) return;
 
-	const productContent = productPreviewView.render({
+	const productContent = views.productPreviewView.render({
 		...previewProduct,
 		price: previewProduct.price?.toString(),
-		isButtonActive: productsData.isProductInBasket(previewProduct.id) || previewProduct.price == null ,
+		isButtonActive: productsData.isProductInBasket(previewProduct.id) || previewProduct.price == null,
 	});
 
-	modalView.render({
-		content: productContent,
-	});
+	views.modalView.render({ content: productContent });
+	views.modalView.toggleOpen();
+}
 
-	modalView.toggleOpen();
-});
-
-events.on(VIEW_EVENTS.ADD_TO_BASKET, (data: TProductView) => {
+function handleAddToBasket(data: TProductView) {
 	const product = productsData.getProductById(data.id);
-
 	productsData.addProduct(product);
-	modalView.toggleOpen();
-});
+	views.modalView.toggleOpen();
+	updateBasketCounter();
+}
 
-events.on(VIEW_EVENTS.REMOVE_FROM_BASKET, (data: TProductView) => {
+function handleRemoveFromBasket(data: TProductView) {
 	productsData.removeProduct(data.id);
-	pageView.render({counter: productsData.getBasketProducts().length});
-
+	updateBasketCounter();
 	updateBasket();
-});
+}
 
-events.on(MODEL_EVENTS.ADD_TO_BASKET, () => {
-	pageView.render({counter: productsData.getBasketProducts().length});
-});
+function updateBasketCounter() {
+	views.pageView.render({ counter: productsData.getBasketProductsCount() });
+}
 
-events.on(VIEW_EVENTS.BASKET_OPEN, () => {
+function handleBasketOpen() {
 	updateBasket();
-
-	modalView.toggleOpen();
-});
+	views.modalView.toggleOpen();
+}
 
 function updateBasket() {
 	const basketProducts = productsData.getBasketProducts().map((product, index) => {
-		const basketProductView = new BasketProductView(cloneTemplate(basketProductTemplate), events);
+		const basketProductView = new BasketProductView(cloneTemplate(ensureElement<HTMLTemplateElement>('#card-basket')), events);
 		return basketProductView.render({
 			...product,
 			price: product.price?.toString(),
@@ -113,13 +144,72 @@ function updateBasket() {
 		});
 	});
 
-	const basketContent = basketView.render({
-		basketProducts: basketProducts,
+	const basketContent = views.basketView.render({
+		basketProducts,
 		cost: productsData.getBasketPrice(),
-		isEmpty: productsData.getBasketProducts().length == 0,
+		isEmpty: productsData.getBasketProductsCount() === 0,
 	});
 
-	modalView.render({
-		content: basketContent,
+	views.modalView.render({ content: basketContent });
+}
+
+function handleOrderOpen() {
+	const orderFormComponent = views.orderFormView.render({
+		buttonState: false,
+		errorMessages: '',
 	});
+
+	views.modalView.render({ content: orderFormComponent });
+}
+
+function handleOrderSubmit(data: TOrderFormView) {
+	productsData.validateOrder(data.paymentSystem, data.address);
+}
+
+function handleContactsSubmit(data: TContactsFormView) {
+	productsData.validateContacts(data.email, data.phone);
+}
+
+function handleOrderValidated(data: TOrderFormView) {
+	if (data.errorMessages.length > 0) {
+		handleFormSubmit(data, views.orderFormView);
+	} else {
+		handleFormSubmit(data, views.contactsFormView);
+	}
+}
+
+function handleContactsValidated(data: TContactsFormView) {
+	if (data.errorMessages.length > 0) {
+		handleFormSubmit(data, views.contactsFormView);
+	} else {
+		postOrder();
+	}
+}
+
+function postOrder() {
+	const order = productsData.getOrderData();
+
+	api.postOrder(order)
+		.then(() => {
+			views.orderFormView.clear();
+			views.contactsFormView.clear();
+			productsData.clearBasket();
+			updateBasketCounter();
+		})
+		.catch(console.error);
+
+	views.modalView.render({
+		content: views.successOrderView.render({
+			message: String(order.total),
+		}),
+	});
+}
+
+function handleFormSubmit(data: TOrderFormView | TContactsFormView, formView: FormView<TFormView>) {
+	const formComponent = formView.render({
+		buttonState: (data as TOrderFormView).paymentSystem !== '',
+		errorMessages: data.errorMessages,
+	});
+
+	views.modalView.render({ content: formComponent });
 }

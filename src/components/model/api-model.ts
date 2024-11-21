@@ -1,5 +1,5 @@
 import { Api, ApiListResponse } from '../base/api';
-import { IProduct } from '../../types';
+import { IOrder, IProduct, TSuccessOrder } from '../../types';
 
 export class ApiModel extends Api {
 	private readonly _cdn_url: string;
@@ -13,16 +13,17 @@ export class ApiModel extends Api {
 	}
 
 	async getProducts() : Promise<IProduct[]> {
-		console.log(this._baseUrl + '/product');
-
 		return this.get('/product').then((list: ApiListResponse<IProduct>) => {
 			return list.items.map((item) => { return {...item, image: this._cdn_url + item.image}})
 		})
 	}
 
-	async getProductById(id: number) : Promise<IProduct> {
-		return this.get('/product/' + id).then((card: IProduct) => {
-			return {...card, image: this._cdn_url + card.image}
-		})
+	async postOrder(order: IOrder): Promise<TSuccessOrder> {
+		try {
+			const response = await this.post('/order', order);
+			return response as TSuccessOrder;
+		} catch (error) {
+			throw new Error(`Ошибка при отправке заказа: ${error}`);
+		}
 	}
 }

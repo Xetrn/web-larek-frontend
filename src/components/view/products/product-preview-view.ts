@@ -18,7 +18,7 @@ export class ProductPreviewView extends ProductView<TProductPreview> implements 
 		});
 	}
 
-	get isPriceValid() {
+	get isBuyButtonDisabled() {
 		return this._buyButton.disabled;
 	}
 

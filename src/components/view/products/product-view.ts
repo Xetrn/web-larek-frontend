@@ -3,16 +3,16 @@ import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 import { IProductView, TProductView } from '../../../types';
 
-export class ProductView<T extends TProductView> extends View<T> implements IProductView {
-	protected _id: string;
-	protected _title: HTMLHeadingElement;
-	protected _price: HTMLSpanElement;
+export abstract class ProductView<T extends TProductView> extends View<T> implements IProductView {
+	private _id: string;
+	private _title: HTMLHeadingElement;
+	private _price: HTMLSpanElement;
 
-	protected _image: HTMLImageElement | null;
-	protected _description: HTMLParagraphElement | null;
-	protected _category: HTMLSpanElement | null;
+	private readonly _image: HTMLImageElement | null;
+	private readonly _description: HTMLParagraphElement | null;
+	private readonly _category: HTMLSpanElement | null;
 
-	constructor(container: HTMLElement, events: IEvents) {
+	protected constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
 
 		this._title = ensureElement<HTMLHeadingElement>('.card__title', container);
@@ -78,5 +78,4 @@ export class ProductView<T extends TProductView> extends View<T> implements IPro
 	get category(): string {
 		return this._category?.textContent || '';
 	}
-
 }

@@ -6,7 +6,7 @@ import { VIEW_EVENTS } from '../../utils/constants';
 
 export class PageView extends View<TPageView> {
 	private _catalog: HTMLElement;
-	private _basketButton: HTMLButtonElement;
+	private readonly _basketButton: HTMLButtonElement;
 	private _counter: HTMLSpanElement;
 	private _screen: HTMLDivElement;
 

@@ -2,6 +2,7 @@ import { IEvents } from '../base/events';
 import { View } from './View';
 import { TBasketView } from '../../types/';
 import { ensureElement } from '../../utils/utils';
+import { VIEW_EVENTS } from '../../utils/constants';
 
 export class BasketView	extends View<TBasketView> {
 	private _basketProducts: HTMLUListElement;
@@ -15,7 +16,7 @@ export class BasketView	extends View<TBasketView> {
 		this._cost = ensureElement<HTMLSpanElement>('.basket__price', container);
 		this._placeOrderBtn = ensureElement<HTMLButtonElement>('.basket__button', container);
 
-		this._placeOrderBtn.addEventListener('click', () => this.events.emit(''));
+		this._placeOrderBtn.addEventListener('click', () => this.events.emit(VIEW_EVENTS.ORDER_OPEN));
 	}
 
 	set basketProducts(viewCards: HTMLElement[]) {
