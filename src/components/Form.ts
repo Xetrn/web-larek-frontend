@@ -43,13 +43,6 @@ export class Form<T> extends Component<IForm> {
 	set errors(value: string) {
 		this.setText(this._errors, value);
 	}
-
-	render(state: Partial<T> & IForm) {
-		const { valid, errors, ...inputs } = state;
-		super.render({ valid, errors });
-		Object.assign(this, inputs);
-		return this.container;
-	}
 	
 	reset() {
 		this.container.reset();
@@ -57,5 +50,12 @@ export class Form<T> extends Component<IForm> {
     
 	buttonDisable(state: boolean) {
 		this.setDisabled(this._submit, state);
+	}
+
+	render(state: Partial<T> & IForm) {
+		const { valid, errors, ...inputs } = state;
+		super.render({ valid, errors });
+		Object.assign(this, inputs);
+		return this.container;
 	}
 }

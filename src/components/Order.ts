@@ -1,9 +1,9 @@
 import { Form } from './Form';
-import { IUser } from '../types';
+import { IOrder } from '../types';
 import { IEvents } from './base/events';
 import { ensureElement, ensureAllElements } from '../utils/utils';
 
-export class Order extends Form<IUser> {
+export class Order extends Form<IOrder> {
 	_btnCollection: HTMLButtonElement[];
 	inputCollection: HTMLInputElement[];
 
@@ -14,6 +14,7 @@ export class Order extends Form<IUser> {
 			'button[type=submit]',
 			this.container
 		);
+
 		this._btnCollection = ensureAllElements<HTMLButtonElement>(
 			'.button_alt',
 			container

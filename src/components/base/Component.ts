@@ -1,8 +1,3 @@
-import {IEvents} from "./events";
-
-/**
- * Базовый компонент
- */
 export abstract class Component<T> {
     protected constructor(protected readonly container: HTMLElement) {
     }

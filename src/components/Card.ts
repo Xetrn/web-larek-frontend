@@ -54,6 +54,7 @@ export class Card<T> extends Component<ICardView<T>> {
 	get id(): string {
 		return this.container.dataset.id || '';
 	}
+
 	set price(value: string) {
 		if (typeof value !== 'number') {
 			this.setText(this._price, ' Бесценно');
@@ -62,6 +63,7 @@ export class Card<T> extends Component<ICardView<T>> {
 			this.setText(this._price, value + ' синапсов');
 		}
 	}
+	
 	get price(): string {
 		return this._title.textContent || '';
 	}
@@ -141,6 +143,7 @@ export class BasketCard<T> extends Component<ICardView<T>> {
 	protected _price: HTMLElement;
 	protected _button?: HTMLButtonElement;
 	protected _listNumber: HTMLElement;
+
 	constructor(
 		protected blockName: string,
 		container: HTMLElement,

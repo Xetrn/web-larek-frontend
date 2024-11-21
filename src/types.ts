@@ -21,11 +21,7 @@ export interface IForm {
     errors: string[];
 }
 
-export interface IOrderResult {
-    total: number
-}
-
-export interface IUser {
+export interface IOrder {
     payment: string;
     address: string;
     email: string;
@@ -34,9 +30,13 @@ export interface IUser {
     items: string[];
 }
 
+export interface IOrderResult {
+    total: number
+}
+
 export interface IAppState {
     products: IProduct[];
     basket: IProduct[];
     preview: string | null;
-    order: IUser;
+    order: IOrder;
 }

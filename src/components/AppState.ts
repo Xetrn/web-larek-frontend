@@ -1,5 +1,5 @@
 import { Model } from './base/Model';
-import { IProduct, IUser, IAppState, IOrderForm, FormErrors } from '../types';
+import { IProduct, IOrder, IAppState, IOrderForm, FormErrors } from '../types';
 
 export class Product extends Model<IProduct> {
 	id: string;
@@ -12,13 +12,13 @@ export class Product extends Model<IProduct> {
 
 export type CatalogChange = {
 	catalog: Product[];
-};
+}
 
 export class AppState extends Model<IAppState> {
 	basket: Product[] = [];
 	basketTotal: number;
 	catalog: Product[];
-	order: IUser = {
+	order: IOrder = {
 		payment: '',
 		email: '',
 		phone: '',

@@ -82,7 +82,7 @@ events.on('basket:delete-item', (item: Product) => {
 	});
 });
 
-events.on('basket:change', (item: Product) => {
+events.on('basket:changed', (item: Product) => {
 	if (!appState.checkCard(item.id)) {
 		appState.setBasket(item);
 		appState.setItems(item);
@@ -112,7 +112,7 @@ events.on('preview:open', (item: Product) => {
 	const showItem = (item: Product) => {
 		const card = new ProductItem(cloneTemplate(cardPreviewTemplate), {
 			onClick: (e) => {
-				events.emit('basket:change', item);
+				events.emit('basket:changed', item);
 				modal.close();
 			},
 		});
