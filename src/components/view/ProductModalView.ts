@@ -1,16 +1,26 @@
-import { IView } from "./View"; 
-import { ModalView } from "./ModalView";
-import { EventEmitter } from "../base/events";
+import { IEvents } from "../base/events";
+import { View } from "./View";
 
-export class ProductModalView extends ModalView {
-    protected _modalElement: HTMLElement;
-	protected _closeButtonElement: HTMLButtonElement;
+import { ensureElement } from "../../utils/utils";
 
-    constructor(events: EventEmitter) {
-        super(events);
-	}
+export class ProductModalView extends View<string>{ 
+    protected _text: HTMLElement;
+    protected _button: HTMLButtonElement;
+  
+  constructor(container: HTMLElement, protected events: IEvents) {
+    super(container)
+    this._button = container.querySelector(`.card__button`);
+    this._text = ensureElement<HTMLElement>(`.card__text`, container);
 
-    render(data?: object): HTMLElement {
-        return this._modalElement;
-    }
+   
+    container.removeEventListener('click', () => {
+        this.events.emit('preview:open');});
+    this._button.addEventListener('click', () => {
+        this.events.emit('product:preview');});
+
+  }
+
+  set text(textValue: string) {
+    this.setTextContent(this._text, textValue);
+  }
 }

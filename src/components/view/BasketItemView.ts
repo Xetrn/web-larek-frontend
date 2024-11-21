@@ -1,27 +1,38 @@
 import { EventEmitter } from "../base/events";
-import { IView } from "./View";
+import { View } from "./View";
 
-export class BasketItemView implements IView {
-    protected title: HTMLSpanElement;
-    protected removeButton: HTMLButtonElement;
+import { BasketItem } from "../../types/types";
+
+import { ensureElement } from "../../utils/utils";
+
+export class BasketItemView extends View<BasketItem>{
+    protected _productName: HTMLSpanElement;
+    protected _productPrice: HTMLElement;
+    protected _removeButton: HTMLButtonElement;
 
     protected id: string | null = null;
 
     constructor(protected container: HTMLElement, protected events: EventEmitter) {
-        this.title = container.querySelector('.card__title') as HTMLSpanElement;
-        this.removeButton = container.querySelector('.basket__item-delete') as HTMLButtonElement;
+        super(container);
 
-        this.removeButton.addEventListener('click', () => {
+        this._productName = ensureElement<HTMLSpanElement>('.card__title', container);
+        this._removeButton = ensureElement<HTMLButtonElement>('.basket__item-delete', container);
+
+        this._removeButton.addEventListener('click', () => {
             this.events.emit('ui:remove-basket', {id: this.id})
         });
 
     }
-    render(data?: {id: string, title: string}): HTMLElement {
-        if (data) {
-            this.id = data.id;
-            this.title.textContent = data.title;
-        }
 
-        return this.container;
+    set name(title: string) {
+        this.setTextContent(this._productName, title);
+    }
+    set price(priceValue: number) {
+        if (priceValue !== null) {
+            this.setTextContent(this._productPrice, `${priceValue} синапсов`);
+        }
+        else {
+            this.setTextContent(this._productPrice, `Цена не установлена`);
+        }
     }
 }

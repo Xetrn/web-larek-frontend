@@ -19,6 +19,11 @@ export type BasketItem = {
     price: number | null;        // цена товара
 }
 
+export type Basket = {
+    items: HTMLElement[];
+    total: number;
+}
+
 // типы для формы заказа
 export type OrderForm = {
     payment: string;            // тип оплаты
