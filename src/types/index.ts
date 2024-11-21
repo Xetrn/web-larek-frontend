@@ -60,15 +60,14 @@ export type TModalView = {
 };
 
 export type TBasketView = {
-	catalog: HTMLElement[],
-	counter: number,
+	basketProducts: HTMLElement[],
+	cost: number,
 
 	isEmpty: boolean,
 };
 
 export type TProductPreview = TProductView & {
-	isPriceValid: boolean,
-	updateButtonText: void
+	isButtonActive: boolean,
 };
 
 

@@ -36,7 +36,6 @@ export class ModalView extends View<TModalView> {
 	}
 
 	toggleOpen() {
-		console.log(this._isOpen)
 		if (!this._isOpen) {
 			this.container.classList.toggle('modal_active', true);
 			this.events.emit(VIEW_EVENTS.MODAL_OPEN);

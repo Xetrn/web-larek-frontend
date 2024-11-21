@@ -3,6 +3,7 @@ import { IEvents } from '../../base/events';
 import { IProductView, TBasketProductView } from '../../../types';
 import { ProductView } from './product-view';
 import { ensureElement } from '../../../utils/utils';
+import { VIEW_EVENTS } from '../../../utils/constants';
 
 export class BasketProductView extends ProductView<TBasketProductView> implements IProductView {
 	private _index: HTMLSpanElement;
@@ -15,7 +16,7 @@ export class BasketProductView extends ProductView<TBasketProductView> implement
 		this._deleteBtn = ensureElement<HTMLButtonElement>('.basket__item-delete', container);
 
 		this._deleteBtn.addEventListener('click', () =>
-			this.events.emit('EVENT', { id: this.id })
+			this.events.emit(VIEW_EVENTS.REMOVE_FROM_BASKET, { id: this.id })
 		);
 	}
 

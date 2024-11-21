@@ -3,6 +3,7 @@ import { ensureElement } from '../../../utils/utils';
 
 import { IProductView, TProductPreview } from '../../../types';
 import { ProductView } from './product-view';
+import { VIEW_EVENTS } from '../../../utils/constants';
 
 export class ProductPreviewView extends ProductView<TProductPreview> implements IProductView {
 	private readonly _buyButton: HTMLButtonElement;
@@ -10,11 +11,10 @@ export class ProductPreviewView extends ProductView<TProductPreview> implements 
 	constructor(container: HTMLElement, events: IEvents) {
 		super(container, events);
 
-		this._buyButton = ensureElement<HTMLButtonElement>('.button', container);
+		this._buyButton = ensureElement<HTMLButtonElement>('.card__button', this.container);
 
 		this._buyButton.addEventListener('click', () => {
-			//
-			this.events.emit('action', { id: this.id });
+			this.events.emit(VIEW_EVENTS.ADD_TO_BASKET, { id : this.id });
 		});
 	}
 
@@ -22,23 +22,14 @@ export class ProductPreviewView extends ProductView<TProductPreview> implements 
 		return this._buyButton.disabled;
 	}
 
-	set isPriceValid(state: boolean) {
+	set isButtonActive(value: boolean) {
 		if (this._buyButton) {
-			if (state) {
+			if (value) {
 				this._buyButton.setAttribute('disabled', 'true');
 			}
 			else {
 				this._buyButton.removeAttribute('disabled');
 			}
-		}
-	}
-
-	set buttonValidation(isInBasket: boolean) {
-		if (this.isPriceValid) {
-			this._buyButton.textContent = 'NOT FOR SALE';
-		} else {
-
-			this._buyButton.textContent = 'ANY';
 		}
 	}
 }

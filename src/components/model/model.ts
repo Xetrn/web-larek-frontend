@@ -14,7 +14,7 @@ export class Model {
 	set catalog(catalog: IProduct[]) {
 		this._catalog = catalog;
 
-		this._events.emit(MODEL_EVENTS.PRODUCTS_UPDATED, this._catalog);
+		this._events.emit(MODEL_EVENTS.FETCHED_CATALOG, this._catalog);
 	}
 
 	get catalog() {
@@ -22,19 +22,19 @@ export class Model {
 	}
 
 	addProduct(product: IProduct) {
-		// this._events.emit(MODEL_EVENTS.PRODUCTS_UPDATED, product)
-
 		this._basketProducts.set(product.id, product);
+
+		this._events.emit(MODEL_EVENTS.ADD_TO_BASKET);
 	}
 
-	removeProduct(product: IProduct) {
-		this._events.emit(MODEL_EVENTS.PRODUCTS_UPDATED, product)
+	removeProduct(productID: string) {
+		this._basketProducts.delete(productID);
 
-		this._basketProducts.delete(product.id);
+		this._events.emit(MODEL_EVENTS.REMOVE_FROM_BASKET);
 	}
 
-	isProductInBasket(product: IProduct) : boolean {
-		return this._basketProducts.has(product.id);
+	isProductInBasket(id: string) : boolean {
+		return this._basketProducts.has(id);
 	}
 
 	getProductById(id: string) {
@@ -52,8 +52,6 @@ export class Model {
 	}
 
 	getBasketPrice() {
-		// добавить проверку на цену "Бесценно"
-
 		if (this._basketProducts.size === 0) {
 			return 0;
 		}

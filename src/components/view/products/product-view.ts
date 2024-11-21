@@ -39,7 +39,7 @@ export class ProductView<T extends TProductView> extends View<T> implements IPro
 	}
 
 	set price(value: string) {
-		this._price.textContent = value;
+		this._price.textContent = value != null ? value + ' синапсов' : 'Бесценно';
 	}
 
 	get price(): string {
