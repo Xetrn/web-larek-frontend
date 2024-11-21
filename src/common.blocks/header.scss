@@ -6,7 +6,7 @@
   background-color: $primary;
 
   &__container {
-    @include mixins.container(45px,45px);
+    @include mixins.container(45px, 45px);
     @include mixins.flex(row);
     align-items: center;
     justify-content: space-between;
