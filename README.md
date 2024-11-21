@@ -190,6 +190,7 @@ interface IOrderModel {
   order: IOrder;
   createOrder(): Promise<IOrderResult>;
   updateOrderInputs(options: Partial<Omit<IOrder, 'items' | 'total'>>): void;
+  getOrderInputs(): IOrder;
   validateAddressForm(): string | null;
   validateContactsForm(): string | null;
   reset(): void;
@@ -262,9 +263,9 @@ interface IShopAPI extends IProductAPI, IOrderAPI {}
 * `BasketItemView` - продукт в корзине (только название и цена).
 
 ### Заказ
-* `AddressEntryModal` - форма для ввода адреса заказа (рендерится в модальном окне).
-* `ContactDetailsModal` - форма для ввода контактных данных (рендерится в модальном окне).
-* `OrderSuccessModal` - компонент статуса заявки (рендерится в модальном окне).
+* `AddressFormView` - форма для ввода адреса заказа (рендерится в модальном окне).
+* `ContactFormView` - форма для ввода контактных данных (рендерится в модальном окне).
+* `OrderSuccessView` - компонент статуса заявки (рендерится в модальном окне).
 
 
 ## Presenter
@@ -283,6 +284,8 @@ interface IShopAPI extends IProductAPI, IOrderAPI {}
 enum Events {
   MODAL_OPEN = 'modal:open',
   MODAL_CLOSE = 'modal:close',
-  ...
-  }
+  BASKET_UPDATE = 'basket:update',
+  ORDER_CREATE = 'order:create',
+  ORDER_FINISHED = 'order:finished',
+}
 ```
