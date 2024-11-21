@@ -141,11 +141,11 @@ ProductsModel - управляет списком продуктов.
 
 * CatalogView: отображение каталога
 * ProductView: отображение карточки продукта в каталоге
-* ProductFullView: отображение товара в модалке
+* ProductModalView: отображение товара в модалке
+* OpenCartButtonView: отображения кнопки корзины
 
-* CartItemView: обеспечивает отображение товара в корзине
-* CartView: обеспечивает отображение корзины
-* FormView: обеспечивает отображение всех форм
-* CartPaymentView: отображение формы оплаты
-* CartContactView: отображение формы контактов
-* CartOrderView: отображение результат покупки
+* ProductInCartView: обеспечивает отображение товара в корзине
+* CartModalView: обеспечивает отображение корзины
+* CartPayModal: отображение формы оплаты
+* CartContactsModalView: отображение формы контактов
+* SuccessOrderModalView: отображение результат покупки
