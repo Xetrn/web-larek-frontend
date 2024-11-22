@@ -66,16 +66,16 @@ yarn build
 - `trigger` - возвращает функцию, которая при вызове вызывает переданное событие.
 
 ## Типы данных
-Данные о товаре
+Основные данные о товаре
 
 ```
-export interface IProduct {
-  id: string;
-  description: string;
-  image: string;
-  title: string;
-  category: string;
-  price: number
+export interface Product {
+  id: string; - уникальный идентификатор товара.
+  description: string; -  описание товара.
+  image: string; - ссылка на изображение.
+  title: string; - название товара.
+  category: string; - категория товара.
+  price: number; - стоимость.
 }
 ```
 
@@ -136,33 +136,14 @@ export interface IOrderData {
 }
 ```
 
-Корзина
-
-```
-export interface IBasketData {
-  items: IProduct[];
-  totalPrice: number;
-  addProduct(product: IProduct): void;
-  deleteProduct(id: string): void;
-  clearBasket(): void;
+// Данные о корзине
+export interface BasketModel {
+  items: Map<string, number>; коллекция ID товара — количество.
+  totalPrice: number; - суммарная стоимость товаров.
+  addItem(productId: string): void; - добавляет товар в корзину.
+  removeItem(productId: string): void; - удаляет товар из корзины.
+  clearBasket(): void; - очищает корзину.
 }
-```
 
-Данные карточек, отображаемых на странице
-
-```
-export type TCard = Omit<IProduct, '_id' | 'description'>;
-```
-
-
-Данные о способе оплаты и адресе пользователя
-
-```
-export type TPayment = Pick<IInputs, 'payment' | 'address'>;
-```
-
-Данные об электронной почте и телефоне пользователя
-
-```
-export type TContacts = Pick<IInputs, 'email' | 'phone'>;
-```
+// Способ оплаты
+export type PaymentType = "online" | "cash"; - оплата онлайн/при получении.
