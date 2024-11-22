@@ -10,43 +10,12 @@ export interface Product {
 export interface ProductInBasket extends Product {
   isAddedToBasket: boolean;  
 }
-  
-export interface IProductList {
-  total: number;
-  items: IProduct()
-}
 
-export interface ICardsData {
-  items: IProduct[];
-  preview: string | null;
-} 
-
-export interface IInputs {
-  payment: string;
-  address: string;
-  email: string;
-  phone: string;
-}
-
-export interface IOrder extends IInputs {
-  total: number;
-  items: string[];
-}
-
-export interface IOrderResult {
-  id: string;
-  total: number;
-}
-
-export interface IOrderData {
-  clearData(): void;
-  getData(): IOrder;
-  setItems(products: IProduct[]): void;
-  setField(field: keyof IInputs, value: string): void;
-  validateOrder(): boolean;
-  validateContacts(): boolean;
-  checkValidation(data: TPayment | TContacts): boolean;
-  checkField(value: string): boolean;
+export interface CatalogModel {
+  products: ProductInBasket[];  
+  findProductById(productId: string): ProductInBasket | undefined; 
+  setProductList(newProducts: ProductInBasket[]): void; 
+  getProductList(): ProductInBasket[]; 
 }
 
 export interface BasketModel {
@@ -58,3 +27,21 @@ export interface BasketModel {
 }
 
 export type PaymentType = "online" | "cash"; 
+
+export interface UserData {
+  paymentMethod: PaymentType;
+  address: string; 
+  email: string; 
+  phoneNumber: string;
+}
+
+export interface OrderDetails {
+  customerInfo: UserData;
+  orderTotal: number; 
+  productIds: string[];
+}
+
+export interface ProductAPIResponse {
+  totalItems: number; 
+  products: Product[];
+}

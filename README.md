@@ -79,64 +79,28 @@ export interface Product {
 }
 ```
 
-Список товаров
+Данные о товаре для отображения в каталоге
 
 ```
-export interface IProductList {
-  total: number;
-  items: IProduct[]
-}
-
-```
-
-Интерфейс для модели данных карточек
-
-```
-export interface ICardsData {
-  items: IProduct[];
-  preview: string | null;
-} 
-```
-
-Данные пользователя
-```
-export interface IInputs {
-  payment: string;
-  address: string;
-  email: string;
-  phone: string;
+export interface ProductInBasket extends Product {
+  isAddedToBasket: boolean;  - флаг, указывающий, добавлен ли товар в корзину
 }
 ```
 
-Данные заказа
-```
-export interface IOrder extends IInputs {
-  total: number;
-  items: string[];
-}
-```
-Ответ сервера при совершении заказа 
+// Модель каталога товаров
 
 ```
-export interface IOrderResult {
-  id: string;
-  total: number;
-}
-```
-
-Интерфейс модели данных заказа
-```
-export interface IOrderData {
-  clearData(): void;
-  getData(): IOrder;
-  setItems(products: IProduct[]): void;
-  setField(field: keyof IInputs, value: string): void;
-  validateOrder(): boolean;
-  checkField(value: string): boolean;
+export interface CatalogModel {
+  products: ProductInBasket[];  - список товаров в каталоге.
+  findProductById(productId: string): ProductInBasket | undefined; - поиск товара по его идентификатору.
+  setProductList(newProducts: ProductInBasket[]): void; - метод для обновления списка товаров.
+  getProductList(): ProductInBasket[]; - возвращает полный список товаров.
 }
 ```
 
 // Данные о корзине
+
+```
 export interface BasketModel {
   items: Map<string, number>; коллекция ID товара — количество.
   totalPrice: number; - суммарная стоимость товаров.
@@ -144,6 +108,36 @@ export interface BasketModel {
   removeItem(productId: string): void; - удаляет товар из корзины.
   clearBasket(): void; - очищает корзину.
 }
+```
 
 // Способ оплаты
+```
 export type PaymentType = "online" | "cash"; - оплата онлайн/при получении.
+```
+
+// Данные о клиенте
+```
+export interface UserData {
+  paymentMethod: PaymentType; - выбранный способ оплаты.
+  address: string; - адрес доставки.
+  email: string; - адрес электронной почты.
+  phoneNumber: string; - номер телефона.
+}
+```
+
+// Данные о заказе
+```
+export interface OrderDetails {
+  customerInfo: UserData; - контактные данные клиента. 
+  orderTotal: number; - общая стоимость заказа.
+  productIds: string[]; - список ID товаров, включённых в заказ.
+}
+```
+
+// Ответ от API
+```
+export interface ProductAPIResponse {
+  totalItems: number; - общее количество товаров.
+  products: ProductInfo[]; - массив товаров.
+}
+```
