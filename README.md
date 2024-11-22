@@ -138,6 +138,6 @@ export interface OrderDetails {
 ```
 export interface ProductAPIResponse {
   totalItems: number; - общее количество товаров.
-  products: ProductInfo[]; - массив товаров.
+  products: Product[]; - массив товаров.
 }
 ```
