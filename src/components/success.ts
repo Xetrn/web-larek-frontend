@@ -33,4 +33,3 @@ export class Success extends Component<ISuccess> {
 		this._total.textContent = `Списано ${value} синапсов`;
 	}
 }
-//

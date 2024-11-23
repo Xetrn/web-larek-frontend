@@ -3,13 +3,11 @@ import {IEvents} from "./base/events";
 import {ensureElement} from "../utils/utils";
 
 interface IPage {
-	counter: number; //- счетчик, значение которого выводится у иконки корзины на главной странице
+	counter: number;
 	catalog: HTMLElement[];
-	locked: boolean; //- блокировка скролла страницы при появлении модального окна
+	locked: boolean;
 }
 
-// Отвечает за наполнение страницы, устанавливает элементы в предназначенные для них контейнеры,
-// работает со счетчиком товаров в корзине (выводит обновленное значение)
 export class Page extends Component<IPage> {
 	protected _counter: HTMLElement;
 	protected _catalog: HTMLElement;

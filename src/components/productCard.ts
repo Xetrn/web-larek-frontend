@@ -1,5 +1,3 @@
-//Слой отображения
-
 import { IProduct } from '../types';
 import {  ensureElement } from '../utils/utils';
 import { Component } from './base/component';
@@ -8,7 +6,6 @@ interface ICardActions {
 	onClick: (event: MouseEvent) => void;
 }
 
-// Отрисовывает карточку, работает с разметкой
 export class ProductCard extends Component<IProduct> {
 	protected _id: string;
 	protected _title: HTMLElement;

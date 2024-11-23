@@ -40,4 +40,3 @@ export class Api {
         }).then(this.handleResponse);
     }
 }
-//

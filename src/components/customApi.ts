@@ -41,4 +41,3 @@ export class CustomAPI extends Api implements ICustomApi {
 	}
 
 }
-//

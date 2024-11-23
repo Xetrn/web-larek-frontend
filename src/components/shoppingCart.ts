@@ -2,14 +2,12 @@ import { createElement, ensureElement } from "../utils/utils";
 import { Component } from "./base/component";
 import { EventEmitter } from "./base/events";
 
-// Необходим для типизации базового компонента (передаем данный тип и превращаем компонент в корзину)
 export interface IShoppingCartView  {
 	items: HTMLElement[];
 	total: number;
 	buttonToggler: string[];
 }
 
-// Отрисовывает корзину с ее содержимым
 export class ShoppingCart extends Component<IShoppingCartView> {
 	protected _list: HTMLElement;
 	protected _total: HTMLElement;

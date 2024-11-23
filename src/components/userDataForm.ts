@@ -35,4 +35,3 @@ export class UserDataForm extends Form<IUserDataForm> {
 		this._submit.disabled = !value;
 	}
 }
-//

@@ -16,4 +16,3 @@ export class UserContactsForm extends Form<IUserContactsForm> {
 		(this.container.elements.namedItem('phone') as HTMLInputElement).value = value;
 	}
 }
-//

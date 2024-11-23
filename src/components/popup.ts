@@ -6,7 +6,6 @@ export interface IPopup  {
 	content: HTMLElement;
 }
 
-// Отображает модальное окно, выводит внутри окна переданный контент
 export class Popup extends Component<IPopup>{
 	protected _closeButton: HTMLButtonElement;
 	protected _content: HTMLElement;

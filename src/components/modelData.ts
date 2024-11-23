@@ -8,7 +8,6 @@ import {
 
 import { IEvents } from './base/events';
 
-// Базовая модель
 export abstract class Model<T> {
 	constructor(data: Partial<T>, protected events: IEvents) {
 		Object.assign(this, data);
@@ -19,14 +18,11 @@ export abstract class Model<T> {
 	}
 }
 
-// Главная модель данных
 export class ModelData extends Model<IModelData> {
 	catalog: IProduct[];
 	shoppingCart: IProduct[] = [];
-	// В поле сохраняется ID товара, отображаемого в модальном окне
 	preview: string | null;
 	formErrors: FormErrors = {};
-	// В поле сохраняются данные, введенные в формы при оформлении заказа
 	order: IUserDataForm & IUserContactsForm = {
 		payment: '',
 		address: '',
@@ -39,7 +35,6 @@ export class ModelData extends Model<IModelData> {
 		this.emitChanges('catalog:change', { catalog: this.catalog });
 	}
 
-	// Получение данных одной карточки для ее отображения в модальном окне
 	setPreview(item: IProduct) {
 		this.preview = item.id;
 		this.emitChanges('preview:change', item);
@@ -57,12 +52,10 @@ export class ModelData extends Model<IModelData> {
 		this.emitChanges('shoppingCart:change', item);
 	}
 
-	// Подсчет количества товаров в корзине для вывода значения у иконки корзины на главной странице
 	countShoppingCartItems() {
 		return this.shoppingCart.length;
 	}
 
-	// Подсчет общей стоимости товаров в корзине
 	getTotal() {
 		let summ = 0;
 		this.shoppingCart.forEach((item) => {
@@ -72,7 +65,6 @@ export class ModelData extends Model<IModelData> {
 		return summ;
 	}
 
-	// Удаление всех товаров из корзины после завершения заказа
 	clearShoppingCart() {
 		this.shoppingCart = [];
 		this.catalog.forEach((item) => {
@@ -80,7 +72,6 @@ export class ModelData extends Model<IModelData> {
 		});
 	}
 
-	// Очистка полей форм после завершения заказа
 	clearOrder() {
 		this.order = {
 			payment: '',
@@ -107,8 +98,7 @@ export class ModelData extends Model<IModelData> {
 		}
 		this.formErrors = errors;
 		this.events.emit('UserDataFormErrors:change', this.formErrors);
-		return Object.keys(errors).length === 0; // Если длина массива равна нулю (ошибок нет),
-		// то выражение будет истинным, функция вернёт true
+		return Object.keys(errors).length === 0;
 	}
 
 	setUserContactsField(field: keyof IUserContactsForm, value: string) {
