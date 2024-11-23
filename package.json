@@ -38,10 +38,11 @@
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
-    "start": "webpack serve",
+    "start": "webpack serve --open",
     "lint": "eslint --ext .js,.ts ./src",
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
+    "predeploy": "npm run build:prod",
     "deploy": "gh-pages -d dist"
   }
 }
