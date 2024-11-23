@@ -1,68 +1,48 @@
-interface ILotItem {
-	id: string;
-	title: string;
-	description: string;
-	image: string;
-	category: ILotCategory;
-	price: number | null;
+// Интерфейс, описывающий объект товара, возвращаемый сервером
+export interface IProduct {
+    id: string;
+    title: string;
+    price: number | null;
+    category: string;
+    image: string;
+    description: string;
+    inCart?: boolean;
+    cartItemIndex?: number;
 }
 
-
-interface ILarek {
-	isOrdered: boolean;
-	placeInBasket: () => void;
-	removeFromBasket: () => void;
+// Интерфейс, описывающий объект заказа, передаваемый на сервер
+export interface IOrder {
+    payment: string;
+    email: string;
+    phone: string;
+    address: string;
+    total: number;
+    items: string[];
 }
 
-type ILot = ILotItem & ILarek;
-
-type IPaymentType = 'card' | 'cash';
-
-
-type IOrderForm = IOrderDeliveryForm & IOrderContactsForm;
-
-
-interface IOrderAPI extends IOrderForm {
-	items: string[];
-	total: number;
+export interface IOrderResult {
+    id: string;
+    total: number;
 }
 
-type ILotCategory =
-	| 'софт-скил'
-	| 'другое'
-	| 'дополнительное'
-	| 'кнопка'
-	| 'хард-скил';
-
-interface IOrder extends IOrderForm {
-	items: ILot[];
-	validateOrder(): void;
-	clearOrder(): void;
-	validatePayment(): void;
-	validateAddress(): void;
-	validateEmail(): void;
-	validatePhone(): void;
-	postOrder(): void;
+export interface IModelData {
+    catalog: IProduct[];
+    shoppingCart: string[];
+    preview: string | null;
 }
 
-type IFormErrors = Partial<Record<keyof IOrderForm, string>>;
-
-type CatalogChangeEvent = {
-	catalog: ILot[];
-};
-
-type IBasketItem = Pick<ILot, 'id' | 'title' | 'price'>;
-
-
-interface IAppState {
-	catalog: ILot[];
-	basket: ILot[];
-	order: IOrder;
-	preview: ILot;
-	isLotInBasket(item: ILot): boolean;
-	clearBasket(): void;
-	getTotalAmount(): number;
-	getBasketIds(): number;
-	getBasketLength(): number;
-	initOrder(): IOrder;
+export interface IcatalogChange {
+    products: IProduct[];
 }
+
+export interface IUserDataForm {
+    payment: string;
+    address: string;
+}
+
+export interface IUserContactsForm {
+    email: string;
+    phone: string;
+}
+
+export type FormErrors = Partial<Record<keyof IOrder, string>>;
