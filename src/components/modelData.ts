@@ -107,7 +107,8 @@ export class ModelData extends Model<IModelData> {
 		}
 		this.formErrors = errors;
 		this.events.emit('UserDataFormErrors:change', this.formErrors);
-		return Object.keys(errors).length === 0;
+		return Object.keys(errors).length === 0; // Если длина массива равна нулю (ошибок нет),
+		// то выражение будет истинным, функция вернёт true
 	}
 
 	setUserContactsField(field: keyof IUserContactsForm, value: string) {

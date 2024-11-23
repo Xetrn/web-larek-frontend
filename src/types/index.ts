@@ -1,4 +1,3 @@
-// Интерфейс, описывающий объект товара, возвращаемый сервером
 export interface IProduct {
     id: string;
     title: string;
@@ -10,7 +9,6 @@ export interface IProduct {
     cartItemIndex?: number;
 }
 
-// Интерфейс, описывающий объект заказа, передаваемый на сервер
 export interface IOrder {
     payment: string;
     email: string;

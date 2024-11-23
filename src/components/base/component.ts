@@ -1,3 +1,5 @@
+// Базовый класс для работы с HTML элементами
+
 export abstract class Component<T> {
     protected constructor(protected readonly container: HTMLElement) {}
 
