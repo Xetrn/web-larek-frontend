@@ -1,30 +1,44 @@
+import { Component } from '../components/base/component';
 import { ICartModel } from '../types/ICartModel';
-import { EventEmitter } from '../components/base/events';
+import { IEvents } from '../components/base/events';
+import { ensureElement } from '../utils/utils';
 
-export class CartModel implements ICartModel {
-    items: string[]
-    _events: EventEmitter | null = null;
+export class Cart extends Component<ICartModel> {
+	private readonly _list: HTMLElement;
+	private readonly _price: HTMLElement;
+	button: HTMLButtonElement | null;
 
-    constructor(events: EventEmitter) {
-        this._events = events;
-    }
+	constructor(block: string, container: HTMLElement, protected eventEmitter: IEvents) {
+		super(container);
+		this._list = ensureElement<HTMLElement>(`.${block}__list`, this.container);
+		this._price = ensureElement<HTMLElement>(`.${block}__price`, this.container);
+		this.button = this.container.querySelector<HTMLButtonElement>(`.${block}__button`);
+		this._initializeButton();
+		this.items = [];
+	}
 
-    add(id: string) {
-        this.items.push(id);
-        this._events.emit('cart:add');
-    }
+	private _initializeButton(): void {
+		if (this.button) {
+			this.button.addEventListener('click', () => {
+				this.eventEmitter.emit('cart:order');
+			});
+		}
+	}
 
-    remove(id: string) {
-        this.items = this.items.filter((item) => item !== id);
-        this._events.emit('cart:remove');
-    }
+	set total(price: number) {
+		this.setText(this._price, `${price} cинапсов`);
+	}
 
-    clear(): void {
-        this.items = [];
-        this._events.emit('cart:clear');
-    }
+	set items(items: HTMLElement[]) {
+		this._list.replaceChildren(...items);
+		if (this.button) {
+			this.button.disabled = !items.length;
+		}
+	}
 
-    get total(): number {
-        return 0;
-    }
+	disable() {
+		if (this.button) {
+			this.button.disabled = true;
+		}
+	}
 }
