@@ -1,19 +1,19 @@
 import { View } from "../base/View";
 import { IEvents } from "../base/events";
 import { ensureElement } from "../../utils/utils";
-import { IProduct } from "../../types/product";
+import { IProduct, BasketProductItem } from "../../types/product";
 import { categoryClasses, Category } from "../../utils/constants";
 
-type modalProductItem = Pick<IProduct, 'image' | 'title' | 'category' | 'price' | 'description'>;
-
-export class ModalProductView extends View<modalProductItem> {
+export class ModalProductView extends View<IProduct> {
+  protected _id: string;
+  protected _description: HTMLElement;
   protected _image: HTMLImageElement;
   protected _title: HTMLElement;
   protected _category: HTMLElement;
   protected _price: HTMLElement;
   protected _button: HTMLButtonElement;
 
-  protected _description: HTMLElement;
+  protected _inBasket = false;
 
   constructor(container: HTMLElement, protected events: IEvents) {
     super(container);
@@ -23,8 +23,20 @@ export class ModalProductView extends View<modalProductItem> {
     this._category = ensureElement<HTMLElement>(`.card__category`, container);
     this._price = ensureElement<HTMLElement>(`.card__price`, container);
     this._description = ensureElement<HTMLElement>(`.card__text`, container);
-
     this._button = ensureElement<HTMLButtonElement>(`.card__button`, container);
+
+    this._button.addEventListener('click', () => {
+      const product: BasketProductItem = {
+          id: this._id,
+          title: this._title.textContent || '',
+          price: parseFloat(this._price.textContent || '0')
+        };
+        this.events.emit('product:update', product);
+    });
+  }
+
+  set id(value: string) {
+    this._id = value;
   }
 
   set image(value: string) {
@@ -52,5 +64,14 @@ export class ModalProductView extends View<modalProductItem> {
 
   set description(value: string) {
     this.setText(this._description, value);
+  }
+
+  set inBasket(value: boolean) {
+    this._inBasket = value;
+    this.updateButtonState();
+  }
+
+  private updateButtonState() {
+    this._button.textContent = this._inBasket ? 'Удалить из корзины' : 'В корзину';
   }
 }

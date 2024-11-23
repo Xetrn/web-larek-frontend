@@ -6,9 +6,9 @@ import { IEvents } from "../base/events";
 type CatalogList = Omit<IProductList, 'total'>;
 
 interface ICatalogModel {
+  catalogList: CatalogList;
   loadProducts(): Promise<void>;
   getProductById(id: string): Promise<IProduct | null>;
-  catalogList: CatalogList;
 }
 
 export class CatalogModel extends Model<IProductList> implements ICatalogModel {
@@ -31,7 +31,7 @@ export class CatalogModel extends Model<IProductList> implements ICatalogModel {
   async getProductById(id: string): Promise<IProduct | null> {
     try {
       const product = await this.api.getProductItem(id);
-      this.emitChanges("product:changed", { product });
+      // this.emitChanges("product:changed", { product });
       return product;
     } catch (error) {
       console.error(`Ошибка при получении продукта с ID ${id}:`, error);

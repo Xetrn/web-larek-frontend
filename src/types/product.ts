@@ -15,6 +15,6 @@ export interface IProductList {
 export type BasketProductItem = Pick<IProduct, 'id' | 'title' | 'price'>;
 
 export interface IBasket {
-  items: Map<BasketProductItem, number>;
+  items: HTMLElement[];
   totalPrice: number;
 }

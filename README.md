@@ -138,7 +138,7 @@ type BasketProductItem = Pick<IProduct, 'id' | 'title' | 'price'>;
 ### IBasket - интерфейс корзины
 ```ts
 interface IBasket {
-  items: Map<BasketProductItem, number>;
+  items: HTMLElement[];
   totalPrice: number;
 }
 ```
