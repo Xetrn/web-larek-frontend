@@ -53,12 +53,15 @@ event.on(Event.BUSKET_OPEN, (products: IProduct[]) => {
 })
 
 event.on(Event.ADD_PRODUCT_TO_BUSKET, (product: IProduct) => {
+  product.busket = true
   busketModel.addProduct(product)
   busketButtonView.render(busketModel.items.length)
   busketView = new BusketView(busketModel.items, event)
+  marketPageModalView.renderOne({item: new CardActiveView(product, event).template})
 })
 
 event.on(Event.REMOVE_PRODUCT_FROM_BUSKET, (product: IProduct) => {
+  product.busket = false
   busketModel.removeProduct(product)
   busketButtonView.render(busketModel.getProductСount())
   busketView = new BusketView(busketModel.items, event)

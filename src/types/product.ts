@@ -11,4 +11,6 @@ export interface IProduct {
   category: string;
   // Цена продукта
   price: number | null;
+  // Находится ли товар в корзине
+  busket: false | true;
 }

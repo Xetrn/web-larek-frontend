@@ -22,16 +22,21 @@ export default class CardActiveView  {
     this.#container.querySelector(".card__title").textContent = this.#product.title
     this.#container.querySelector(".card__text").textContent = this.#product.description
     this.#container.querySelector(".card__price").textContent = this.#product.price ? this.#product.price + ' синапсов' : "Бесценно"
-    this.#container.querySelector(".card__button").classList.add('add__button')
-
     const img = this.#container.querySelector(".card__image") as HTMLImageElement
     img.src = `${CDN_URL}${this.#product.image}`
 
     const type = CardTypes.find((x: string[]) => x[0] === this.#product.category)[1]
     this.#container.querySelector(".card__category").classList.add(`card__category_${type}`)
 
-    const basket =  this.#container.querySelector('.add__button') as HTMLButtonElement
-    basket.onclick = () => this.#event.emit(Event.ADD_PRODUCT_TO_BUSKET, this.#product)
+    const basket = this.#container.querySelector('.card__button') as HTMLButtonElement
+    if((!basket.hasAttribute('disabled') && this.#product.busket === true) || this.#product.title === 'Мамка-таймер') {
+      basket.setAttribute('disabled', '')
+    } else if(basket.hasAttribute('disabled') && !this.#product.busket === true) {
+      basket.removeAttribute('disabled')
+    }
+    basket.onclick = () => {
+      this.#event.emit(Event.ADD_PRODUCT_TO_BUSKET, this.#product)
+    }
   }
 
   get template() {

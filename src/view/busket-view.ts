@@ -30,6 +30,7 @@ export default class BusketView  {
     this.#container.querySelector('.basket__list').replaceChildren(...HTMLProductsList)
     this.#container.querySelector('.basket__price').textContent = `${sum} синапсов`
     const order = this.#container.querySelector('.basket__button') as HTMLButtonElement;
+    this.#items.length === 0 ? order.setAttribute('disabled', '') : order.removeAttribute('disabled')
     order.onclick = () => this.#event.emit(Event.ORDER_EMIT, this.#items);
   }
 

@@ -12,6 +12,7 @@ export class MarketPageModalView {
     this.#event = event;
     const close = document.querySelector('.modal__close') as HTMLButtonElement;
     close.onclick = () => this.#event.emit(Event.MODAL_CLOSE);
+    this.#container.onclick = (e: MouseEvent) => this.#onOverlayClick(e)
   }
 
   renderAll({items}: {items: HTMLElement[]}){
@@ -30,5 +31,10 @@ export class MarketPageModalView {
     this.#container.classList.remove('modal_active');
     document.querySelector('.page').classList.remove('page_hidden');
     this.#content.replaceChildren('');
+  }
+  #onOverlayClick(e: MouseEvent) {
+    if (e.target === this.#container) {
+      this.#event.emit(Event.MODAL_CLOSE);
+    }
   }
 }
