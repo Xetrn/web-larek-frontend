@@ -95,7 +95,6 @@ event.on(Event.ORDER_ADD_PHONE, ({phone}: {phone: string}) => {
 
 event.on(Event.ORDER_CONTINUE, (products: IProduct[]) => {
   marketPageModalView.renderOne({item: new OrderSecondStepView(products, event).template})
-
 })
 
 event.on(Event.PAY, (products: IProduct[]) => {
@@ -104,8 +103,10 @@ event.on(Event.PAY, (products: IProduct[]) => {
   busketModel.clearBucket()
   busketButtonView.render(busketModel.getProductСount())
   busketView = new BusketView(busketModel.items, event)
+  products.forEach((el) => el.isBusket = false)
 })
 
 event.on(Event.ORDER_END, () => {
   marketPageModalView.remove()
+
 })
