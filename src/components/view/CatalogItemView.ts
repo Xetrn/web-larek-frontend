@@ -26,9 +26,11 @@ export class CatalogItemView extends View<Product>{
     set name(title: string) {
         this.setTextContent(this.productName, title);
     }
+    
     set image(src: string) {
         this.setImageSrc(this.productImage, src);
     }
+
     set price(priceValue: number) {
         priceValue ? this.setTextContent(this.productPrice, `${priceValue} синапсов`) : this.setTextContent(this.productPrice, `Бесценно`);
     }

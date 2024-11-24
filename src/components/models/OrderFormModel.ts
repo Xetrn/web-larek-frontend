@@ -9,12 +9,11 @@ interface IOrderFormModel {
 
 export class OrderFormModel implements IOrderFormModel {
     orderForm: OrderForm;
-    _items: OrderForm[];
-    _submit: HTMLButtonElement;
-    _events: EventEmitter | null = null;
+    protected _items: OrderForm[];
+    protected _submit: HTMLButtonElement;
+    protected _events: EventEmitter | null = null;
 
     constructor(events: EventEmitter) {
-        //this._submit = this.
         this._events = events;
 
     }
@@ -31,13 +30,13 @@ export class OrderFormModel implements IOrderFormModel {
     reset(): void {
         this._items = [];
 
-        this._events.emit('items:changed');
+        this._events.emit('items:change');
     }
 
     set valid(value: boolean) {
         this._submit.disabled = !value;
     }
-
+/* 
     get total() {
         return this._items.map(item => {
             if (typeof item.total === 'number') {
@@ -48,25 +47,5 @@ export class OrderFormModel implements IOrderFormModel {
                 return 0;
             }
         }).reduce((a, b) => a+b, 0);
-    }
-
-    addItem(item: OrderForm, callback?: Function | null): void {
-        this._items = [...this._items, item];
-
-        if (callback) {
-            callback();
-        }
-
-        this._events.emit('items:changed');
-    }
-
-    deleteItem(id: string, callback?: Function | null): void {
-        this._items = this._items.filter(item => item.id !== id);
-
-        if (callback) {
-            callback();
-        }
-
-        this._events.emit('items:changed');
-    }
+    } */
 }

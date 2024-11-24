@@ -18,7 +18,7 @@ export class BasketView extends View<Basket> {
         this.buttonForm = this.container.querySelector('.basket__button')
 
         this.buttonForm.addEventListener('click', () => {
-            events.emit('order:open');
+            events.emit('basket:open');
           });
 
         this.items = []

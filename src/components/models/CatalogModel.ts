@@ -9,7 +9,7 @@ interface IProductsModel {
 
 export class CatalogModel implements IProductsModel{
     items: Product[] | null = null;
-    _events: IEvents | null = null;
+    protected _events: IEvents | null = null;
 
     constructor(events: EventEmitter) {
         this._events = events

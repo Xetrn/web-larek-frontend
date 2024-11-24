@@ -20,7 +20,7 @@ import { ApiClient } from './components/ApiClients';
 import { API_URL, CDN_URL } from './utils/constants';
 import { ensureElement, cloneTemplate } from './utils/utils';
 
-import { Product, ProductList } from './types/types';
+import { BasketItem, Product, ProductList } from './types/types';
 
 const templates: Record<string, HTMLTemplateElement> = {
     cardCatalog: document.querySelector('#card-catalog'),
@@ -40,59 +40,55 @@ const productModalTemplate = ensureElement<HTMLTemplateElement>('#card-preview')
 const page = new PageView(document.body, emitter);
 const modal = new ModalView(ensureElement<HTMLElement>('#modal-container'), emitter);
 
-const contacts = ensureElement<HTMLTemplateElement>('#contacts')
+const contacts = ensureElement<HTMLTemplateElement>('#contacts');
 
 //const catalog = new CatalogView(emitter);
-const basket = new BasketView(ensureElement<HTMLTemplateElement>('#basket'), emitter);
-//const orderForm = cloneTemplate<HTMLTemplateElement>('#order');
-//const orderForm = new OrderFormView(cloneTemplate<HTMLFormElement>(contacts), emitter);
-const orderForm = new OrderFormModel(emitter);
+const basket = new BasketView(ensureElement<HTMLTemplateElement>('.basket'), emitter);
+const basketModel = new BasketModel(emitter);
+
+const orderFormModel = new OrderFormModel(emitter);
 
 const catalogView = new PageView(document.querySelector('.gallery'), emitter);
 const catalogModel = new CatalogModel(emitter);
 
 api.getProductList().then(response => {
-    //catalogModel.items = (response as Product[]).items;
+    catalogModel.items = response;
 })
 .catch(res => console.log(res))
 
 emitter.on('basket:open', () => {
-    modal.content = basket.render(collectCatalog());
-
     modal.open();
 })
 
 // добавление карточки в корзину
 emitter.on('item:select', (evt: {product: string}) => {
-    //orderForm.addItem(catalogModel.getProduct(evt.product));
-
-    modal.close();
 })
 
 // удаление карточки из корзины
 emitter.on('item:delete', (evt: {product: string}) => {
-    orderForm.deleteItem(evt.product);
-
-    basket.render(collectCatalog());
 })
 
+class FormOrderController {
+    private basketView: BasketView;
 
+	constructor(private events: EventEmitter, private model: OrderFormModel, private api: Api, private cartButton: HTMLButtonElement
+	) {
+		this.basketView = new BasketView(ensureElement<HTMLTemplateElement>('#basket'), events);
+		this.events.on('item:change', this.renderCart.bind(this));
+		this.cartButton.addEventListener('click', () => {
+			this.events.emit('modal:open', model);
+		});
+		this.events.on('modal:open', this.renderCart.bind(this));
+		this.events.on('item:remove', this.removeFromCart.bind(this));
+	}
 
-function collectCatalog() {
-    return {
-        catalog: orderForm._items.map(data => {
-            const card = new CatalogItemView(cloneTemplate(templates.cardCompact));
-            return card.render(data);
-        }),
-        total: orderForm.total
-    }
-}
+    renderCart(products: BasketItem) {
+		this.basketView.render();
+	}
 
-// удаление и добавление карточки
-export function handleAddCard() {
-    this.events.emit('item:select', {product: this.cardId});
-}
-
-export function handleDeleteCard() {
-    this.events.emit('item:delete', {product: this.cardId});
+    removeFromCart(item: Product) {
+		this.cartButton.querySelector('.header__basket-counter').textContent =
+			String(this.model);
+		this.events.emit('modal:open', this.model);
+	}
 }

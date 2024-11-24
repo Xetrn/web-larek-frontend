@@ -10,7 +10,7 @@ export class BasketItemView extends View<BasketItem>{
     protected _productPrice: HTMLElement;
     protected _removeButton: HTMLButtonElement;
 
-    protected id: string | null = null;
+    protected _id: string | null = null;
 
     constructor(protected container: HTMLElement, protected events: EventEmitter) {
         super(container);
@@ -19,7 +19,7 @@ export class BasketItemView extends View<BasketItem>{
         this._removeButton = ensureElement<HTMLButtonElement>('.basket__item-delete', container);
 
         this._removeButton.addEventListener('click', () => {
-            this.events.emit('ui:remove-basket', {id: this.id})
+            this.events.emit('basket:remove', {id: this._id})
         });
 
     }
@@ -27,13 +27,8 @@ export class BasketItemView extends View<BasketItem>{
     set name(title: string) {
         this.setTextContent(this._productName, title);
     }
+
     set price(priceValue: number) {
-        /* if (priceValue !== null) {
-            this.setTextContent(this._productPrice, `${priceValue} синапсов`);
-        }
-        else {
-            this.setTextContent(this._productPrice, `Цена не установлена`);
-        } */
         priceValue ? this.setTextContent(this._productPrice, `${priceValue} синапсов`) : this.setTextContent(this._productPrice, `Бесценно`)
     }
 }

@@ -17,6 +17,7 @@ export class ProductModalView extends ModalView{
    
     container.removeEventListener('click', () => {
         this.events.emit('preview:open');});
+        
     this._button.addEventListener('click', () => {
         this.events.emit('product:preview');});
 

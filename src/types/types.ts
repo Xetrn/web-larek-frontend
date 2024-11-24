@@ -32,7 +32,6 @@ export type OrderForm = {
     email: string;              // email пользователя
     total: string | number;     // общая сумма корзины
     items: string[];            // массив идентификаторов покупаемых товаров
-    id: string;
 }
 
 export type FormErrors = Partial<Record<keyof OrderForm, string>>;
