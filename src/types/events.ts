@@ -25,11 +25,3 @@ export enum Event {
   ORDER_ADD_PHONE = 'order:add-phone',
   ORDER_ADD_EMAIL = 'order:add-email',
 }
-
-export const CardTypes = [
-  ['другое', 'other'],
-  ['софт-скил', 'soft'],
-  ['кнопка', 'button'],
-  ['дополнительное', 'additional'],
-  ['хард-скил', 'hard'],
-]

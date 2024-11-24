@@ -12,5 +12,5 @@ export interface IProduct {
   // Цена продукта
   price: number | null;
   // Находится ли товар в корзине
-  busket: false | true;
+  isBusket: boolean;
 }

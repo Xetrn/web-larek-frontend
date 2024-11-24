@@ -2,7 +2,7 @@ import { IProduct } from "../types/product";
 import { EventEmitter } from "../components/base/events";
 import { Event } from "../types/events";
 import { cloneTemplate } from "../utils/utils";
-import CardBucketView from "./product-card-busket-view";
+import CardBucketView from "./product-card-buсket-view";
 
 export default class BusketView  {
   #items: IProduct[] | [];

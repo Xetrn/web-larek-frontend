@@ -2,7 +2,7 @@ import { IProduct } from "../types/product";
 import { EventEmitter } from "../components/base/events";
 import { Event } from "../types/events";
 import { CDN_URL } from "../utils/constants";
-import { CardTypes } from "../types/events";
+import { CardTypes } from "../types/index";
 import { cloneTemplate } from "../utils/utils";
 
 export default class CardDefaultView  {

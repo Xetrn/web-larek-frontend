@@ -24,12 +24,13 @@ const productApi = new ProductApi(API_URL)
 const orderApi = new OrderApi(API_URL)
 
 const marketPageView = new MarketPageView()
-const marketPageModel = new MarketPageModel(event)
-const marketPageModalView = new MarketPageModalView(event)
-const busketModel = new BusketModel(event)
-const orderModel = new OrderModel(event)
 const busketButtonView = new BusketButtonView([], event)
 let busketView = new BusketView([], event)
+const marketPageModalView = new MarketPageModalView(event)
+
+const marketPageModel = new MarketPageModel(event)
+const busketModel = new BusketModel(event)
+const orderModel = new OrderModel(event)
 
 productApi.getProducts()
   .then((data: IProductsList) => {
@@ -46,14 +47,14 @@ event.on(Event.PRODUCT_CARD_OPEN, (product: IProduct) => {
 
 event.on(Event.MODAL_CLOSE, () => marketPageModalView.remove())
 
-event.on(Event.BUSKET_OPEN, (products: IProduct[]) => {
+event.on(Event.BUSKET_OPEN, () => {
   marketPageModalView.renderOne({
     item: busketView.template
   })
 })
 
 event.on(Event.ADD_PRODUCT_TO_BUSKET, (product: IProduct) => {
-  product.busket = true
+  product.isBusket = true
   busketModel.addProduct(product)
   busketButtonView.render(busketModel.items.length)
   busketView = new BusketView(busketModel.items, event)
@@ -61,7 +62,7 @@ event.on(Event.ADD_PRODUCT_TO_BUSKET, (product: IProduct) => {
 })
 
 event.on(Event.REMOVE_PRODUCT_FROM_BUSKET, (product: IProduct) => {
-  product.busket = false
+  product.isBusket = false
   busketModel.removeProduct(product)
   busketButtonView.render(busketModel.getProductСount())
   busketView = new BusketView(busketModel.items, event)

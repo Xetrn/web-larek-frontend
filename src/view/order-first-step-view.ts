@@ -14,6 +14,7 @@ export default class OrderFirstStepView  {
     this.#container = cloneTemplate('#order') as HTMLElement
     this.#init()
   }
+
   #init() {
     const orderButton = this.#container.querySelector('.order__button') as HTMLButtonElement
     const onlineButton = this.#container.querySelectorAll('.button_alt')[0] as HTMLButtonElement
@@ -27,6 +28,7 @@ export default class OrderFirstStepView  {
         orderButton.setAttribute('disabled', 'true')
       }
     }
+
     onlineButton.onclick = () => {
       onlineButton.classList.add('button_alt-active')
       offlineButton.classList.remove('button_alt-active')
@@ -40,6 +42,7 @@ export default class OrderFirstStepView  {
     }
     orderButton.onclick = () => this.#event.emit(Event.ORDER_CONTINUE, this.#items)
   }
+  
   get template() {
     return this.#container
   }

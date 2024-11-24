@@ -3,7 +3,7 @@ import { EventEmitter } from "../components/base/events"
 import { Event } from "../types/events"
 import { CDN_URL } from "../utils/constants"
 import { cloneTemplate } from "../utils/utils"
-import { CardTypes } from "../types/events"
+import { CardTypes } from "../types/index"
 
 export default class CardActiveView  {
   #product: IProduct = null
@@ -14,10 +14,10 @@ export default class CardActiveView  {
     this.#product = product
     this.#event = event
     this.#container = cloneTemplate('#card-preview') as HTMLButtonElement;
-    this.init()
+    this.#init()
   }
 
-  init() {
+  #init() {
     this.#container.querySelector(".card__category").textContent = this.#product.category
     this.#container.querySelector(".card__title").textContent = this.#product.title
     this.#container.querySelector(".card__text").textContent = this.#product.description
@@ -29,9 +29,9 @@ export default class CardActiveView  {
     this.#container.querySelector(".card__category").classList.add(`card__category_${type}`)
 
     const basket = this.#container.querySelector('.card__button') as HTMLButtonElement
-    if((!basket.hasAttribute('disabled') && this.#product.busket === true) || this.#product.title === 'Мамка-таймер') {
+    if((!basket.hasAttribute('disabled') && this.#product.isBusket === true) || this.#product.title === 'Мамка-таймер') {
       basket.setAttribute('disabled', '')
-    } else if(basket.hasAttribute('disabled') && !this.#product.busket === true) {
+    } else if(basket.hasAttribute('disabled') && !this.#product.isBusket === true) {
       basket.removeAttribute('disabled')
     }
     basket.onclick = () => {

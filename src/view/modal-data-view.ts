@@ -21,17 +21,20 @@ export class MarketPageModalView {
     this.#content.replaceChildren(...items)
     return this.#container
   }
+
   renderOne({item}: {item: HTMLElement}){
     this.#container.classList.add('modal_active')
     document.querySelector('.page').classList.add('page_hidden');
     this.#content.replaceChildren(item)
     return this.#container
   }
+
   remove() {
     this.#container.classList.remove('modal_active');
     document.querySelector('.page').classList.remove('page_hidden');
     this.#content.replaceChildren('');
   }
+  
   #onOverlayClick(e: MouseEvent) {
     if (e.target === this.#container) {
       this.#event.emit(Event.MODAL_CLOSE);

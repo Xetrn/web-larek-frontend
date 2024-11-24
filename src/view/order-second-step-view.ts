@@ -14,6 +14,7 @@ export default class OrderSecondStepView  {
     this.#container = cloneTemplate('#contacts') as HTMLElement
     this.#init()
   }
+  
   #init() {
     const payButton = this.#container.querySelector('.button') as HTMLButtonElement
     const emailInput = this.#container.querySelectorAll('.form__input')[0] as HTMLInputElement
@@ -42,6 +43,7 @@ export default class OrderSecondStepView  {
 
     payButton.onclick = () => this.#event.emit(Event.PAY, this.#items)
   }
+
   get template() {
     return this.#container
   }
