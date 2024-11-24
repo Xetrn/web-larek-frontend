@@ -15,12 +15,14 @@ export default class CardDefaultView  {
     this.#events = event
     this.#container = cloneTemplate('#card-catalog') as HTMLButtonElement
     this.#container.onclick = () => this.#events.emit(Event.PRODUCT_CARD_OPEN, product)
-    this.init()
+    this.#init()
   }
-  init() {
-    const type = CardTypes.find((x: any) => x[0] === this.#product.category)[1];
+
+  #init() {
+    const type = CardTypes.find((x: string[]) => x[0] === this.#product.category)[1];
     this.#container.querySelector(".card__category").classList.add(`card__category_${type}`)
   }
+
   get template() {
     this.#container.querySelector(".card__category").textContent = this.#product.category
     this.#container.querySelector(".card__title").textContent = this.#product.title

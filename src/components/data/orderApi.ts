@@ -2,22 +2,21 @@ import { IOrder } from "../../types/order";
 import { Api } from "../base/api";
 
 export class OrderApi extends Api {
-    #CDN_URL: string
-    #order: object
+  #order: object
+  #API_URL: string
+  constructor(API_URL: string) {
+    super(API_URL);
+    this.#API_URL = API_URL;
+  }
 
-    constructor(CDN_URL: string) {
-        super(CDN_URL);
-        this.#CDN_URL = CDN_URL;
-    }
-
-    async postOrder(order: IOrder) {
-        await this.post("/order", order)
-        .then((result) => {
-          this.#order = result;
-        })
-        .catch((error) => {
-          console.error("Error fetching products:", error);
-        });
-        return this.#order;
-    }
+  async postOrder(order: IOrder) {
+    await this.post("/order", order)
+      .then((result) => {
+        this.#order = result
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error)
+      })
+    return this.#order
+  }
 }

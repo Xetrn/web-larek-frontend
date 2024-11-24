@@ -27,7 +27,7 @@ export default class CardActiveView  {
     const img = this.#container.querySelector(".card__image") as HTMLImageElement
     img.src = `${CDN_URL}${this.#product.image}`
 
-    const type = CardTypes.find((x: any) => x[0] === this.#product.category)[1]
+    const type = CardTypes.find((x: string[]) => x[0] === this.#product.category)[1]
     this.#container.querySelector(".card__category").classList.add(`card__category_${type}`)
 
     const basket =  this.#container.querySelector('.add__button') as HTMLButtonElement

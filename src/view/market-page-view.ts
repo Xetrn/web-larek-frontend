@@ -1,12 +1,12 @@
 export class MarketPageView {
-    #container: HTMLElement
+  #container: HTMLElement
 
-    constructor() {
-        this.#container = document.querySelector('.gallery')
-    }
+  constructor() {
+    this.#container = document.querySelector('.gallery')
+  }
 
-    render({items}:{items: HTMLElement[]}){
-        this.#container.replaceChildren(...items)
-        return this.#container
-    }
+  render({items}:{items: HTMLElement[]}){
+    this.#container.replaceChildren(...items)
+    return this.#container
+  }
 }
