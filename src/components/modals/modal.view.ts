@@ -2,14 +2,17 @@ import type { IView } from '../../types';
 import { ensureElement } from '../../utils/utils';
 import type { IEvents } from '../base/events';
 
-export interface IModalProps {
+export interface IModalProps<T = unknown> {
 	content: HTMLElement;
+	data?: T;
 }
 
 export abstract class ModalView implements IView {
 	protected contentContainer: HTMLElement;
 	protected modalContainer: HTMLElement;
 	protected closeButton: HTMLButtonElement;
+
+	private _rendered: boolean = false;
 
 	constructor(
 		protected wrapper: HTMLElement,
@@ -40,8 +43,8 @@ export abstract class ModalView implements IView {
 	}
 
 	public show(data: IModalProps): void {
-		this.wrapper.classList.add('modal_active');
 		this.render(data);
+		this.wrapper.classList.add('modal_active');
 	}
 
 	public hide(): void {
@@ -50,6 +53,7 @@ export abstract class ModalView implements IView {
 
 	public render(data: IModalProps): HTMLElement {
 		this.contentContainer.replaceChildren(data.content);
+
 		return this.wrapper;
 	}
 }

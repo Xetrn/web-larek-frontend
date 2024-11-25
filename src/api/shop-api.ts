@@ -1,5 +1,10 @@
 import { Api } from '../components/base/api';
-import type { IOrder, IOrderResponse, IProduct, IProducts } from '../types';
+import type {
+	IOrder,
+	IOrderResponse,
+	IProduct,
+	IProductsResponse,
+} from '../types';
 import { API_URL, CDN_URL } from '../utils/constants';
 import type { IShopApi } from './shop-api.interface';
 
@@ -8,8 +13,8 @@ export class ShopApi extends Api implements IShopApi {
 		super(API_URL);
 	}
 
-	public getProducts(): Promise<IProducts> {
-		return this.get('/product') as Promise<IProducts>;
+	public getProducts(): Promise<IProductsResponse> {
+		return this.get('/product') as Promise<IProductsResponse>;
 	}
 
 	public getProductById(id: string): Promise<IProduct> {

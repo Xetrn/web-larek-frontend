@@ -1,4 +1,6 @@
+import type { IModalProps } from '../modal.view';
+
 export interface IModalModel {
-	show(content?: HTMLElement): void;
+	show(data?: IModalProps): void;
 	hide(): void;
 }

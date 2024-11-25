@@ -14,8 +14,6 @@ export abstract class ModalPresenter
 	) {}
 
 	init(): void {
-		this.events.on(`${this.modalName}:show`, () => this.model.show());
-
 		this.events.on(`view-${this.modalName}:show`, (data: IModalProps) =>
 			this.view.show(data)
 		);

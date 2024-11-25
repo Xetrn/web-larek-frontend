@@ -1,4 +1,4 @@
-export type PaymentMethod = 'online' | 'cash';
+export type PaymentMethod = 'card' | 'cash';
 
 export interface IOrder {
 	payment: PaymentMethod;
