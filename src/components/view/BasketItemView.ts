@@ -19,7 +19,7 @@ export class BasketItemView extends View<BasketItem>{
         this._removeButton = ensureElement<HTMLButtonElement>('.basket__item-delete', container);
 
         this._removeButton.addEventListener('click', () => {
-            this.events.emit('basket:remove', {id: this._id})
+            this.events.emit('item:delete', {id: this._id})
         });
 
     }
