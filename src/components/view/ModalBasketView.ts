@@ -14,10 +14,13 @@ export class ModalBasketView extends View<IBasket> {
     this._list = ensureElement<HTMLElement>(`.basket__list`, container);
     this._price = ensureElement<HTMLElement>(`.basket__price`, container);
     this._button = ensureElement<HTMLButtonElement>(`.basket__button`, container);
+
+    this._button.addEventListener('click', () => {
+      events.emit('payment:open');
+    });
   }
 
   set items(items: HTMLElement[]) {
-    console.log(items)
     if (items.length > 0) {
       this._list.replaceChildren(...items);
       this.setDisabled(this._button, false);

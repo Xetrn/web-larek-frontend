@@ -11,3 +11,8 @@ export interface IOrderResult {
   id: string;
   total: number;
 }
+
+export interface IValidationResult {
+  isValid: boolean;
+  errorMessage: string;
+}

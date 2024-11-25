@@ -31,7 +31,6 @@ export class CatalogModel extends Model<IProductList> implements ICatalogModel {
   async getProductById(id: string): Promise<IProduct | null> {
     try {
       const product = await this.api.getProductItem(id);
-      // this.emitChanges("product:changed", { product });
       return product;
     } catch (error) {
       console.error(`Ошибка при получении продукта с ID ${id}:`, error);

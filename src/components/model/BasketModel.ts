@@ -6,6 +6,7 @@ interface IBacketModel {
 	total: number;
   add(product: BasketProductItem): void;
   remove(product: BasketProductItem): void;
+	has(id: string): void;
   clearBasket(): void;
 }
 
@@ -24,15 +25,15 @@ export class BacketModel extends Model<BasketProductItem> implements IBacketMode
 		);
 		this.updateTotalBasketSum();
 	}
-
+	
+  has(id: string) {
+		return Array.from(this.productsList).some((product) => product.id === id);
+  }
+	
 	clearBasket() {
 		this.productsList = [];
 		this.updateTotalBasketSum();
 	}
-
-  has(id: string) {
-    return Array.from(this.productsList).some((product) => product.id === id);
-  }
 
 	private finalPrice() {
 		let total = 0;
