@@ -36,16 +36,4 @@ export class OrderFormModel implements IOrderFormModel {
     set valid(value: boolean) {
         this._submit.disabled = !value;
     }
-/* 
-    get total() {
-        return this._items.map(item => {
-            if (typeof item.total === 'number') {
-                return item.total;
-            } else if(typeof item.total === 'string') {
-                return Number(item.total);
-            } else {
-                return 0;
-            }
-        }).reduce((a, b) => a+b, 0);
-    } */
 }

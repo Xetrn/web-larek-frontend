@@ -3,7 +3,7 @@ import { EventEmitter } from "../base/events";
 
 interface IBasketModel {
     items: Map<string, BasketItem>;
-    //add(item: BasketItem): void;    
+    add(item: BasketItem): void;    
     remove(id: string): void;
     get totalPrice(): number;
 }
@@ -16,17 +16,17 @@ export class BasketModel implements IBasketModel {
         this._events = events
     }
 
-   /*  add(item: BasketItem): void {
+   add(item: BasketItem): void {
         if(!this.items.has(item.id)) this.items.set(item.id, item);
 
-        this._events.emit("basket:change", this.items);
-    } */
+        this._events.emit("basket:add", this.items);
+    }
 
     remove(id: string): void {
         if (!this.items.has(id)) return;
         if (this.items.has(id)) {
             this.items.delete(id);
-            this._events.emit("basket:change", this.items);
+            this._events.emit("basket:delete", this.items);
         }
     }
 
