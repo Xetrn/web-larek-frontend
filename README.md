@@ -102,34 +102,48 @@ removeItem(itemId: string): void — удаляет товар из корзин
 getTotalPrice(): number — возвращает общую сумму.
 clearBasket(): void — очищает корзину.
 submitOrder(): Promise<string> — отправляет заказ и возвращает статус.
+save(): Сохранение текущего состояния корзины
 
 #Классы представления
 
 1. MainPageView
 
 Методы:
+
 renderItems(items: IItem[]): void — отображение списка товаров.
 showError(message: string): void — отображение ошибки.
+updateBasketCounter(): void Обновление счетчика товаров в корзине
+getBasketItemCount(): number Возвращает количество товаров в корзине
 
 2. ItemCardView
 
 Методы:
+
 render(item: IItem): void — отображает карточку товара.
 onAddToBasketClick(item: IItem): void — обрабатывает нажатие "Добавить в корзину".
 
 3. ItemModalView
 
 Методы:
+
 render(item: IItem): void — отображение информации о товаре.
+renderItem(item: IItem): void Устанавливает текущий товар и отображает его в модальном окне
 onAddToBasketClick(item: IItem): void — добавляет товар в корзину.
 closeModal(): void — закрытие модального окна.
 
 4. BasketModalView
 
 Методы:
+
 renderBasket(basket: IBasket): void — отображает корзину.
 onRemoveItemClick(item: IItem): void — удаляет товар из корзины.
 closeModal(): void — закрытие окна корзины.
+updateBasketCounter(): void — обновляет элемент, отображающий общую стоимость корзины.
+updateBasketItems(): void — обновляет список товаров в корзине.
+renderBasketItem(item: IItem, index: number): void — создает элемент для отображения товара в корзине.
+addRemoveItemListeners(): void — добавляет обработчики событий для кнопок удаления товаров.
+removeItem(item: IItem): void — удаляет товар из корзины.
+toggleSubmitButton(): void — отображает или скрывает кнопку для оформления заказа в зависимости от состояния корзины.
 
 5. PaymentModalView
 
@@ -137,12 +151,18 @@ closeModal(): void — закрытие окна корзины.
 renderPaymentForm(basket: IBasket): void — отображает форму оплаты.
 onPaymentSubmit(paymentDetails: { paymentMethod: string, shippingAddress: string }): void — обрабатывает оплату.
 showError(message: string): void — отображает ошибку оплаты.
+render(): void — отрисовывает форму для ввода данных
+onPaymentMethodSelect(event: Event): void — обрабатывает выбор способа оплаты пользователем.
+validateForm(): boolean — валидирует поля формы оплаты
 
 6. ContactsModalView
 
 Методы:
 renderContactForm(user: IUser): void — отображает контактные данные.
 onSubmitContactForm(): void — обрабатывает отправку контактов.
+howError(message: string): void — отображает сообщение об ошибке при отправке данных
+render(): void — отрисовывает форму для ввода контактов
+validateForm(): boolean — валидирует поля формы контактных данных
 
 7. SuccessOrderModalView
 
@@ -155,10 +175,12 @@ Api — для отправки HTTP-запросов
 Атрибуты:
 baseUrl: string — базовый URL API.
 options — параметры запросов.
+
 Методы:
 get(uri: string): Promise<any> — отправляет GET-запрос и возвращает данные.
 post(uri: string, data: object, method: ApiPostMethods): Promise<any> — отправляет POST, PUT, DELETE-запрос.
 handleResponse(response: Response): any — обрабатывает ответ от сервера.
+
 EventEmitter — для управления событиями
 
 Атрибуты:
