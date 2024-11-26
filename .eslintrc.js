@@ -19,5 +19,7 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
+        "@typescript-eslint/indent": ["error", 4],
+        "@typescript-eslint/semi": ["error", "always"]
     }
 }

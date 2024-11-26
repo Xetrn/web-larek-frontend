@@ -3,7 +3,7 @@ export interface IProduct {
     id: string; 
 
     //название товара                
-    name: string;  
+    title: string;  
 
     //описание товара             
     description: string; 
@@ -12,12 +12,21 @@ export interface IProduct {
     image: string;    
     
     //цена товара
-    price: number | null;             
+    price: number | null;  
+    
+    //категория
+    category: string;
+
+    //содержится ли в корзине
+    isBacketContains: boolean           
 }
 
 export interface IProductList {
     //список всех продуктов
-    products: IProduct[];
+    items: IProduct[];
+
+    //колличество всех продуктов
+    total: number;
 }
 
 export interface IBacketProduct {
@@ -25,16 +34,13 @@ export interface IBacketProduct {
     id: string;
 
     //название товара
-    name: string;
+    title: string;
 
     //цена товара
     price: number;
 }
 
 export interface IOrder {
-    //идентификатор заказа
-    id: string;
-
     //способ оплаты
     payment: string;
 
@@ -48,8 +54,8 @@ export interface IOrder {
     phone: string;
 
     //итоговая сумма заказа
-    totalPrice: number;
+    total: number;
 
     //список приобретаемых товаров
-    products: IBacketProduct[];
+    items: string[];
 }
