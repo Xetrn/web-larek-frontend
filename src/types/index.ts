@@ -1,52 +1,40 @@
-type PaymentMethod = 'online' | 'after-dilivery';
+type PaymentMethod = 'card' | 'cash';
 
 // Types
 interface IProduct {
     id: string;
     title: string;
     category: string;
-    imageUrl: string;
+    image: string;
     price: number;
     description: string;
     inBasket: boolean;
 }
 
-interface IBasket {
-    products: Map<IProduct, number>;  // Map<product, count of product>
-}
-
-interface ICatalog {
-    products: IProduct[];
-}
-
-interface IOrder {
-    id: string;
-    payment: PaymentMethod;
-    customerEmail: string;
-    customerAddres: string;
-    customerPhone: string;
-    products: Map<IProduct, number>;  // Map<product, count of product>
-}
 
 // Models
-interface IProductModel {
-    addToBasket(product: IProduct): void;
-    removeFromBasket(product: IProduct): void;
-}
-
 interface IBasketModel {
-    add(id: string): void;
-    remove(id: string): void;
+    add(product: IProduct): void;
+    remove(product: IProduct): void;
+    getProductLength(): number;
     clear(): void;
-    getProducts(): IProduct[] | undefined;
+    getProducts(): IProduct[];
 }
 
 interface ICatalogModel {
-    getProductByID(id: string): IProduct | undefined;
-    getProducts(): IProduct[] | undefined;
+    getProducts(): IProduct[];
+    setProducts(products: IProduct[]): void;
 }
 
 interface IOrderModel {
-    getOrder(): IOrder | undefined;
+    clear(): void;
+    setPaymentMethod(method: PaymentMethod): void;
+    setAdrress(address: string): void;
+    setEmail(email: string): void;
+    setPhone(phone: string): void;
+    getPaymentMethod(): PaymentMethod;
+    getAddress(): string;
+    getEmail(): string;
+    getPhone(): string;
 }
 

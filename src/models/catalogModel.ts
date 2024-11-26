@@ -1,10 +1,20 @@
-export class catalogModel implements ICatalogModel {
-    getProductByID(id: string) {
-        let product: IProduct = undefined;
-        return product; // get product from catalog
+import { EventEmitter } from "../components/base/events";
+
+export class CatalogModel implements ICatalogModel {
+    #products: IProduct[];
+    _events: EventEmitter;
+
+    constructor(events: EventEmitter) {
+        this._events = events;
+        this.#products = [];
     }
-    getProducts() {
-        let products: IProduct[] = [];
-        return products; // get all products from catalog
+
+    getProducts(): IProduct[] {
+        return this.#products; // get all products from catalog
+    }
+
+    setProducts(products: IProduct[]) {
+        this.#products = products;
+        this._events.emit('changeCatalogData', this.#products);
     }
 }

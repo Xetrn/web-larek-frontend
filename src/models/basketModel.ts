@@ -1,18 +1,33 @@
-export class basketModel implements IBasketModel {
-    add(id: string) {
-        // add product to basket
+import { EventEmitter } from "../components/base/events";
+
+export class BasketModel implements IBasketModel {
+    _events: EventEmitter | null = null;
+    #products: IProduct[] = [];
+
+    constructor(events: EventEmitter) {
+        this._events = events;
     }
 
-    remove(id: string) {
-        // remove product from basket
+    add(product: IProduct) {
+        this.#products[this.#products.length] = product;
+    }
+
+    getProductLength() {
+        return  this.#products.length;
+    }
+
+    remove(product: IProduct) {
+        this.#products = this.#products.filter((prod) => prod.id !== product.id);
+        this._events.emit('renderBasket', this.#products);
+        product.inBasket = false;
     }
 
     clear() {
-        // delete all products from basket
+        this.#products.forEach((product) => product.inBasket = false);
+        this.#products = [];
     }
 
     getProducts() {
-        let products: IProduct[] = [];
-        return products; // get all products from basket
+        return this.#products; 
     }
 }
