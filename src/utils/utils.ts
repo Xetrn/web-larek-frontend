@@ -133,3 +133,58 @@ export function createElement<
     }
     return element;
 }
+
+export function formatNumber(x: number) {
+	return Number(x)
+		.toString()
+		.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+export function formatPrice(
+	x: number,
+	currencyTitles?: [string, string, string]
+) {
+	if (x === null) {
+		return 'Бесценно';
+	}
+
+	if (!Array.isArray(currencyTitles)) {
+		return formatNumber(x);
+	}
+
+	return `${formatNumber(x)} ${declOfNum(x, currencyTitles)}`;
+}
+
+/**
+ * Счетная форма существительного
+ * @example
+ * declOfNum(1, ['рубль', 'рубля', 'рублей']) // рубль
+ * declOfNum(2, ['рубль', 'рубля', 'рублей']) // рубля
+ * declOfNum(100, ['рубль', 'рубля', 'рублей']) // рублей
+ * @param {number} x Число
+ * @param {[string, string, string]} titles Падежные формы, где: 0 элемент - Един. число им. падеж, 1 - элемент - Един. число род. падеж, 2 - элемент - Множ. число род. падеж
+ * @return {string}
+ */
+export function declOfNum(x: number, titles: [string, string, string]) {
+	const cases = [2, 0, 1, 1, 1, 2];
+
+	const result =
+		titles[x % 100 > 4 && x % 100 < 20 ? 2 : cases[x % 10 < 5 ? x % 10 : 5]];
+
+	return result;
+}
+
+export function getKeyByValueTranslation(
+	translation: string,
+	object: Record<string, string>
+): string | null {
+	const result = Object.entries(object).find(
+		([, value]) => value == translation
+	);
+
+	if (result === undefined) {
+		return null;
+	}
+
+	return result[0];
+}
