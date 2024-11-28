@@ -133,3 +133,25 @@ export function createElement<
     }
     return element;
 }
+
+export function getCategoryClass(category: string): string {
+    switch (category) {
+        case 'другое':
+            return 'card__category_other';
+        case 'хард-скил':
+            return 'card__category_hard';
+        case 'дополнительное':
+            return 'card__category_additional';
+        case 'кнопка':
+            return 'card__category_button';
+        default:
+            return 'card__category_soft';
+    }
+}
+
+export function getTotalBasketPrice(products: IProduct[]) {
+    let totalPrice = 0;
+    products.map((product) => totalPrice += product.price)
+
+    return totalPrice;
+}
