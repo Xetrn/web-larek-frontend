@@ -5,6 +5,7 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.21.5",
+    "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/preset-env": "^7.21.5",
     "@typescript-eslint/eslint-plugin": "^5.59.1",
     "@typescript-eslint/parser": "^5.59.2",
@@ -13,14 +14,15 @@
     "babel-loader": "^9.1.2",
     "css-loader": "^6.7.3",
     "dotenv": "^16.3.1",
-    "eslint": "^8.39.0",
-    "eslint-config-prettier": "^8.8.0",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.1",
     "mini-css-extract-plugin": "^2.7.5",
     "postcss": "^8.4.23",
     "postcss-loader": "^7.3.0",
-    "prettier": "^2.8.8",
+    "prettier": "^3.3.3",
     "resolve-url-loader": "^5.0.0",
     "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
@@ -28,6 +30,7 @@
     "terser-webpack-plugin": "^5.3.10",
     "ts-loader": "^9.4.2",
     "typescript": "^5.0.4",
+    "typescript-eslint": "^8.12.2",
     "webpack": "^5.81.0",
     "webpack-cli": "^5.0.2",
     "webpack-dev-server": "^4.13.3"
@@ -43,5 +46,6 @@
     "lint:fix": "npm run lint -- --fix",
     "format": "prettier ./src --write",
     "deploy": "gh-pages -d dist"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
