@@ -1,7 +1,7 @@
-import { Component } from './Components';
-import { createElement, ensureElement } from '../../utils/utils';
-import { EventEmitter } from './events';
-import { IBasket } from '../../types';
+import { Component } from '../Components';
+import { createElement, ensureElement } from '../../../utils/utils';
+import { EventEmitter } from '../../base/events';
+import { IBasket } from '../../../types/index';
 
 export class Basket extends Component<IBasket> {
 	protected _list: HTMLElement;

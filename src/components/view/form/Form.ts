@@ -1,5 +1,5 @@
-import { Component } from '../Components';
-import { IEvents } from '../events';
+import { Component } from '../../view/Components';
+import { IEvents } from '../../base/events';
 import { ensureElement } from '../../../utils/utils';
 import { IFormState } from '../../../types/index'
 

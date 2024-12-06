@@ -1,20 +1,7 @@
-import { Component } from './Components';
-import { ensureElement } from '../../utils/utils';
-import { CategoryType } from '../../utils/constants';
-
-interface ICardActions {
-	onClick: (event: MouseEvent) => void;
-}
-
-export interface ICard {
-	id: string;
-	title: string;
-	category: string;
-	description: string;
-	image: string;
-	price: number | null;
-	index?: number;
-}
+import { Component } from '../Components';
+import { ensureElement } from '../../../utils/utils';
+import { CategoryType } from '../../../utils/constants';
+import {ICard, ICardActions} from '../../../types/index'
 
 export class Card extends Component<ICard> {
 	protected _title: HTMLElement;

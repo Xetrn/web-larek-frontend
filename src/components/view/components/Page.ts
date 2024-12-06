@@ -1,7 +1,7 @@
-import { Component } from './Components';
-import { IEvents } from './events';
-import { ensureElement } from '../../utils/utils';
-import { IPage } from '../../types/index'
+import { Component } from '../Components';
+import { IEvents } from '../../base/events';
+import { ensureElement } from '../../../utils/utils';
+import { IPage } from '../../../types/index'
 
 export class Page extends Component<IPage> {
 	protected _counter: HTMLElement;

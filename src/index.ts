@@ -1,17 +1,17 @@
 import './scss/styles.scss';
-import { LarekApi } from './components/base/LarekApi';
+import { LarekApi } from './components/models/LarekApi'
 import { API_URL, CDN_URL } from './utils/constants';
 import { EventEmitter } from './components/base/events';
-import { AppState } from './components/base/AppState';
+import { AppState } from './components/models/AppState';
 import { cloneTemplate, ensureElement } from './utils/utils';
-import { Card, CardView } from './components/base/Card';
-import { Page } from './components/base/Page';
-import { Modal } from './components/base/common/Modal';
-import { Order } from './components/base/Order';
+import { Card, CardView } from './components/view/components/Card'
+import { Page } from './components/view/components/Page';
+import { Modal } from './components/view/modal/Modal';
+import { Order } from './components/view/form/Order';
 import { IOrder, IProduct, IOrderForm } from './types';
-import { ContactsForm } from './components/base/Contacts';
-import { Basket } from './components/base/Basket';
-import { Success } from './components/base/Success';
+import { ContactsForm } from './components/view/form/Contacts';
+import { Basket } from './components/view/components/Basket';
+import { Success } from './components/view/components/Success';
 
 const events = new EventEmitter();
 const api = new LarekApi(CDN_URL, API_URL);
@@ -30,11 +30,9 @@ const templates = {
 // Модель данных приложения
 const appData = new AppState({}, events);
 
-// Глобальные контейнеры
+
 const page = new Page(document.body, events);
 const modal = new Modal(ensureElement<HTMLElement>('#modal-container'), events);
-
-// Переиспользуемые части интерфейса
 const basket = new Basket(cloneTemplate<HTMLTemplateElement>(templates.basket),events);
 const order = new Order(cloneTemplate<HTMLFormElement>(templates.order), events);
 const contacts = new ContactsForm(cloneTemplate(templates.contacts), events);
@@ -173,7 +171,7 @@ events.on('payment:change', (item: HTMLButtonElement) => {
 	appData.validateOrderForm();
 });
 
-// Изменилось одно из полей
+// Изменилось одно из полей заказа
 events.on(
 	/^order\..*:change/,
 	(data: { field: keyof IOrderForm; value: string }) => {
