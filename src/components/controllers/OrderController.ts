@@ -4,32 +4,19 @@ import OrderModel from '../models/OrderModel';
 import ModalView from '../views/ModalView';
 import { CartItem, Order, OrderResp } from '../../types';
 import Api from '../base/api';
-import CartModalView from '../views/CartModalView';
-import PaymentModalView from '../views/PaymentModalView';
-import ContactModalView from '../views/ContactModalView';
-import ResultModalView from '../views/ResultModalView';
 
 class OrderController {
-	private cartView: ModalView;
-	private paymentView: ModalView;
-	private contactView: ModalView;
-	private resultView: ModalView;
-	private cartButtonCounter: HTMLSpanElement;
-
 	constructor(
-		private events: EventEmitter,
-		private model: OrderModel,
-		private api: Api,
-		private cartButton: HTMLButtonElement
+		private readonly events: EventEmitter,
+		private readonly model: OrderModel,
+		private readonly api: Api,
+		private readonly cartButton: HTMLButtonElement,
+		private readonly cartView: ModalView,
+		private readonly paymentView: ModalView,
+		private readonly contactView: ModalView,
+		private readonly resultView: ModalView,
+		private cartButtonCounter: HTMLSpanElement
 	) {
-		this.cartView = new CartModalView(events);
-		this.paymentView = new PaymentModalView(events);
-		this.contactView = new ContactModalView(events);
-		this.resultView = new ResultModalView(events);
-		this.cartButtonCounter = this.cartButton.querySelector(
-			'.header__basket-counter'
-		);
-
 		this.events.on(Actions.CART_CHANGE, this.renderCart.bind(this));
 		this.events.on(Actions.MODAL_CART_OPEN, this.renderCart.bind(this));
 		this.events.on(Actions.CART_REMOVE, this.removeFromCart.bind(this));
