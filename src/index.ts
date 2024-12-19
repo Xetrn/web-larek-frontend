@@ -8,7 +8,7 @@ import { Card, CardView } from './components/view/components/Card'
 import { Page } from './components/view/components/Page';
 import { Modal } from './components/view/modal/Modal';
 import { Order } from './components/view/form/Order';
-import { IOrder, IProduct, IOrderForm } from './types';
+import {IProduct, IOrderForm } from './types';
 import { ContactsForm } from './components/view/form/Contacts';
 import { Basket } from './components/view/components/Basket';
 import { Success } from './components/view/components/Success';
@@ -150,19 +150,6 @@ events.on('order:submit', () => {
 			errors: [],
 		}),
 	});
-});
-
-// Изменилось состояние валидации формы
-events.on('formErrors:change', (errors: Partial<IOrder>) => {
-	const { email, phone, address, payment } = errors;
-	order.valid = !address && !payment;
-	contacts.valid = !email && !phone;
-	order.errors = Object.values({ address, payment })
-		.filter((i) => !!i)
-		.join('; ');
-	contacts.errors = Object.values({ phone, email })
-		.filter((i) => !!i)
-		.join('; ');
 });
 
 // Реакция на изменении способа оплаты в форме заказа.

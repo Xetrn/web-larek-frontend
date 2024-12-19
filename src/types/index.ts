@@ -1,81 +1,69 @@
-// Интерфейс, описывающий карточку товара
 export interface IProduct {
-	id: string; // Уникальный идентификатор товара
-	description: string; // Описание товара
-	image: string; // URL изображения товара
-	title: string; // Название товара
-	category: string; // Категория товара
-	price: number | null; //Цена товара
+	id: string; 
+	description: string; 
+	image: string; 
+	title: string;
+	category: string; 
+	price: number | null; 
 }
 
-// Интерфейс для класса ContactsForm, описывающий форму контактов пользователя
 export interface IOrderForm {
-	email: string; // Электронный адрес пользователя
-	phone: string; // Номер телефона пользователя
+	email: string; 
+	phone: string; 
 }
 
-//Интерфейс, описывающий состояние формы
 export interface IFormState {
-	valid: boolean; // Флаг валидности формы
-	errors: string[]; // Массив строк с ошибками
+	valid: boolean;
+	errors: string[];
 }
 
-//Интерфейс для класса Card:
 export interface ICard {
-	id: string; //Уникальный идентификатор карточки
-	title: string; //Заголовок карточки
-	category: string; //Категория, к которой относится карточка
-	description: string; //Текст, отображаемый на карточке
-	image: string; // URL изображения, отображаемого на карточке
-  price: number | null; // цена товара(если указана)
-	index?: number; // индекс товара
+	id: string;
+	title: string
+	category: string;
+	description: string;
+	image: string;
+  price: number | null;
+	index?: number;
 }
 
 export interface IBasket {
-	items: HTMLElement[]; // Массив элементов, представляющих товары в корзине
-	totalPrice: number; // Общая цена товаров в корзине
+	items: HTMLElement[]; 
+	totalPrice: number;
 }
 
-//Интерфейс для описания действий, которые могут быть привязаны к карточке товара
 export interface ICardActions {
-	onClick: (event: MouseEvent) => void; //обработчик события клика, который будет выполняться при взаимодействии с карточкой товара
+	onClick: (event: MouseEvent) => void;
 }
 
-// Интерфейс для класса Order, описывающий контактные данные для оформления заказа
 export interface IOrderContact {
-	payment: string; // Способ оплаты
-	address: string; // Адрес доставки
+	payment: string;
+	address: string;
 }
 
-// Интерфейс IOrder, расширяющий IOrderForm и IOrderContact
 export interface IOrder extends IOrderForm, IOrderContact {
-	total: number; // Общая сумма заказа
-	items: string[]; // Массив строк, представляющий идентификаторы или описания товаров, включенных в заказ
+	total: number;
+	items: string[];
 }
 
-// Интерфейс, описывающий ответ от сервера при создании заказа
 export interface IOrderAnswer {
-	total: number; // идентификатор заказа
+	total: number;
 }
 
-// Интерфейс для класса AppState, представляющий состояние приложения
 export interface IAppState {
-	catalog: IProduct[]; // Массив товаров в корзине
-	basket: string[]; // Каталог товаров
-	order: IOrder; // Текущий заказ
+	catalog: IProduct[];
+	basket: string[]; 
+	order: IOrder;
 }
 
-// Интерфейс для работы с API магазина
 export interface ILarekApi {
-	getProductList: () => Promise<IProduct[]>; // Получение списка всех продуктов, доступных в магазине
-	orderProduct: (value: IOrder) => Promise<IOrderAnswer>; // Отправка заказа на сервер
+	getProductList: () => Promise<IProduct[]>;
+	orderProduct: (value: IOrder) => Promise<IOrderAnswer>;
 }
 
-// Интерфейс для класса Page, описывающий страницу 
 export interface IPage {
-	counter: HTMLElement; // Счетчик на странице
-	catalog: HTMLElement; //Каталог товаров или элементов
+	counter: HTMLElement; 
+	catalog: HTMLElement;
 }
 
-//Тип, который используется для представления ошибок формы
 export type FormErrors = Partial<Record<keyof IOrder, string>>;
