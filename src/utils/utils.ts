@@ -133,3 +133,24 @@ export function createElement<
     }
     return element;
 }
+
+/**
+ * Форматирование цены со словом "синапс"
+ */
+
+export function formatPrice(price: number)  {
+    const priceString = price.toString();
+    const priceLength = priceString.length;
+    const lastDigit = priceString[priceLength - 1];
+    const penultimateDigit = priceString[priceLength - 2];
+
+    if (lastDigit === '1' && penultimateDigit !== '1') {
+        return `${price} синапс`;
+    }
+
+    if (lastDigit >= '2' && lastDigit <= '4' && penultimateDigit !== '1') {
+        return `${price} синапса`;
+    }
+
+    return `${price} синапсов`;
+}
